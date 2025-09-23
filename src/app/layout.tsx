@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
 import './globals.css';
+import SideNav from '@/components/layouts/SideNav/SideNav';
 
 const pretendard = localFont({
 	src: './fonts/PretendardVariable.woff2',
@@ -11,8 +12,17 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-	title: '최종 프로젝트',
-	description: '신한투자증권 프로디지털아카데미 최종 프로젝트',
+	title: '블록 기반 노코드 자동 감시 주문 플랫폼',
+	description:
+		'코딩 없이 드래그 앤 드롭으로 매매 전략을 만들고, 실시간으로 자동 실행하는 노코드 플랫폼',
+	keywords: [
+		'자동매매',
+		'노코드',
+		'블록 기반',
+		'투자',
+		'알고리즘 트레이딩',
+		'퀀트',
+	],
 };
 
 export default function RootLayout({
@@ -22,7 +32,12 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="ko">
-			<body className={`${pretendard.className} antialiased`}>{children}</body>
+			<body
+				className={`${pretendard.className} antialiased flex w-dvw h-dvh overflow-hidden bg-bg-custom`}
+			>
+				<SideNav />
+				{children}
+			</body>
 		</html>
 	);
 }
