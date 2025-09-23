@@ -1,12 +1,14 @@
 import DashboardCard from '@/components/layouts/DashboardCard/DashboardCard';
+import PortfolioProfitChartCard from './_view/PortfolioProfitChartCard';
+import PortfolioChart from './_view/PortfolioChart';
 
 const Dashboard = () => {
 	return (
 		<div className="flex flex-col gap-4 h-full">
 			<div className="flex gap-4 flex-4">
-				<DashboardCard className="flex-1">카드입니다.</DashboardCard>
+				<PortfolioProfitChartCard />
 				<div className="flex flex-col gap-4 flex-1">
-					<DashboardCard className="flex-1">카드입니다.</DashboardCard>
+					<PortfolioChart />
 					<DashboardCard className="flex-1">카드입니다.</DashboardCard>
 				</div>
 			</div>
