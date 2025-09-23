@@ -35,7 +35,7 @@ const chartConfig = {
 const PortfolioProfitChartCard = () => {
 	return (
 		<DashboardCard className="flex-1">
-			<ChartContainer config={chartConfig} className="w-full h-full">
+			<ChartContainer config={chartConfig}>
 				<LineChart
 					accessibilityLayer
 					data={chartLineData}
