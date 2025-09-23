@@ -5,7 +5,7 @@ import { MENU } from '@/constants/menu';
 
 const SideNav = () => {
 	return (
-		<nav className="flex flex-col align-center justify-between w-[70px] h-full pt-6 pb-6 border-r-[0.2px] border-r-border-custom">
+		<nav className="fixed flex flex-col align-center justify-between w-[70px] h-full pt-6 pb-6 border-r-[0.2px] border-r-border-custom bg-transparent">
 			<menu className="flex flex-col items-center justify-center gap-4 w-full">
 				<li className="mb-6">
 					<MenuIcon
