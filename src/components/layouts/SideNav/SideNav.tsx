@@ -1,7 +1,9 @@
-import UserChip from '../../common/UserChip';
 import { LayoutDashboard } from 'lucide-react';
+
 import MenuIcon from './MenuIcon';
+
 import { MENU } from '@/constants/menu';
+import UserChip from '@/components/common/UserChip';
 
 const SideNav = () => {
 	return (

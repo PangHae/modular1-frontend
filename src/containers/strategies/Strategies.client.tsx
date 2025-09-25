@@ -2,6 +2,7 @@
 
 import SearchInput from '@/components/common/SearchInput';
 import StrategyCard from '@/components/common/StrategyCard';
+import StrategyStatusFilterChip from '@/components/common/StrategyStatusFilterChip';
 import CardGridLayout from '@/components/layouts/CardGridLayout';
 
 const StrategiesClient = () => {
@@ -15,6 +16,19 @@ const StrategiesClient = () => {
 				<SearchInput onSearch={handleSearch} />
 			</div>
 			<div className="flex flex-col flex-1 min-h-0  mx-auto">
+				<div>
+					<menu className="flex gap-2">
+						<li>
+							<StrategyStatusFilterChip selected={true} type={'all'} />
+						</li>
+						<li>
+							<StrategyStatusFilterChip selected={false} type={'running'} />
+						</li>
+						<li>
+							<StrategyStatusFilterChip selected={false} type={'pending'} />
+						</li>
+					</menu>
+				</div>
 				<CardGridLayout>
 					<StrategyCard
 						title="월마트는 무조건 이 전략이다."
