@@ -4,6 +4,8 @@ import DashboardCard from '@/components/layouts/DashboardCard/DashboardCard';
 import {
 	ChartConfig,
 	ChartContainer,
+	ChartLegend,
+	ChartLegendContent,
 	ChartTooltip,
 	ChartTooltipContent,
 } from '@/components/ui/chart';
@@ -56,8 +58,11 @@ const chartConfig = {
 
 const PortfolioChart = () => {
 	return (
-		<DashboardCard className="flex-1">
-			<ChartContainer config={chartConfig} className="w-full h-full">
+		<DashboardCard className="flex-1 min-h-0" title="보유 종목 비중">
+			<ChartContainer
+				config={chartConfig}
+				className="w-full h-[calc(100%-10px)]"
+			>
 				<PieChart>
 					<ChartTooltip
 						cursor={false}
@@ -67,13 +72,12 @@ const PortfolioChart = () => {
 						data={chartDoughnutData}
 						dataKey="amount"
 						nameKey="stock"
-						innerRadius={60}
-						strokeWidth={5}
 						activeIndex={0}
 						activeShape={({ outerRadius = 0, ...props }: PieSectorDataItem) => (
 							<Sector {...props} outerRadius={outerRadius + 10} />
 						)}
 					/>
+					<ChartLegend content={<ChartLegendContent />} />
 				</PieChart>
 			</ChartContainer>
 		</DashboardCard>

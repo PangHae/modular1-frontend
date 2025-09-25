@@ -34,8 +34,14 @@ const chartConfig = {
 
 const PortfolioProfitChartCard = () => {
 	return (
-		<DashboardCard className="flex-1">
-			<ChartContainer config={chartConfig}>
+		<DashboardCard
+			className="flex-[1.5] min-w-0 min-h-0"
+			title="포트폴리오 수익률"
+		>
+			<ChartContainer
+				config={chartConfig}
+				className="w-full h-[calc(100%-40px)]"
+			>
 				<LineChart
 					accessibilityLayer
 					data={chartLineData}

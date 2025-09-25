@@ -8,7 +8,7 @@ import 'react-calendar-heatmap/dist/styles.css';
 
 const HeatmapChart = () => {
 	return (
-		<DashboardCard className="flex-1">
+		<DashboardCard className="min-h-0" title="거래 활동">
 			<CalendarHeatmap
 				startDate={new Date('2025-01-01')}
 				endDate={new Date('2025-08-31')}
