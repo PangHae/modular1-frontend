@@ -46,6 +46,22 @@
 	--color-custom-gray-border: var(--color-custom-gray-border);
 	--color-custom-point: var(--color-custom-point);
 	--color-border-custom: var(--color-border-custom);
+	--color-custom-sub-text: var(--color-custom-sub-text);
+	--color-status-running-bg: var(--color-status-running-bg);
+	--color-status-running-text: var(--color-status-running-text);
+	--color-status-pending-bg: var(--color-status-pending-bg);
+	--color-status-pending-text: var(--color-status-pending-text);
+
+	--text-heading1: var(--font-size-heading1); /* 34px*/
+	--text-heading2: var(--font-size-heading2); /* 24px*/
+	--text-heading3: var(--font-size-heading3); /* 20px*/
+	--text-body1: var(--font-size-body1); /* 17px*/
+	--text-body2: var(--font-size-body2); /* 15px*/
+	--text-sub1: var(--font-size-sub1); /* 15px*/
+	--text-sub2: var(--font-size-sub2); /* 13px*/
+	--text-button: var(--font-size-button); /* 14px*/
+	--text-caption: var(--font-size-caption); /* 12px*/
+	--text-overline: var(--font-size-overline); /* 10px*/
 }
 
 :root {
@@ -87,6 +103,23 @@
 	--color-custom-main: #333d48;
 	--color-custom-sub: #92949d;
 	--color-custom-point: #6e7dff;
+	--color-custom-sub-text: #425968;
+	--color-status-running-bg: rgba(91, 191, 131, 0.2);
+	--color-status-running-text: #50ac75;
+	--color-status-pending-bg: rgba(132, 132, 132, 0.2);
+	--color-status-pending-text: #848484;
+
+	/* custom text sizes */
+	--font-size-heading1: 34px;
+	--font-size-heading2: 24px;
+	--font-size-heading3: 20px;
+	--font-size-body1: 16px;
+	--font-size-body2: 14px;
+	--font-size-sub1: 16px;
+	--font-size-sub2: 14px;
+	--font-size-button: 14px;
+	--font-size-caption: 12px;
+	--font-size-overline: 10px;
 }
 
 @layer base {
