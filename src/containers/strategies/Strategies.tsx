@@ -1,5 +1,7 @@
+import ContentWrapper from '@/components/layouts/ContentWrapper';
+
 const Strategies = () => {
-	return <div>Strategies</div>;
+	return <ContentWrapper></ContentWrapper>;
 };
 
 export default Strategies;
