@@ -2,8 +2,9 @@
 
 import SearchInput from '@/components/common/SearchInput';
 import StrategyCard from '@/components/common/StrategyCard';
-import StrategyStatusFilterChip from '@/components/common/StrategyStatusFilterChip';
+import StrategyStatusFilterMenu from '@/components/common/StrategyStatusFilterMenu';
 import CardGridLayout from '@/components/layouts/CardGridLayout';
+import { Button } from '@/components/ui/button';
 
 const StrategiesClient = () => {
 	const handleSearch = (keyword: string) => {
@@ -15,19 +16,12 @@ const StrategiesClient = () => {
 			<div className="flex align-center justify-center flex-shrink-0 sticky top-0 bg-custom-gray-bg px-10 pt-20 pb-8">
 				<SearchInput onSearch={handleSearch} />
 			</div>
-			<div className="flex flex-col flex-1 min-h-0  mx-auto">
-				<div>
-					<menu className="flex gap-2">
-						<li>
-							<StrategyStatusFilterChip selected={true} type={'all'} />
-						</li>
-						<li>
-							<StrategyStatusFilterChip selected={false} type={'running'} />
-						</li>
-						<li>
-							<StrategyStatusFilterChip selected={false} type={'pending'} />
-						</li>
-					</menu>
+			<div className="flex flex-col flex-1 min-h-0  mx-auto gap-4">
+				<div className="flex justify-between px-1">
+					<StrategyStatusFilterMenu />
+					<Button className="bg-shinhan-blue w-[100px] h-[40px] cursor-pointer hover:bg-shinhan-blue/80">
+						+ 전략 생성
+					</Button>
 				</div>
 				<CardGridLayout>
 					<StrategyCard
