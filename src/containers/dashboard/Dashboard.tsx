@@ -1,4 +1,5 @@
-import StockProfitInfo from '@/components/common/StockProfitInfo';
+import InvestmentRankingItem from '@/components/common/InvestmentRankingItem';
+import StockProfitRateItem from '@/components/common/StockProfitRateItem';
 import ContentWrapper from '@/components/layouts/ContentWrapper';
 import DashboardCard from '@/components/layouts/DashboardCard/DashboardCard';
 
@@ -23,7 +24,7 @@ const Dashboard = () => {
 						title="수익률 Top10"
 					>
 						<div className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
-							<StockProfitInfo
+							<InvestmentRankingItem
 								imageUrl="/icons/WMT.png"
 								stock="WMT"
 								profit={100000}
@@ -31,7 +32,7 @@ const Dashboard = () => {
 								amount={100000}
 								profitRate={10}
 							/>
-							<StockProfitInfo
+							<InvestmentRankingItem
 								imageUrl="/icons/WMT.png"
 								stock="WMT"
 								profit={100000}
@@ -39,7 +40,7 @@ const Dashboard = () => {
 								amount={100000}
 								profitRate={10}
 							/>
-							<StockProfitInfo
+							<InvestmentRankingItem
 								imageUrl="/icons/WMT.png"
 								stock="WMT"
 								profit={100000}
@@ -47,7 +48,7 @@ const Dashboard = () => {
 								amount={100000}
 								profitRate={10}
 							/>
-							<StockProfitInfo
+							<InvestmentRankingItem
 								imageUrl="/icons/WMT.png"
 								stock="WMT"
 								profit={100000}
@@ -55,7 +56,7 @@ const Dashboard = () => {
 								amount={100000}
 								profitRate={10}
 							/>
-							<StockProfitInfo
+							<InvestmentRankingItem
 								imageUrl="/icons/WMT.png"
 								stock="WMT"
 								profit={100000}
@@ -68,7 +69,34 @@ const Dashboard = () => {
 					<DashboardCard
 						className="flex-1 flex flex-col overflow-hidden"
 						title="종목별 수익률"
-					></DashboardCard>
+					>
+						<div className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
+							<StockProfitRateItem
+								stockName="LG에너지솔루션"
+								stockCode="373220"
+								amount={30}
+								profitRate={8.7}
+							/>
+							<StockProfitRateItem
+								stockName="LG에너지솔루션"
+								stockCode="373220"
+								amount={14530}
+								profitRate={8.7}
+							/>
+							<StockProfitRateItem
+								stockName="LG에너지솔루션"
+								stockCode="373220"
+								amount={30}
+								profitRate={8.7}
+							/>
+							<StockProfitRateItem
+								stockName="LG에너지솔루션"
+								stockCode="373220"
+								amount={30}
+								profitRate={8.7}
+							/>
+						</div>
+					</DashboardCard>
 					<DashboardCard
 						className="flex-1 flex flex-col overflow-hidden"
 						title="최근 체결 내역"
