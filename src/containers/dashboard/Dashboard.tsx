@@ -1,5 +1,6 @@
 import InvestmentRankingItem from '@/components/common/InvestmentRankingItem';
 import StockProfitRateItem from '@/components/common/StockProfitRateItem';
+import TradeExecutionItem from '@/components/common/TradeExecutionItem';
 import ContentWrapper from '@/components/layouts/ContentWrapper';
 import DashboardCard from '@/components/layouts/DashboardCard/DashboardCard';
 
@@ -100,7 +101,38 @@ const Dashboard = () => {
 					<DashboardCard
 						className="flex-1 flex flex-col overflow-hidden"
 						title="최근 체결 내역"
-					></DashboardCard>
+					>
+						<div className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
+							<TradeExecutionItem
+								type="buy"
+								stockName="삼성전자"
+								strategyName="골든크로스"
+								dateTime="2025.09.23 09:30"
+								amount={720000}
+							/>
+							<TradeExecutionItem
+								type="sell"
+								stockName="SK 하이닉스"
+								strategyName="어쩌구저쩌구전략"
+								dateTime="2025.09.23 09:30"
+								amount={456000}
+							/>
+							<TradeExecutionItem
+								type="buy"
+								stockName="삼성전자"
+								strategyName="골든크로스"
+								dateTime="2025.09.23 09:30"
+								amount={720000}
+							/>
+							<TradeExecutionItem
+								type="sell"
+								stockName="SK 하이닉스"
+								strategyName="어쩌구저쩌구전략"
+								dateTime="2025.09.23 09:30"
+								amount={456000}
+							/>
+						</div>
+					</DashboardCard>
 				</div>
 			</div>
 		</ContentWrapper>
