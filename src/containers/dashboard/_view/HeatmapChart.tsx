@@ -1,21 +1,27 @@
 'use client';
 
-import DashboardCard from '@/components/layouts/DashboardCard/DashboardCard';
-import { heatmapData } from '@/mock/chartData';
 import CalendarHeatmap from 'react-calendar-heatmap';
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { heatmapData } from '@/mock/chartData';
 
 import 'react-calendar-heatmap/dist/styles.css';
 
 const HeatmapChart = () => {
 	return (
-		<DashboardCard className="min-h-0" title="거래 활동">
-			<CalendarHeatmap
-				startDate={new Date('2025-01-01')}
-				endDate={new Date('2025-08-31')}
-				values={heatmapData}
-				showMonthLabels
-			/>
-		</DashboardCard>
+		<Card className="min-h-0">
+			<CardHeader>
+				<CardTitle>거래 활동</CardTitle>
+			</CardHeader>
+			<CardContent>
+				<CalendarHeatmap
+					startDate={new Date('2025-01-01')}
+					endDate={new Date('2025-08-31')}
+					values={heatmapData}
+					showMonthLabels
+				/>
+			</CardContent>
+		</Card>
 	);
 };
 

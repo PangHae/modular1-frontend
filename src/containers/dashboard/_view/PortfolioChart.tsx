@@ -1,6 +1,9 @@
 'use client';
 
-import DashboardCard from '@/components/layouts/DashboardCard/DashboardCard';
+import { Pie, PieChart, Sector } from 'recharts';
+import { PieSectorDataItem } from 'recharts/types/polar/Pie';
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
 	ChartConfig,
 	ChartContainer,
@@ -10,8 +13,6 @@ import {
 	ChartTooltipContent,
 } from '@/components/ui/chart';
 import { chartDoughnutData } from '@/mock/chartData';
-import { Pie, PieChart, Sector } from 'recharts';
-import { PieSectorDataItem } from 'recharts/types/polar/Pie';
 
 const chartConfig = {
 	'005930': {
@@ -58,29 +59,37 @@ const chartConfig = {
 
 const PortfolioChart = () => {
 	return (
-		<DashboardCard className="flex-1 min-h-0" title="보유 종목 비중">
-			<ChartContainer
-				config={chartConfig}
-				className="w-full h-[calc(100%-10px)]"
-			>
-				<PieChart>
-					<ChartTooltip
-						cursor={false}
-						content={<ChartTooltipContent hideLabel />}
-					/>
-					<Pie
-						data={chartDoughnutData}
-						dataKey="amount"
-						nameKey="stock"
-						activeIndex={0}
-						activeShape={({ outerRadius = 0, ...props }: PieSectorDataItem) => (
-							<Sector {...props} outerRadius={outerRadius + 10} />
-						)}
-					/>
-					<ChartLegend content={<ChartLegendContent />} />
-				</PieChart>
-			</ChartContainer>
-		</DashboardCard>
+		<Card className="flex-1 min-h-0">
+			<CardHeader>
+				<CardTitle>보유 종목 비중</CardTitle>
+			</CardHeader>
+			<CardContent>
+				<ChartContainer
+					config={chartConfig}
+					className="w-full h-[calc(100%-10px)]"
+				>
+					<PieChart>
+						<ChartTooltip
+							cursor={false}
+							content={<ChartTooltipContent hideLabel />}
+						/>
+						<Pie
+							data={chartDoughnutData}
+							dataKey="amount"
+							nameKey="stock"
+							activeIndex={0}
+							activeShape={({
+								outerRadius = 0,
+								...props
+							}: PieSectorDataItem) => (
+								<Sector {...props} outerRadius={outerRadius + 10} />
+							)}
+						/>
+						<ChartLegend content={<ChartLegendContent />} />
+					</PieChart>
+				</ChartContainer>
+			</CardContent>
+		</Card>
 	);
 };
 

@@ -2,7 +2,7 @@ import InvestmentRankingItem from '@/components/common/InvestmentRankingItem';
 import StockProfitRateItem from '@/components/common/StockProfitRateItem';
 import TradeExecutionItem from '@/components/common/TradeExecutionItem';
 import ContentWrapper from '@/components/layouts/ContentWrapper';
-import DashboardCard from '@/components/layouts/DashboardCard/DashboardCard';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import HeatmapChart from './_view/HeatmapChart';
 import PortfolioChart from './_view/PortfolioChart';
@@ -20,11 +20,11 @@ const Dashboard = () => {
 					</div>
 				</div>
 				<div className="flex gap-4 flex-[3] min-h-[300px]">
-					<DashboardCard
-						className="flex-1 flex flex-col overflow-hidden"
-						title="수익률 Top10"
-					>
-						<div className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
+					<Card className="flex-1 flex flex-col overflow-hidden">
+						<CardHeader>
+							<CardTitle>수익률 Top10</CardTitle>
+						</CardHeader>
+						<CardContent className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
 							<InvestmentRankingItem
 								imageUrl="/icons/WMT.png"
 								stock="WMT"
@@ -65,13 +65,13 @@ const Dashboard = () => {
 								amount={100000}
 								profitRate={10}
 							/>
-						</div>
-					</DashboardCard>
-					<DashboardCard
-						className="flex-1 flex flex-col overflow-hidden"
-						title="종목별 수익률"
-					>
-						<div className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
+						</CardContent>
+					</Card>
+					<Card className="flex-1 flex flex-col overflow-hidden">
+						<CardHeader>
+							<CardTitle>종목별 수익률</CardTitle>
+						</CardHeader>
+						<CardContent className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
 							<StockProfitRateItem
 								stockName="LG에너지솔루션"
 								stockCode="373220"
@@ -96,13 +96,13 @@ const Dashboard = () => {
 								amount={30}
 								profitRate={8.7}
 							/>
-						</div>
-					</DashboardCard>
-					<DashboardCard
-						className="flex-1 flex flex-col overflow-hidden"
-						title="최근 체결 내역"
-					>
-						<div className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
+						</CardContent>
+					</Card>
+					<Card className="flex-1 flex flex-col overflow-hidden">
+						<CardHeader>
+							<CardTitle>최근 체결 내역</CardTitle>
+						</CardHeader>
+						<CardContent className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
 							<TradeExecutionItem
 								type="buy"
 								stockName="삼성전자"
@@ -131,8 +131,8 @@ const Dashboard = () => {
 								dateTime="2025.09.23 09:30"
 								amount={456000}
 							/>
-						</div>
-					</DashboardCard>
+						</CardContent>
+					</Card>
 				</div>
 			</div>
 		</ContentWrapper>
