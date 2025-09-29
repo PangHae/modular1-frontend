@@ -2,8 +2,9 @@
 
 import { Compass, Cuboid, Shapes } from 'lucide-react';
 
+import MyStrategy from './MyStrategy/MyStrategy';
 import PaletteMenu from './PaletteMenu';
-import StockSearch from './StockSearch/StockSearch';
+// import StockSearch from './StockSearch';
 
 const SidePalette = () => {
 	return (
@@ -19,7 +20,8 @@ const SidePalette = () => {
 					<PaletteMenu icon={<Shapes strokeWidth={1} />} title="블록" />
 				</li>
 			</menu>
-			<StockSearch />
+			{/* <StockSearch /> */}
+			<MyStrategy />
 		</div>
 	);
 };
