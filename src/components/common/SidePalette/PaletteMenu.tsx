@@ -1,30 +1,21 @@
-'use client';
-
 import { FC } from 'react';
-
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 interface Props {
 	icon: React.ReactNode;
-	href: string;
-	title?: string;
+	title: string;
 }
 
-const MenuIcon: FC<Props> = ({ icon, title, href }) => {
-	const pathname = usePathname();
-	const isActive = pathname.startsWith(href);
+const PaletteMenu: FC<Props> = ({ icon, title }) => {
+	const isActive = true;
 	const colorClass = isActive ? 'text-custom-main' : 'text-custom-sub';
-
 	return (
-		<Link
-			href={href}
+		<div
 			className={`flex flex-col items-center justify-center gap-1 w-full text-xs transition-colors duration-200 ${colorClass}`}
 		>
 			<div className={colorClass}>{icon}</div>
 			{title}
-		</Link>
+		</div>
 	);
 };
 
-export default MenuIcon;
+export default PaletteMenu;

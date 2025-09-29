@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 import SearchInput from '@/components/common/SearchInput';
 import StrategyCard from '@/components/common/StrategyCard';
 import StrategyStatusFilterMenu from '@/components/common/StrategyStatusFilterMenu';
@@ -19,9 +21,11 @@ const StrategiesClient = () => {
 			<div className="flex flex-col flex-1 min-h-0 w-full mx-auto gap-4">
 				<div className="flex justify-between px-1">
 					<StrategyStatusFilterMenu />
-					<Button className="bg-shinhan-blue w-[100px] h-[40px] cursor-pointer hover:bg-shinhan-blue/80">
-						+ 전략 생성
-					</Button>
+					<Link href="/strategies/create">
+						<Button className="bg-shinhan-blue w-[100px] h-[40px] cursor-pointer hover:bg-shinhan-blue/80">
+							+ 전략 생성
+						</Button>
+					</Link>
 				</div>
 				<CardGridLayout>
 					<StrategyCard

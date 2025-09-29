@@ -1,14 +1,17 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Search } from 'lucide-react';
 import { FC, useRef } from 'react';
+
+import { Search } from 'lucide-react';
+
+import { cn } from '@/lib/utils';
 
 interface Props {
 	onSearch: (keyword: string) => void;
+	className?: string;
 }
 
-const SearchInput: FC<Props> = ({ onSearch }) => {
+const SearchInput: FC<Props> = ({ onSearch, className }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -22,7 +25,12 @@ const SearchInput: FC<Props> = ({ onSearch }) => {
 	};
 
 	return (
-		<label className="flex gap-2 align-center justify-center w-[600px] border border-custom-gray-border rounded-full pl-1 pr-6 py-3 bg-white focus-within:border-custom-point">
+		<label
+			className={cn(
+				'flex gap-2 align-center justify-center w-[600px] border border-custom-gray-border rounded-full pl-1 pr-6 py-3 bg-white focus-within:border-custom-point',
+				className
+			)}
+		>
 			<input
 				ref={inputRef}
 				className="w-full h-full focus:outline-none pl-5"
