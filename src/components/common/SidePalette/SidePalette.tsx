@@ -2,7 +2,8 @@
 
 import { Compass, Cuboid, Shapes } from 'lucide-react';
 
-import MyStrategy from './MyStrategy/MyStrategy';
+// import MyStrategy from './MyStrategy/MyStrategy';
+import Block from './Block';
 import PaletteMenu from './PaletteMenu';
 // import StockSearch from './StockSearch';
 
@@ -21,7 +22,8 @@ const SidePalette = () => {
 				</li>
 			</menu>
 			{/* <StockSearch /> */}
-			<MyStrategy />
+			{/* <MyStrategy /> */}
+			<Block />
 		</div>
 	);
 };
