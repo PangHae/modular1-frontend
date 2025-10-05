@@ -1,8 +1,8 @@
-import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
+import type { Metadata } from 'next';
+
 import './globals.css';
-import SideNav from '@/components/layouts/SideNav';
 
 const pretendard = localFont({
 	src: './fonts/PretendardVariable.woff2',
@@ -35,8 +35,7 @@ export default function RootLayout({
 			<body
 				className={`${pretendard.className} antialiased flex w-dvw h-dvh overflow-hidden bg-custom-gray-bg`}
 			>
-				<SideNav />
-				<div className="pl-[70px] w-full h-full">{children}</div>
+				{children}
 			</body>
 		</html>
 	);

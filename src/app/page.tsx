@@ -1,5 +1,1 @@
-const HomePage = () => {
-	return null;
-};
-
-export default HomePage;
+export { default } from '@/containers/Home';
