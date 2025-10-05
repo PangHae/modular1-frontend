@@ -1,1 +1,5 @@
-export { default } from '@/containers/MainRedirect';
+const HomePage = () => {
+	return null;
+};
+
+export default HomePage;
