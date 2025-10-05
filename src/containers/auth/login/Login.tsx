@@ -3,10 +3,12 @@
 import { useState } from 'react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -29,10 +31,13 @@ const loginSchema = z.object({
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
 
-export default function Login() {
+const Login = () => {
+	const router = useRouter();
+
 	const { mutate } = useLogin({
-		onSuccess: (data) => {
-			console.log(data);
+		onSuccess: () => {
+			toast.success('로그인에 성공하였습니다.');
+			router.replace('/dashboard');
 		},
 		onError: (error) => {
 			console.error(error);
@@ -214,4 +219,6 @@ export default function Login() {
 			</Card>
 		</div>
 	);
-}
+};
+
+export default Login;
