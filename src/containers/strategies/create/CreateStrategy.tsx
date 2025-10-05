@@ -1,12 +1,12 @@
-import ContentWrapper from '@/components/layouts/ContentWrapper';
+import CreateStrategyLayout from '@/components/layouts/CreateStrategyLayout';
 
 import CreateStrategyClient from './CreateStrategy.client';
 
 const CreateStrategy = () => {
 	return (
-		<ContentWrapper className="p-4 bg-white">
+		<CreateStrategyLayout>
 			<CreateStrategyClient />
-		</ContentWrapper>
+		</CreateStrategyLayout>
 	);
 };
 
