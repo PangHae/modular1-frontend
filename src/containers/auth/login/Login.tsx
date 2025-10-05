@@ -20,36 +20,39 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useLogin } from '@/hooks/useLogin';
 
 const loginSchema = z.object({
-	email: z
-		.string()
-		.min(1, 'Email is required')
-		.regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please enter a valid email address'),
-	password: z
-		.string()
-		.min(1, 'Password is required')
-		.min(6, 'Password must be at least 6 characters'),
+	memberId: z.string().min(1, 'Member Id is required.'),
+	memberPassword: z.string().min(1, 'Password is required'),
 });
 
-type LoginFormValues = z.infer<typeof loginSchema>;
+export type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function Login() {
+	const { mutate } = useLogin({
+		onSuccess: (data) => {
+			console.log(data);
+		},
+		onError: (error) => {
+			console.error(error);
+		},
+	});
 	const [showPassword, setShowPassword] = useState(false);
 
 	// 폼 설정
 	const form = useForm<LoginFormValues>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: {
-			email: '',
-			password: '',
+			memberId: '',
+			memberPassword: '',
 		},
 	});
 
 	// 폼 제출 핸들러
-	const onSubmit = (data: LoginFormValues) => {
+	const onSubmit = async (data: LoginFormValues) => {
 		console.log('Login form data:', data);
-		// TODO: 실제 로그인 로직 구현
+		mutate(data);
 	};
 
 	return (
@@ -86,7 +89,7 @@ export default function Login() {
 									{/* 이메일 필드 */}
 									<FormField
 										control={form.control}
-										name="email"
+										name="memberId"
 										render={({ field }) => (
 											<FormItem>
 												<FormLabel className="sr-only">Email Address</FormLabel>
@@ -94,8 +97,8 @@ export default function Login() {
 													<div className="relative">
 														<Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
 														<Input
-															type="email"
-															placeholder="Email Address"
+															type="string"
+															placeholder="Member ID"
 															className="pl-12 h-12 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
 															{...field}
 														/>
@@ -109,7 +112,7 @@ export default function Login() {
 									{/* 비밀번호 필드 */}
 									<FormField
 										control={form.control}
-										name="password"
+										name="memberPassword"
 										render={({ field }) => (
 											<FormItem>
 												<FormLabel className="sr-only">Password</FormLabel>
@@ -139,16 +142,6 @@ export default function Login() {
 											</FormItem>
 										)}
 									/>
-								</div>
-
-								{/* Forgot Password */}
-								<div className="flex justify-end">
-									<Link
-										href="#"
-										className="text-blue-600 hover:text-blue-700 text-sm font-medium"
-									>
-										Forgot password?
-									</Link>
 								</div>
 
 								{/* Login Button */}

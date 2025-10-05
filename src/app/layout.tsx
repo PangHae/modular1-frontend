@@ -1,6 +1,7 @@
 import localFont from 'next/font/local';
 
 import QueryClientProvider from '@/components/providers/QueryClientProvider';
+import { Toaster } from '@/components/ui/sonner';
 
 import type { Metadata } from 'next';
 
@@ -39,6 +40,7 @@ export default function RootLayout({
 					className={`${pretendard.className} antialiased flex w-dvw h-dvh overflow-hidden bg-custom-gray-bg`}
 				>
 					{children}
+					<Toaster />
 				</body>
 			</html>
 		</QueryClientProvider>
