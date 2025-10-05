@@ -1,5 +1,7 @@
 import localFont from 'next/font/local';
 
+import QueryClientProvider from '@/components/providers/QueryClientProvider';
+
 import type { Metadata } from 'next';
 
 import './globals.css';
@@ -31,12 +33,14 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="ko">
-			<body
-				className={`${pretendard.className} antialiased flex w-dvw h-dvh overflow-hidden bg-custom-gray-bg`}
-			>
-				{children}
-			</body>
-		</html>
+		<QueryClientProvider>
+			<html lang="ko">
+				<body
+					className={`${pretendard.className} antialiased flex w-dvw h-dvh overflow-hidden bg-custom-gray-bg`}
+				>
+					{children}
+				</body>
+			</html>
+		</QueryClientProvider>
 	);
 }
