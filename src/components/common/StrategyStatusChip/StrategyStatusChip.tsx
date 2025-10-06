@@ -3,18 +3,18 @@ import { FC } from 'react';
 import { cn } from '@/lib/utils';
 
 interface Props {
-	status: 'running' | 'pending';
+	status: 'ACTIVATED' | 'PENDING';
 }
 
 const STATUS_MAP = {
-	running: {
+	ACTIVATED: {
 		bgColor: 'bg-status-running-bg',
 		textColor: 'text-status-running-text',
 		borderColor: 'border-status-running-text',
 		dotColor: 'bg-status-running-text',
 		text: '실행 중',
 	},
-	pending: {
+	PENDING: {
 		bgColor: 'bg-status-pending-bg',
 		textColor: 'text-status-pending-text',
 		borderColor: 'border-status-pending-text',

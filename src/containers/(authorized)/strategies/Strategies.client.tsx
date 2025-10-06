@@ -7,11 +7,22 @@ import StrategyCard from '@/components/common/StrategyCard';
 import StrategyStatusFilterMenu from '@/components/common/StrategyStatusFilterMenu';
 import CardGridLayout from '@/components/layouts/CardGridLayout';
 import { Button } from '@/components/ui/button';
+import { useAllStrategies } from '@/hooks/api/strategy/useAllStrategies';
 
 const StrategiesClient = () => {
+	const { data, isLoading } = useAllStrategies();
+
 	const handleSearch = (keyword: string) => {
 		console.log(keyword);
 	};
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
+
+	if (!data) {
+		return <div>No data</div>;
+	}
 
 	return (
 		<div className="flex flex-col gap-8 h-full overflow-y-auto relative px-10">
@@ -28,48 +39,19 @@ const StrategiesClient = () => {
 					</Link>
 				</div>
 				<CardGridLayout>
-					<StrategyCard
-						title="월마트는 무조건 이 전략이다."
-						stock={'월마트(WMT)'}
-						imageUrl={'/icons/WMT.png'}
-						status={'running'}
-					/>
-					<StrategyCard
-						title="월마트는 무조건 이 전략이다."
-						stock={'월마트(WMT)'}
-						imageUrl={'/icons/WMT.png'}
-						status={'running'}
-					/>
-					<StrategyCard
-						title="월마트는 무조건 이 전략이다."
-						stock={'월마트(WMT)'}
-						imageUrl={'/icons/WMT.png'}
-						status={'running'}
-					/>
-					<StrategyCard
-						title="월마트는 무조건 이 전략이다."
-						stock={'월마트(WMT)'}
-						imageUrl={'/icons/WMT.png'}
-						status={'running'}
-					/>
-					<StrategyCard
-						title="월마트는 무조건 이 전략이다."
-						stock={'월마트(WMT)'}
-						imageUrl={'/icons/WMT.png'}
-						status={'running'}
-					/>
-					<StrategyCard
-						title="월마트는 무조건 이 전략이다."
-						stock={'월마트(WMT)'}
-						imageUrl={'/icons/WMT.png'}
-						status={'running'}
-					/>
-					<StrategyCard
-						title="월마트는 무조건 이 전략이다."
-						stock={'월마트(WMT)'}
-						imageUrl={'/icons/WMT.png'}
-						status={'pending'}
-					/>
+					{data.data.items.map((strategy) => (
+						<StrategyCard
+							key={strategy.id}
+							title={strategy.strategyName}
+							stock={strategy.stockInfo.stockName}
+							imageUrl={`https://images.tossinvest.com/https%3A%2F%2Fstatic.toss.im%2Fpng-icons%2Fsecurities%2Ficn-sec-fill-${strategy.stockInfo.stockCode}.png?width=64&height=64`}
+							status={strategy.activatedStatus}
+							profitAmount={strategy.profitAmount}
+							profitRate={strategy.profitRate}
+							avgPrice={strategy.avgPrice}
+							currentPrice={strategy.currentPrice}
+						/>
+					))}
 				</CardGridLayout>
 			</div>
 		</div>

@@ -22,7 +22,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useLogin } from '@/hooks/useLogin';
+import { useLogin } from '@/hooks/api/auth/useLogin';
 
 const loginSchema = z.object({
 	memberId: z.string().min(1, 'Member Id is required.'),

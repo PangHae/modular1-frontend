@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import Image from 'next/image';
 
 import {
@@ -7,23 +9,43 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
-import { FC } from 'react';
+import { cn } from '@/lib/utils';
+
 import StrategyStatusChip from '../StrategyStatusChip';
 
 interface Props {
 	title: string;
 	stock: string;
-	status: 'running' | 'pending';
+	status: 'ACTIVATED' | 'PENDING';
 	imageUrl: string;
+	profitAmount: number;
+	profitRate: number;
+	avgPrice: number;
+	currentPrice: number;
 }
 
-const StrategyCard: FC<Props> = ({ title, stock, imageUrl, status }) => {
+const StrategyCard: FC<Props> = ({
+	title,
+	stock,
+	imageUrl,
+	status,
+	profitAmount,
+	profitRate,
+	avgPrice,
+	currentPrice,
+}) => {
 	return (
 		<Card className="w-[415px] h-[250px] flex flex-col justify-between">
 			<CardHeader>
 				<CardDescription className="flex justify-between text-sub2 text-custom-sub-text">
 					<div className="flex items-center gap-1">
-						<Image src={imageUrl} alt="주식아이콘" width={22} height={22} />
+						<Image
+							className="rounded-full"
+							src={imageUrl}
+							alt="주식아이콘"
+							width={22}
+							height={22}
+						/>
 						{stock}
 					</div>
 					<StrategyStatusChip status={status} />
@@ -33,16 +55,21 @@ const StrategyCard: FC<Props> = ({ title, stock, imageUrl, status }) => {
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<p className="text-end text-heading3 font-semibold text-red-500">
-					+432,000(+14.7%)
+				<p
+					className={cn(
+						'text-end text-heading3! font-semibold',
+						profitAmount > 0 ? 'text-red-500' : 'text-blue-500'
+					)}
+				>
+					{`${profitAmount.toLocaleString()}원(${profitRate.toLocaleString()}%)`}
 				</p>
 				<div className="flex justify-between w-full text-caption">
 					<p className="text-custom-sub-text">현재 가격</p>
-					<p>1,000,000원</p>
+					<p>{`${currentPrice.toLocaleString()}원`}</p>
 				</div>
 				<div className="flex justify-between w-full text-caption">
 					<p className="text-custom-sub-text">내 평균 매수 가격</p>
-					<p>289,000원</p>
+					<p>{`${avgPrice.toLocaleString()}원`}</p>
 				</div>
 			</CardContent>
 		</Card>
