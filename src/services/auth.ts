@@ -13,12 +13,12 @@ export const login = async (memberData: LoginFormValues) => {
 				'Content-Type': 'application/json',
 			},
 		});
-		console.log(response);
-		if (!response.ok) {
-			throw new Error(response.statusText);
-		}
 
 		const res: Response<null> = await response.json();
+
+		if (!response.ok) {
+			throw res;
+		}
 
 		return res;
 	} catch (error) {
@@ -37,11 +37,11 @@ export const signUp = async (memberData: RegisterFormValues) => {
 			},
 		});
 
-		if (!response.ok) {
-			throw new Error(response.statusText);
-		}
-
 		const res: Response<null> = await response.json();
+
+		if (!response.ok) {
+			throw res;
+		}
 
 		return res;
 	} catch (error) {

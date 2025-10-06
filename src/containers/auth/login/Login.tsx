@@ -35,12 +35,12 @@ const Login = () => {
 	const router = useRouter();
 
 	const { mutate } = useLogin({
-		onSuccess: () => {
-			toast.success('로그인에 성공하였습니다.');
+		onSuccess: (data) => {
+			toast.success(data.message);
 			router.replace('/dashboard');
 		},
 		onError: (error) => {
-			console.error(error);
+			toast.error(error.message);
 		},
 	});
 	const [showPassword, setShowPassword] = useState(false);

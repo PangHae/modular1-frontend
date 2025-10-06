@@ -41,12 +41,12 @@ export type RegisterFormValues = z.infer<typeof registerSchema>;
 export default function Register() {
 	const router = useRouter();
 	const { mutate } = useSignUp({
-		onSuccess: () => {
-			toast.success('회원가입이 완료되었습니다.');
+		onSuccess: (data) => {
+			toast.success(data.message);
 			router.replace('/auth/login');
 		},
-		onError: (error: any) => {
-			console.error(error);
+		onError: (error) => {
+			toast.error(error.message);
 		},
 	});
 	const [showPassword, setShowPassword] = useState(false);
