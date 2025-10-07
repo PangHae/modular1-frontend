@@ -42,6 +42,7 @@ const StrategiesClient = () => {
 					{data.data.items.map((strategy) => (
 						<StrategyCard
 							key={strategy.id}
+							id={strategy.id}
 							title={strategy.strategyName}
 							stock={strategy.stockInfo.stockName}
 							imageUrl={`https://images.tossinvest.com/https%3A%2F%2Fstatic.toss.im%2Fpng-icons%2Fsecurities%2Ficn-sec-fill-${strategy.stockInfo.stockCode}.png?width=64&height=64`}

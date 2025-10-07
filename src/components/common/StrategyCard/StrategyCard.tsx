@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import {
 	Card,
@@ -14,6 +15,7 @@ import { cn } from '@/lib/utils';
 import StrategyStatusChip from '../StrategyStatusChip';
 
 interface Props {
+	id: number;
 	title: string;
 	stock: string;
 	status: 'ACTIVATED' | 'PENDING';
@@ -25,6 +27,7 @@ interface Props {
 }
 
 const StrategyCard: FC<Props> = ({
+	id,
 	title,
 	stock,
 	imageUrl,
@@ -34,8 +37,12 @@ const StrategyCard: FC<Props> = ({
 	avgPrice,
 	currentPrice,
 }) => {
+	const router = useRouter();
 	return (
-		<Card className="w-[415px] h-[250px] flex flex-col justify-between">
+		<Card
+			className="w-[415px] h-[250px] flex flex-col justify-between cursor-pointer"
+			onClick={() => router.push(`/strategies/${id}`)}
+		>
 			<CardHeader>
 				<CardDescription className="flex justify-between text-sub2 text-custom-sub-text">
 					<div className="flex items-center gap-1">
