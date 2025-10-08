@@ -17,6 +17,7 @@ import { useExecutionById } from '@/hooks/api/execution/useExecutionById';
 import { useStrategyDetail } from '@/hooks/api/strategy/useStrategyDetail';
 import { cn } from '@/lib/utils';
 
+import ProfitRateCard from './_view/ProfitRateCard';
 import RecentExecution from './_view/RecentExecution';
 
 interface Props {
@@ -28,6 +29,8 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 		useStrategyDetail(strategyId);
 	const { data: executions, isLoading: isExecutionsLoading } =
 		useExecutionById(strategyId);
+
+	console.log(strategyDetail);
 
 	if (isStrategyDetailLoading || isExecutionsLoading) {
 		return (
@@ -177,40 +180,7 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 				{/* 우측 컬럼 */}
 				<div className="h-full flex flex-col gap-4">
 					{/* 수익률 그래프 */}
-					<Card className="flex-1">
-						<CardHeader>
-							<div className="flex items-center justify-between">
-								<CardTitle>수익률 그래프</CardTitle>
-								<div className="flex gap-2">
-									<Button
-										variant="outline"
-										size="sm"
-										className="bg-blue-50 text-blue-700 border-blue-200"
-									>
-										1M
-									</Button>
-									<Button variant="outline" size="sm">
-										3M
-									</Button>
-									<Button variant="outline" size="sm">
-										6M
-									</Button>
-									<Button variant="outline" size="sm">
-										1Y
-									</Button>
-									<Button variant="outline" size="sm">
-										All
-									</Button>
-								</div>
-							</div>
-						</CardHeader>
-						<CardContent className="h-full">
-							<div className="h-full bg-gray-50 rounded-lg flex items-center justify-center">
-								<div className="text-gray-500">수익률 그래프</div>
-							</div>
-						</CardContent>
-					</Card>
-
+					<ProfitRateCard profitRateSeries={strategyDetail.profitSeries} />
 					{/* 최근 체결 내역 */}
 					<RecentExecution executions={executions?.tradeExecutions || []} />
 				</div>

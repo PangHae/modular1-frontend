@@ -62,3 +62,5 @@ export interface ProfitData {
 	date: string;
 	profit: number;
 }
+
+export type ProfitDataKey = keyof ProfitDataSeries;

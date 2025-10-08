@@ -1,14 +1,8 @@
 'use client';
 
-import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
-
+import ProfitRateLineChart from '@/components/charts/ProfitRateLineChart';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-	ChartConfig,
-	ChartContainer,
-	ChartTooltip,
-	ChartTooltipContent,
-} from '@/components/ui/chart';
+import { ChartConfig } from '@/components/ui/chart';
 import { chartLineData } from '@/mock/chartData';
 
 const chartConfig = {
@@ -39,38 +33,12 @@ const PortfolioProfitChartCard = () => {
 			<CardHeader>
 				<CardTitle>포트폴리오 수익률</CardTitle>
 			</CardHeader>
-			<CardContent className="max-h-[calc(100%-40px)]">
-				<ChartContainer config={chartConfig} className="w-full h-full">
-					<LineChart
-						accessibilityLayer
-						data={chartLineData}
-						margin={{
-							left: 12,
-							right: 12,
-						}}
-					>
-						<CartesianGrid vertical={false} />
-						<XAxis
-							dataKey="date"
-							tickLine={false}
-							axisLine={false}
-							tickMargin={8}
-							minTickGap={32}
-							tickFormatter={(value) => {
-								const date = new Date(value);
-								return date.toLocaleDateString('ko-KR', {
-									month: 'short',
-									day: 'numeric',
-								});
-							}}
-						/>
-						<ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-						{/* <Line dataKey="kospi" stroke="var(--chart-1)" dot={false} /> */}
-						{/* <Line dataKey="nasdaq" stroke="var(--chart-2)" dot={false} /> */}
-						{/* <Line dataKey="sp500" stroke="var(--chart-3)" dot={false} /> */}
-						<Line dataKey="mydata" stroke="var(--chart-4)" dot={false} />
-					</LineChart>
-				</ChartContainer>
+			<CardContent className="max-h-[calc(100%-40px)] pl-0">
+				<ProfitRateLineChart
+					chartConfig={chartConfig}
+					chartLineData={chartLineData}
+					dataKey="mydata"
+				/>
 			</CardContent>
 		</Card>
 	);
