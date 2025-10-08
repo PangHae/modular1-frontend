@@ -243,10 +243,10 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 										type="button"
 										onClick={() => setStrategyType('buy')}
 										className={cn(
-											'flex items-center gap-3 px-6 py-3 rounded-lg border-2 transition-all duration-200',
+											'flex items-center gap-3 px-6 py-3 rounded-lg border-2 transition-all duration-200 cursor-pointer',
 											strategyType === 'buy'
-												? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-200'
-												: 'border-gray-300 bg-white hover:border-blue-300 hover:bg-blue-25'
+												? 'border-red-500 bg-red-50 shadow-lg shadow-red-200'
+												: 'border-gray-300 bg-white hover:border-red-300 hover:bg-red-25'
 										)}
 									>
 										<input
@@ -262,7 +262,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 												className={cn(
 													'w-5 h-5 transition-colors duration-200',
 													strategyType === 'buy'
-														? 'text-blue-600'
+														? 'text-red-600'
 														: 'text-gray-500'
 												)}
 											/>
@@ -270,7 +270,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 												className={cn(
 													'text-sm font-medium transition-colors duration-200',
 													strategyType === 'buy'
-														? 'text-blue-700'
+														? 'text-red-700'
 														: 'text-gray-600'
 												)}
 											>
@@ -282,10 +282,10 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 										type="button"
 										onClick={() => setStrategyType('sell')}
 										className={cn(
-											'flex items-center gap-3 px-6 py-3 rounded-lg border-2 transition-all duration-200',
+											'flex items-center gap-3 px-6 py-3 rounded-lg border-2 transition-all duration-200 cursor-pointer',
 											strategyType === 'sell'
-												? 'border-red-500 bg-red-50 shadow-lg shadow-red-200'
-												: 'border-gray-300 bg-white hover:border-red-300 hover:bg-red-25'
+												? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-200'
+												: 'border-gray-300 bg-white hover:border-blue-300 hover:bg-blue-25'
 										)}
 									>
 										<input
@@ -301,7 +301,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 												className={cn(
 													'w-5 h-5 transition-colors duration-200',
 													strategyType === 'sell'
-														? 'text-red-600'
+														? 'text-blue-600'
 														: 'text-gray-500'
 												)}
 											/>
@@ -309,7 +309,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 												className={cn(
 													'text-sm font-medium transition-colors duration-200',
 													strategyType === 'sell'
-														? 'text-red-700'
+														? 'text-blue-700'
 														: 'text-gray-600'
 												)}
 											>
