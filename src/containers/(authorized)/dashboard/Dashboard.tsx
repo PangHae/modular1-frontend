@@ -4,7 +4,6 @@ import TradeExecutionItem from '@/components/common/TradeExecutionItem';
 import ContentWrapper from '@/components/layouts/ContentWrapper';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-import HeatmapChart from './_view/HeatmapChart';
 import PortfolioChart from './_view/PortfolioChart';
 import PortfolioProfitChartCard from './_view/PortfolioProfitChartCard';
 
@@ -14,10 +13,7 @@ const Dashboard = () => {
 			<div className="flex flex-col gap-4 h-[calc(100%-80px)] min-h-[calc(100vh-80px)]">
 				<div className="flex gap-4 flex-[4] min-h-[400px]">
 					<PortfolioProfitChartCard />
-					<div className="flex flex-col gap-4 flex-1 min-w-0">
-						<PortfolioChart />
-						<HeatmapChart />
-					</div>
+					<PortfolioChart />
 				</div>
 				<div className="flex gap-4 flex-[3] min-h-[300px]">
 					<Card className="flex-1 flex flex-col overflow-hidden">
