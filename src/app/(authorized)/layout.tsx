@@ -8,7 +8,7 @@ export default function AuthorizedLayout({
 	return (
 		<>
 			<SideNav />
-			<div className="pl-[70px] w-full h-full">{children}</div>;
+			<div className="pl-[70px] w-full h-full">{children}</div>
 		</>
 	);
 }

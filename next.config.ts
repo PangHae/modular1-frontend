@@ -13,8 +13,17 @@ const nextConfig: NextConfig = {
 	rewrites: async () => {
 		return [
 			{
-				source: '/api/v1/:path*',
-				destination: `${process.env.API_SERVICE_URL}/api/v1/:path*`,
+				source: '/api/v1/auth/:path*',
+				destination: `${process.env.AUTH_SERVICE_URL}/api/v1/auth/:path*`,
+			},
+
+			{
+				source: '/api/v1/strategies/:path*',
+				destination: `${process.env.STRATEGIES_SERVICE_URL}/api/v1/strategies/:path*`,
+			},
+			{
+				source: '/api/v1/trade/:path*',
+				destination: `${process.env.TRADING_SERVICE_URL}/api/v1/trade/:path*`,
 			},
 		];
 	},
