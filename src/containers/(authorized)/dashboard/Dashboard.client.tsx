@@ -1,4 +1,3 @@
-import InvestmentRankingItem from '@/components/common/InvestmentRankingItem';
 import StockProfitRateItem from '@/components/common/StockProfitRateItem';
 import TradeExecutionItem from '@/components/common/TradeExecutionItem';
 import ContentWrapper from '@/components/layouts/ContentWrapper';
@@ -6,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import PortfolioChart from './_view/PortfolioChart';
 import PortfolioProfitChartCard from './_view/PortfolioProfitChartCard';
+import TopProfitRate from './_view/TopProfitRate';
 
 const DashboardClient = () => {
 	return (
@@ -16,53 +16,7 @@ const DashboardClient = () => {
 					<PortfolioChart />
 				</div>
 				<div className="flex gap-4 flex-[3] min-h-[300px]">
-					<Card className="flex-1 flex flex-col overflow-hidden">
-						<CardHeader>
-							<CardTitle>수익률 Top10</CardTitle>
-						</CardHeader>
-						<CardContent className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
-							<InvestmentRankingItem
-								imageUrl="/icons/WMT.png"
-								stock="WMT"
-								profit={100000}
-								count={100}
-								amount={100000}
-								profitRate={10}
-							/>
-							<InvestmentRankingItem
-								imageUrl="/icons/WMT.png"
-								stock="WMT"
-								profit={100000}
-								count={100}
-								amount={100000}
-								profitRate={10}
-							/>
-							<InvestmentRankingItem
-								imageUrl="/icons/WMT.png"
-								stock="WMT"
-								profit={100000}
-								count={100}
-								amount={100000}
-								profitRate={10}
-							/>
-							<InvestmentRankingItem
-								imageUrl="/icons/WMT.png"
-								stock="WMT"
-								profit={100000}
-								count={100}
-								amount={100000}
-								profitRate={10}
-							/>
-							<InvestmentRankingItem
-								imageUrl="/icons/WMT.png"
-								stock="WMT"
-								profit={100000}
-								count={100}
-								amount={100000}
-								profitRate={10}
-							/>
-						</CardContent>
-					</Card>
+					<TopProfitRate />
 					<Card className="flex-1 flex flex-col overflow-hidden">
 						<CardHeader>
 							<CardTitle>종목별 수익률</CardTitle>
