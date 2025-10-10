@@ -102,11 +102,14 @@ export const getAccountStocks = async () => {
 
 export const getAccountStockProfitRateByStockId = async (stockId: string) => {
 	try {
-		const response = await fetch(`${ACCOUNTS_API_URL}/${stockId}/profit-rate`, {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
+		const response = await fetch(
+			`${ACCOUNTS_API_URL}/stocks/${stockId}/profit-rate`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 
 		if (!response.ok) {
 			throw response;
