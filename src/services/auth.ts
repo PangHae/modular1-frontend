@@ -14,16 +14,17 @@ export const login = async (memberData: LoginFormValues) => {
 			},
 		});
 
-		const res: Response<null> = await response.json();
-
 		if (!response.ok) {
-			throw res;
+			throw response;
 		}
+
+		const res: Response<null> = await response.json();
 
 		return res;
 	} catch (error) {
-		console.error(error);
-		throw error;
+		const errorRes = await (error as globalThis.Response).json();
+		console.log(errorRes);
+		throw errorRes;
 	}
 };
 
@@ -37,15 +38,16 @@ export const signUp = async (memberData: RegisterFormValues) => {
 			},
 		});
 
-		const res: Response<null> = await response.json();
-
 		if (!response.ok) {
-			throw res;
+			throw response;
 		}
+
+		const res: Response<null> = await response.json();
 
 		return res;
 	} catch (error) {
-		console.error(error);
+		const errorRes = await (error as globalThis.Response).json();
+		console.log(errorRes);
 		throw error;
 	}
 };

@@ -11,16 +11,17 @@ export const getStrategies = async () => {
 			},
 		});
 
-		const res: Response<{ items: StrategySummary[] }> = await response.json();
-
 		if (!response.ok) {
-			throw res;
+			throw response;
 		}
+
+		const res: Response<{ items: StrategySummary[] }> = await response.json();
 
 		return res;
 	} catch (error) {
-		console.error(error);
-		throw error;
+		const errorRes = await (error as globalThis.Response).json();
+		console.log(errorRes);
+		throw errorRes;
 	}
 };
 
@@ -32,15 +33,16 @@ export const getStrategyDetailById = async (strategyId: number) => {
 			},
 		});
 
-		const res: Response<StrategyDetail> = await response.json();
-
 		if (!response.ok) {
-			throw res;
+			throw response;
 		}
+
+		const res: Response<StrategyDetail> = await response.json();
 
 		return res.data;
 	} catch (error) {
-		console.error(error);
+		const errorRes = await (error as globalThis.Response).json();
+		console.log(errorRes);
 		throw error;
 	}
 };

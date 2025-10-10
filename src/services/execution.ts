@@ -14,15 +14,16 @@ export const getExecutionById = async (executionId: number) => {
 			}
 		);
 
-		const res: Response<ExecutionList> = await response.json();
-
 		if (!response.ok) {
-			throw res;
+			throw response;
 		}
+
+		const res: Response<ExecutionList> = await response.json();
 
 		return res.data;
 	} catch (error) {
-		console.error(error);
+		const errorRes = await (error as globalThis.Response).json();
+		console.log(errorRes);
 		throw error;
 	}
 };

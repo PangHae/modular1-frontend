@@ -25,6 +25,10 @@ const nextConfig: NextConfig = {
 				source: '/api/v1/trade/:path*',
 				destination: `${process.env.TRADING_SERVICE_URL}/api/v1/trade/:path*`,
 			},
+			{
+				source: '/api/v1/accounts/:path*',
+				destination: `${process.env.STRATEGIES_SERVICE_URL}/api/v1/accounts/:path*`,
+			},
 		];
 	},
 };
