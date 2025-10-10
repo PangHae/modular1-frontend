@@ -99,6 +99,7 @@ const PortfolioProfitChartCard = () => {
 			</CardHeader>
 			<CardContent className="max-h-[calc(100%-72px)] pl-0">
 				<ProfitRateLineChart
+					id="portfolio-profit-rate-chart"
 					chartConfig={chartConfig}
 					chartLineData={data.data.profitSeries[selectedPeriod]}
 					dataKey="cumulativeProfitRate"

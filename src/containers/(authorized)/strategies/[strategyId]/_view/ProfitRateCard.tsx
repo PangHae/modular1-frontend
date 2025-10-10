@@ -90,6 +90,7 @@ const ProfitRateCard: FC<Props> = ({ profitRateSeries }) => {
 			</CardHeader>
 			<CardContent className="h-full pl-0">
 				<ProfitRateLineChart
+					id="strategy-profit-rate-chart"
 					chartConfig={chartConfig}
 					chartLineData={profitRateSeries[selectedPeriod]}
 					dataKey="cumulativeProfitRate"

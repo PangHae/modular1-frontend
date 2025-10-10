@@ -9,7 +9,7 @@ import SidePalette from '@/components/common/SidePalette/SidePalette';
 
 const CreateStrategyClient = () => {
 	return (
-		<div className="flex flex-1 gap-4 p-4">
+		<div className="flex flex-1 gap-4">
 			<SidePalette />
 			<div className="flex gap-4 flex-1 bg-white rounded-[8px] border border-custom-gray-border/40 p-4">
 				<Sell>

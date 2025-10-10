@@ -19,15 +19,17 @@ interface Props {
 	chartConfig: ChartConfig;
 	chartLineData: any[];
 	dataKey: string;
+	id?: string;
 }
 
 const ProfitRateLineChart: FC<Props> = ({
 	chartConfig,
 	chartLineData,
 	dataKey,
+	id,
 }) => {
 	return (
-		<ChartContainer config={chartConfig} className="w-full h-full">
+		<ChartContainer id={id} config={chartConfig} className="w-full h-full">
 			<LineChart
 				accessibilityLayer
 				data={chartLineData}
