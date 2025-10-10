@@ -40,7 +40,7 @@ const StrategyCard: FC<Props> = ({
 	const router = useRouter();
 	return (
 		<Card
-			className="w-[415px] h-[250px] flex flex-col justify-between cursor-pointer"
+			className="lg:w-[350px] lg:h-[210px] xl:w-[415px] xl:h-[250px] 2xl:w-[510px] 2xl:h-[315px] flex flex-col justify-between cursor-pointer"
 			onClick={() => router.push(`/strategies/${id}`)}
 		>
 			<CardHeader>
