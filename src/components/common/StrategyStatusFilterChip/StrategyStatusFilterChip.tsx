@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 
 interface Props {
 	selected: boolean;
-	type: 'all' | 'running' | 'pending';
+	type: 'all' | 'ACTIVATED' | 'PENDING';
 	onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -23,8 +23,8 @@ const SELECTED_STATUS_MAP = {
 
 const STATUS_TEXT_MAP = {
 	all: '전체',
-	running: '실행 중',
-	pending: '대기 중',
+	ACTIVATED: '실행 중',
+	PENDING: '대기 중',
 };
 
 const StrategyStatusFilterChip: FC<Props> = ({ selected, type, onChange }) => {

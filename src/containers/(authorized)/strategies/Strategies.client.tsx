@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import Link from 'next/link';
 
 import SearchInput from '@/components/common/SearchInput';
@@ -12,8 +14,18 @@ import { useAllStrategies } from '@/hooks/api/strategy/useAllStrategies';
 const StrategiesClient = () => {
 	const { data, isLoading } = useAllStrategies();
 
+	const [filterStatus, setFilterStatus] = useState<
+		'all' | 'ACTIVATED' | 'PENDING'
+	>('all');
+
 	const handleSearch = (keyword: string) => {
 		console.log(keyword);
+	};
+
+	const handleChangeFilterStatus = (
+		status: 'all' | 'ACTIVATED' | 'PENDING'
+	) => {
+		setFilterStatus(status);
 	};
 
 	if (isLoading) {
@@ -31,7 +43,10 @@ const StrategiesClient = () => {
 			</div>
 			<div className="flex flex-col flex-1 min-h-0 w-full mx-auto gap-4">
 				<div className="flex justify-between px-1">
-					<StrategyStatusFilterMenu />
+					<StrategyStatusFilterMenu
+						value={filterStatus}
+						onChange={handleChangeFilterStatus}
+					/>
 					<Link href="/strategies/create">
 						<Button className="bg-shinhan-blue w-[100px] h-[40px] cursor-pointer hover:bg-shinhan-blue/80">
 							+ 전략 생성
@@ -39,20 +54,27 @@ const StrategiesClient = () => {
 					</Link>
 				</div>
 				<CardGridLayout>
-					{data.data.items.map((strategy) => (
-						<StrategyCard
-							key={strategy.id}
-							id={strategy.id}
-							title={strategy.strategyName}
-							stock={strategy.stockInfo.stockName}
-							imageUrl={`https://images.tossinvest.com/https%3A%2F%2Fstatic.toss.im%2Fpng-icons%2Fsecurities%2Ficn-sec-fill-${strategy.stockInfo.stockCode}.png?width=64&height=64`}
-							status={strategy.activatedStatus}
-							profitAmount={strategy.profitAmount}
-							profitRate={strategy.profitRate}
-							avgPrice={strategy.avgPrice}
-							currentPrice={strategy.currentPrice}
-						/>
-					))}
+					{data.data.items
+						.filter((strategy) => {
+							if (filterStatus === 'all') {
+								return true;
+							}
+							return strategy.activatedStatus === filterStatus;
+						})
+						.map((strategy) => (
+							<StrategyCard
+								key={strategy.id}
+								id={strategy.id}
+								title={strategy.strategyName}
+								stock={strategy.stockInfo.stockName}
+								imageUrl={`https://images.tossinvest.com/https%3A%2F%2Fstatic.toss.im%2Fpng-icons%2Fsecurities%2Ficn-sec-fill-${strategy.stockInfo.stockCode}.png?width=64&height=64`}
+								status={strategy.activatedStatus}
+								profitAmount={strategy.profitAmount}
+								profitRate={strategy.profitRate}
+								avgPrice={strategy.avgPrice}
+								currentPrice={strategy.currentPrice}
+							/>
+						))}
 				</CardGridLayout>
 			</div>
 		</div>

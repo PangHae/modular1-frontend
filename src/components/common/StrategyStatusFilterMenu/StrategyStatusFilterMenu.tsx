@@ -1,37 +1,36 @@
 'use client';
 
-import { useState } from 'react';
+import { FC } from 'react';
 
 import StrategyStatusFilterChip from '../StrategyStatusFilterChip';
 
-const StrategyStatusFilterRadioGroup = () => {
-	const [value, setValue] = useState('all');
+interface Props {
+	value: 'all' | 'ACTIVATED' | 'PENDING';
+	onChange: (status: 'all' | 'ACTIVATED' | 'PENDING') => void;
+}
 
-	const handleChangeValue = (value: string) => {
-		setValue(value);
-	};
-
+const StrategyStatusFilterRadioGroup: FC<Props> = ({ value, onChange }) => {
 	return (
 		<menu className="flex gap-2">
 			<li>
 				<StrategyStatusFilterChip
 					selected={value === 'all'}
 					type="all"
-					onChange={() => handleChangeValue('all')}
+					onChange={() => onChange('all')}
 				/>
 			</li>
 			<li>
 				<StrategyStatusFilterChip
-					selected={value === 'running'}
-					type="running"
-					onChange={() => handleChangeValue('running')}
+					selected={value === 'ACTIVATED'}
+					type="ACTIVATED"
+					onChange={() => onChange('ACTIVATED')}
 				/>
 			</li>
 			<li>
 				<StrategyStatusFilterChip
-					selected={value === 'pending'}
-					type="pending"
-					onChange={() => handleChangeValue('pending')}
+					selected={value === 'PENDING'}
+					type="PENDING"
+					onChange={() => onChange('PENDING')}
 				/>
 			</li>
 		</menu>
