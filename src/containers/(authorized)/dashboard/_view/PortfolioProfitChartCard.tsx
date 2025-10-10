@@ -2,37 +2,31 @@
 
 import { useState } from 'react';
 
+import { ProfitDataKey } from '@/@types/strategy';
 import ProfitRateLineChart from '@/components/charts/ProfitRateLineChart';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartConfig } from '@/components/ui/chart';
-import { chartLineData } from '@/mock/chartData';
+import { useAccountProfitRateSeries } from '@/hooks/api/accounts/useAccountProfitRateSeries';
 
 const chartConfig = {
-	point: {
-		label: 'Points',
-	},
-	kospi: {
-		label: 'KOSPI',
+	cumulativeProfitRate: {
+		label: '1M',
 		color: 'var(--chart-1)',
-	},
-	nasdaq: {
-		label: 'NASDAQ',
-		color: 'var(--chart-2)',
-	},
-	sp500: {
-		label: 'S&P500',
-		color: 'var(--chart-2)',
-	},
-	mydata: {
-		label: 'My Data',
-		color: 'var(--chart-4)',
 	},
 } satisfies ChartConfig;
 
 const PortfolioProfitChartCard = () => {
-	const [selectedPeriod, setSelectedPeriod] = useState<
-		'oneMonth' | 'threeMonth' | 'sixMonth' | 'oneYear' | 'all'
-	>('oneMonth');
+	const { data, isLoading } = useAccountProfitRateSeries();
+	const [selectedPeriod, setSelectedPeriod] =
+		useState<ProfitDataKey>('oneMonth');
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
+
+	if (!data) {
+		return <div>No data</div>;
+	}
 
 	return (
 		<Card className="flex-1 min-h-0">
@@ -106,8 +100,8 @@ const PortfolioProfitChartCard = () => {
 			<CardContent className="max-h-[calc(100%-72px)] pl-0">
 				<ProfitRateLineChart
 					chartConfig={chartConfig}
-					chartLineData={chartLineData}
-					dataKey="mydata"
+					chartLineData={data.data.profitSeries[selectedPeriod]}
+					dataKey="cumulativeProfitRate"
 				/>
 			</CardContent>
 		</Card>
