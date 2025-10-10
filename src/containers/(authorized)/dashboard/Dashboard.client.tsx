@@ -1,10 +1,9 @@
-import StockProfitRateItem from '@/components/common/StockProfitRateItem';
-import TradeExecutionItem from '@/components/common/TradeExecutionItem';
 import ContentWrapper from '@/components/layouts/ContentWrapper';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import PortfolioChart from './_view/PortfolioChart';
 import PortfolioProfitChartCard from './_view/PortfolioProfitChartCard';
+import ProfitRatePerStock from './_view/ProfitRatePerStock';
+import RecentExecutions from './_view/RecentExecutions';
 import TopProfitRate from './_view/TopProfitRate';
 
 const DashboardClient = () => {
@@ -17,72 +16,8 @@ const DashboardClient = () => {
 				</div>
 				<div className="flex gap-4 flex-[3] min-h-[300px]">
 					<TopProfitRate />
-					<Card className="flex-1 flex flex-col overflow-hidden">
-						<CardHeader>
-							<CardTitle>종목별 수익률</CardTitle>
-						</CardHeader>
-						<CardContent className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
-							<StockProfitRateItem
-								stockName="LG에너지솔루션"
-								stockCode="373220"
-								amount={30}
-								profitRate={8.7}
-							/>
-							<StockProfitRateItem
-								stockName="LG에너지솔루션"
-								stockCode="373220"
-								amount={14530}
-								profitRate={8.7}
-							/>
-							<StockProfitRateItem
-								stockName="LG에너지솔루션"
-								stockCode="373220"
-								amount={30}
-								profitRate={8.7}
-							/>
-							<StockProfitRateItem
-								stockName="LG에너지솔루션"
-								stockCode="373220"
-								amount={30}
-								profitRate={8.7}
-							/>
-						</CardContent>
-					</Card>
-					<Card className="flex-1 flex flex-col overflow-hidden">
-						<CardHeader>
-							<CardTitle>최근 체결 내역</CardTitle>
-						</CardHeader>
-						<CardContent className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
-							<TradeExecutionItem
-								type="buy"
-								stockName="삼성전자"
-								strategyName="골든크로스"
-								dateTime="2025.09.23 09:30"
-								amount={720000}
-							/>
-							<TradeExecutionItem
-								type="sell"
-								stockName="SK 하이닉스"
-								strategyName="어쩌구저쩌구전략"
-								dateTime="2025.09.23 09:30"
-								amount={456000}
-							/>
-							<TradeExecutionItem
-								type="buy"
-								stockName="삼성전자"
-								strategyName="골든크로스"
-								dateTime="2025.09.23 09:30"
-								amount={720000}
-							/>
-							<TradeExecutionItem
-								type="sell"
-								stockName="SK 하이닉스"
-								strategyName="어쩌구저쩌구전략"
-								dateTime="2025.09.23 09:30"
-								amount={456000}
-							/>
-						</CardContent>
-					</Card>
+					<ProfitRatePerStock />
+					<RecentExecutions />
 				</div>
 			</div>
 		</ContentWrapper>

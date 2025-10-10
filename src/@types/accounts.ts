@@ -1,8 +1,13 @@
+import { Pageable } from './service';
 import { StockProfitRate } from './stock';
 
 export interface Accounts<T> {
 	accountId: string;
 	items: T[];
+}
+
+export interface PageableAccounts<T> extends Accounts<T> {
+	pageInfo: Pageable;
 }
 
 export interface StockRankingItem {
@@ -34,7 +39,7 @@ export interface AccountStocks<T> extends Accounts<T> {
 	totalMarketValue: number;
 }
 
-export interface AccountStockProfitRatePerStock {
+export interface AccountStockProfitRate {
 	accountId: string;
 	asOf: string;
 	stockData: StockProfitRate[];

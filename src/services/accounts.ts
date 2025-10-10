@@ -1,7 +1,8 @@
 import {
 	Accounts,
-	AccountStockProfitRatePerStock,
+	AccountStockProfitRate,
 	AccountStocks,
+	PageableAccounts,
 	StockRankingItem,
 	Transactions,
 } from '@/@types/accounts';
@@ -56,19 +57,22 @@ export const getAccountProfitRateRanking = async () => {
 	}
 };
 
-export const getAccountTransactions = async () => {
+export const getAccountTransactions = async (page: number, size: number) => {
 	try {
-		const response = await fetch(`${ACCOUNTS_API_URL}/transactions`, {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
+		const response = await fetch(
+			`${ACCOUNTS_API_URL}/transactions?page=${page}&size=${size}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 
 		if (!response.ok) {
 			throw response;
 		}
 
-		const res: Response<Accounts<Transactions>> = await response.json();
+		const res: Response<PageableAccounts<Transactions>> = await response.json();
 
 		return res;
 	} catch (error) {
@@ -78,7 +82,7 @@ export const getAccountTransactions = async () => {
 	}
 };
 
-export const getAccountStocks = async () => {
+export const getAccountHoldingStocks = async () => {
 	try {
 		const response = await fetch(`${ACCOUNTS_API_URL}/stocks`, {
 			headers: {
@@ -100,22 +104,19 @@ export const getAccountStocks = async () => {
 	}
 };
 
-export const getAccountStockProfitRateByStockId = async (stockId: string) => {
+export const getAccountStockProfitRate = async () => {
 	try {
-		const response = await fetch(
-			`${ACCOUNTS_API_URL}/stocks/${stockId}/profit-rate`,
-			{
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
+		const response = await fetch(`${ACCOUNTS_API_URL}/stocks/profit-rate`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 
 		if (!response.ok) {
 			throw response;
 		}
 
-		const res: Response<AccountStockProfitRatePerStock> = await response.json();
+		const res: Response<AccountStockProfitRate> = await response.json();
 
 		return res;
 	} catch (error) {

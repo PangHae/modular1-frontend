@@ -24,7 +24,7 @@ const TradeExecutionItemMain = ({
 interface TradeTypeChipProps {
 	children: React.ReactNode;
 	className?: string;
-	type: 'buy' | 'sell';
+	type: 'BUY' | 'SELL';
 }
 
 const TradeTypeChip = ({ children, className, type }: TradeTypeChipProps) => {
@@ -32,7 +32,7 @@ const TradeTypeChip = ({ children, className, type }: TradeTypeChipProps) => {
 		<div
 			className={cn(
 				'flex items-center justify-center px-2 py-1 rounded-full text-overline! font-semibold w-[50px] h-[22px] my-auto',
-				type === 'buy'
+				type === 'BUY'
 					? 'bg-red-100 text-red-600'
 					: 'bg-blue-100 text-blue-600',
 				className
@@ -87,7 +87,7 @@ const DateTime = ({ children, className }: DateTimeProps) => {
 interface AmountProps {
 	children: React.ReactNode;
 	className?: string;
-	type: 'buy' | 'sell';
+	type: 'BUY' | 'SELL';
 }
 
 const Amount = ({ children, className, type }: AmountProps) => {
@@ -95,7 +95,7 @@ const Amount = ({ children, className, type }: AmountProps) => {
 		<span
 			className={cn(
 				'text-caption! font-semibold',
-				type === 'buy' ? 'text-red-500' : 'text-blue-500',
+				type === 'BUY' ? 'text-red-500' : 'text-blue-500',
 				className
 			)}
 		>

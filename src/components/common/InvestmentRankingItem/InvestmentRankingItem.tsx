@@ -20,7 +20,7 @@ const InvestmentRankingItem = ({
 	profitRate,
 }: Props) => {
 	return (
-		<div className="flex justify-between px-4 py-2">
+		<div className="flex justify-between py-2">
 			<div className="flex items-center gap-4">
 				<Image
 					src={imageUrl}

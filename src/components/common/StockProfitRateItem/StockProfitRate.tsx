@@ -43,7 +43,7 @@ const StockAmountChip = ({ children, className }: StockAmountChipProps) => {
 	return (
 		<div
 			className={cn(
-				'flex items-center justify-center px-1 py-0.5 border border-custom-gray-border rounded-full w-[50px] h-[22px]',
+				'flex items-center justify-center px-1 py-0.5 border border-custom-gray-border rounded-full min-w-[50px] h-[22px]',
 				className
 			)}
 		>
@@ -68,19 +68,23 @@ const StockCode = ({ children, className }: StockCodeProps) => {
 interface StockProfitRateProps {
 	children: React.ReactNode;
 	className?: string;
-	isPositive?: boolean;
+	profitRate: number;
 }
 
 const StockProfitRate = ({
 	children,
 	className,
-	isPositive = true,
+	profitRate,
 }: StockProfitRateProps) => {
 	return (
 		<span
 			className={cn(
 				'text-caption! font-semibold',
-				isPositive ? 'text-red-500' : 'text-blue-500',
+				profitRate > 0
+					? 'text-red-500'
+					: profitRate < 0
+						? 'text-blue-500'
+						: 'text-gray-500',
 				className
 			)}
 		>

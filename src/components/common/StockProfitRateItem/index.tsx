@@ -25,10 +25,10 @@ const StockProfitRateItem = ({
 			</div>
 			<div className="flex flex-col items-end gap-1">
 				<StockProfitRateComponent.AmountChip>
-					{amount}
+					{amount.toLocaleString('ko-KR')}
 				</StockProfitRateComponent.AmountChip>
-				<StockProfitRateComponent.ProfitRate isPositive={true}>
-					+ {profitRate}%
+				<StockProfitRateComponent.ProfitRate profitRate={profitRate}>
+					{profitRate.toLocaleString('ko-KR')}%
 				</StockProfitRateComponent.ProfitRate>
 			</div>
 		</StockProfitRateComponent>

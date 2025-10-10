@@ -1,7 +1,7 @@
 import TradeExecutionComponent from './TradeExecution';
 
 interface Props {
-	type: 'buy' | 'sell';
+	type: 'BUY' | 'SELL';
 	stockName: string;
 	strategyName: string;
 	dateTime: string;
@@ -20,7 +20,7 @@ const TradeExecutionItem = ({
 			<div className="flex justify-between w-full">
 				<div className="flex gap-2 justify-center">
 					<TradeExecutionComponent.TypeChip type={type}>
-						{type === 'buy' ? '매수' : '매도'}
+						{type === 'BUY' ? '매수' : '매도'}
 					</TradeExecutionComponent.TypeChip>
 					<div className="flex flex-col gap-1">
 						<TradeExecutionComponent.StockName>
