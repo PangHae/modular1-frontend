@@ -4,6 +4,8 @@ import { FC } from 'react';
 
 import { Cuboid, Shapes } from 'lucide-react';
 
+import ChangeRate from '@/components/Blocks/default/ChangeRate';
+import Execution from '@/components/Blocks/default/Execution';
 import Price from '@/components/Blocks/default/Price';
 import TradingMetric from '@/components/Blocks/default/TradingMetric';
 import All from '@/components/Blocks/logical/All';
@@ -52,6 +54,8 @@ const StrategyConfigurationClient: FC<Props> = ({ strategyType }) => {
 					<All>
 						<Price ref={ref} />
 						<TradingMetric ref={ref} />
+						<Execution ref={ref} />
+						<ChangeRate ref={ref} />
 					</All>
 					<Any></Any>
 				</Sell>
