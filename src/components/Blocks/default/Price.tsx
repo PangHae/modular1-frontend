@@ -80,6 +80,7 @@ const Price: FC<Props> = ({ ref }) => {
 			};
 		}
 	}, [leftValue, leftTimeframe, rightValueType, rightComparison]);
+
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-custom-gray-border rounded-lg bg-custom-gray-bg">
 			<div className="flex items-center gap-1">

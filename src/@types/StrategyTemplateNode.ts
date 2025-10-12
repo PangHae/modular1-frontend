@@ -35,6 +35,7 @@ export interface HoldNode extends BaseNode {
 }
 
 export type TradeMetricType = 'CUMULATIVE_VOLUME' | 'CUMULATIVE_AMOUNT';
+export type ExecutionType = 'TRADE_VOLUME';
 
 // === 가능한 피연산자 ===
 export type Operand =
@@ -47,13 +48,13 @@ export type Operand =
 // === CONSTANT ===
 export interface ConstantOperand {
 	kind: 'CONSTANT';
-	constant: { value: number };
+	constant: { value: number; unit?: string };
 }
 
 // === PRICE ===
 export interface PriceOperand {
 	kind: 'PRICE';
-	field: 'high' | 'low' | 'close' | TradeMetricType;
+	field: 'high' | 'low' | 'close' | TradeMetricType | ExecutionType;
 	timeframe: string;
 }
 
