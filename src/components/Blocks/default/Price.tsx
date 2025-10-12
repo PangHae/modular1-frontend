@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useImperativeHandle, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 import { ConstantOperand, Node } from '@/@types/StrategyTemplateNode';
 
@@ -71,10 +71,15 @@ const Price: FC<Props> = ({ ref }) => {
 		} as Node;
 	};
 
-	useImperativeHandle(ref, () => ({
-		price: createJson,
-	}));
-
+	useEffect(() => {
+		if (ref?.current) {
+			ref.current.price = createJson;
+		} else {
+			ref.current = {
+				price: createJson,
+			};
+		}
+	}, [leftValue, leftTimeframe, rightValueType, rightComparison]);
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-custom-gray-border rounded-lg bg-custom-gray-bg">
 			<div className="flex items-center gap-1">
@@ -143,8 +148,8 @@ const Price: FC<Props> = ({ ref }) => {
 							{
 								category: '',
 								options: [
-									{ label: '이하', value: '<=' },
 									{ label: '이상', value: '>=' },
+									{ label: '이하', value: '<=' },
 								],
 							},
 						]}

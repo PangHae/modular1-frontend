@@ -4,11 +4,11 @@ import { FC } from 'react';
 
 import { Cuboid, Shapes } from 'lucide-react';
 
-import Price from '@/components/common/Blocks/default/Price';
-import All from '@/components/common/Blocks/logical/All';
-import Any from '@/components/common/Blocks/logical/Any';
-import Buy from '@/components/common/Blocks/trade/Buy';
-import Sell from '@/components/common/Blocks/trade/Sell';
+import Price from '@/components/Blocks/default/Price';
+import TradingMetric from '@/components/Blocks/default/TradingMetric';
+import All from '@/components/Blocks/logical/All';
+import Any from '@/components/Blocks/logical/Any';
+import Sell from '@/components/Blocks/trade/Sell';
 import SidePalette from '@/components/common/SidePalette/SidePalette';
 import { useCreateStrategyContext } from '@/hooks/contexts/useCreateStrategyContext';
 
@@ -51,11 +51,12 @@ const StrategyConfigurationClient: FC<Props> = ({ strategyType }) => {
 				<Sell>
 					<All>
 						<Price ref={ref} />
+						<TradingMetric ref={ref} />
 					</All>
 					<Any></Any>
 				</Sell>
 
-				<Buy></Buy>
+				{/* <Buy></Buy> */}
 			</div>
 		</div>
 	);

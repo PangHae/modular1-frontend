@@ -53,9 +53,8 @@ export const CreateStrategyProvider = ({
 		if (!childRef.current) {
 			return;
 		}
-		const priceJson = childRef.current.price();
-		console.log(priceJson);
-
+		console.log(childRef.current);
+		Object.values(childRef.current).map((value) => console.log(value()));
 		// TODO: 전략 생성 API 호출
 	};
 
