@@ -1,28 +1,30 @@
 'use client';
 
-import { FC, PropsWithChildren, useState } from 'react';
+import { FC, PropsWithChildren, useMemo } from 'react';
 
 import Link from 'next/link';
 
-import {
-	BanknoteArrowDown,
-	BanknoteArrowUp,
-	ChevronLeft,
-	ChevronRight,
-	Search,
-	X,
-} from 'lucide-react';
+import { BanknoteArrowDown, BanknoteArrowUp, ChevronLeft } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
-interface Props {
-	className?: string;
-}
-
 type StrategyType = 'BUY' | 'SELL';
 type Step = 1 | 2;
+
+interface Props {
+	className?: string;
+	currentStep: Step;
+	strategyType: StrategyType;
+	strategyName: string;
+	onStrategyTypeChange: (type: StrategyType) => void;
+	onStrategyNameChange: (name: string) => void;
+	onNext: () => void;
+	onPrev: () => void;
+	onCreateStrategy: () => void;
+	canProceed: boolean;
+}
 
 const STEP_MAP = {
 	1: {
@@ -38,169 +40,18 @@ const STEP_MAP = {
 const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 	className,
 	children,
+	currentStep,
+	strategyType,
+	strategyName,
+	onStrategyTypeChange,
+	onStrategyNameChange,
+	onPrev,
+	onCreateStrategy,
 }) => {
-	const [currentStep, setCurrentStep] = useState<Step>(1);
-	const [strategyType, setStrategyType] = useState<StrategyType>('BUY');
-	const [strategyName, setStrategyName] = useState('');
-	const [selectedStock, setSelectedStock] = useState('');
-	const [searchQuery, setSearchQuery] = useState('');
-	const [showStockList, setShowStockList] = useState(false);
-
-	// 모의 종목 데이터
-	const stockList = [
-		{ code: '005930', name: '삼성전자', price: 75000, change: '+2.5%' },
-		{ code: '000660', name: 'SK하이닉스', price: 120000, change: '-1.2%' },
-		{ code: '035420', name: 'NAVER', price: 180000, change: '+0.8%' },
-		{
-			code: '207940',
-			name: '삼성바이오로직스',
-			price: 850000,
-			change: '+3.1%',
-		},
-		{ code: '006400', name: '삼성SDI', price: 450000, change: '-0.5%' },
-		{ code: '035720', name: '카카오', price: 45000, change: '+1.8%' },
-		{ code: '051910', name: 'LG화학', price: 420000, change: '+0.3%' },
-		{ code: '068270', name: '셀트리온', price: 180000, change: '-2.1%' },
-		{ code: '323410', name: '카카오뱅크', price: 45000, change: '+0.9%' },
-		{ code: '000270', name: '기아', price: 95000, change: '+1.5%' },
-	];
-
-	// 검색 필터링된 종목 리스트
-	const filteredStocks = stockList.filter(
-		(stock) =>
-			stock.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			stock.code.includes(searchQuery)
-	);
-
-	const handleNext = () => {
-		if (currentStep < 2) {
-			setCurrentStep((prev) => (prev + 1) as Step);
-		}
-	};
-
-	const handlePrev = () => {
-		if (currentStep > 1) {
-			setCurrentStep((prev) => (prev - 1) as Step);
-		}
-	};
-
-	const renderStepContent = () => {
+	const renderStepContent = useMemo(() => {
 		switch (currentStep) {
 			case 1:
-				return (
-					<div className="flex flex-col h-full p-6">
-						{/* 검색 입력 */}
-						<div className="relative mb-6">
-							<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-							<Input
-								placeholder="종목명 또는 종목코드를 검색하세요"
-								className="w-full h-12 pl-10 pr-10"
-								value={searchQuery}
-								onChange={(e) => {
-									setSearchQuery(e.target.value);
-									setShowStockList(true);
-								}}
-								onFocus={() => setShowStockList(true)}
-							/>
-							{searchQuery && (
-								<button
-									onClick={() => {
-										setSearchQuery('');
-										setShowStockList(false);
-									}}
-									className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-								>
-									<X className="w-4 h-4" />
-								</button>
-							)}
-						</div>
-
-						{/* 종목 리스트 */}
-						{showStockList && (
-							<div className="flex-1 overflow-hidden">
-								<div className="h-full overflow-y-auto border border-gray-200 rounded-lg bg-white">
-									{filteredStocks.length > 0 ? (
-										<div className="divide-y divide-gray-100">
-											{filteredStocks.map((stock) => (
-												<button
-													key={stock.code}
-													onClick={() => {
-														setSelectedStock(`${stock.name} (${stock.code})`);
-														setShowStockList(false);
-														setSearchQuery('');
-													}}
-													className="w-full p-4 text-left hover:bg-gray-50 transition-colors duration-150"
-												>
-													<div className="flex items-center justify-between">
-														<div className="flex flex-col">
-															<span className="font-medium text-gray-900">
-																{stock.name}
-															</span>
-															<span className="text-sm text-gray-500">
-																{stock.code}
-															</span>
-														</div>
-														<div className="flex flex-col items-end">
-															<span className="font-medium text-gray-900">
-																{stock.price.toLocaleString()}원
-															</span>
-															<span
-																className={cn(
-																	'text-sm',
-																	stock.change.startsWith('+')
-																		? 'text-red-500'
-																		: 'text-blue-500'
-																)}
-															>
-																{stock.change}
-															</span>
-														</div>
-													</div>
-												</button>
-											))}
-										</div>
-									) : (
-										<div className="p-8 text-center text-gray-500">
-											검색 결과가 없습니다.
-										</div>
-									)}
-								</div>
-							</div>
-						)}
-
-						{/* 선택된 종목 표시 */}
-						{selectedStock && (
-							<div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-								<div className="flex items-center justify-between">
-									<div>
-										<span className="text-sm text-blue-700 font-medium">
-											선택된 종목:
-										</span>
-										<span className="ml-2 text-blue-900">{selectedStock}</span>
-									</div>
-									<button
-										onClick={() => setSelectedStock('')}
-										className="text-blue-500 hover:text-blue-700"
-									>
-										<X className="w-4 h-4" />
-									</button>
-								</div>
-							</div>
-						)}
-
-						{/* 다음 버튼 */}
-						<div className="mt-6 flex justify-center">
-							<Button
-								onClick={handleNext}
-								className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-8"
-								disabled={!selectedStock.trim()}
-							>
-								다음
-								<ChevronRight className="w-4 h-4" />
-							</Button>
-						</div>
-					</div>
-				);
+				return <div className="flex flex-col h-full">{children}</div>;
 			case 2:
 				return (
 					<div className="flex flex-col h-full">
@@ -210,7 +61,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 								<div className="flex items-center gap-4">
 									<button
 										type="button"
-										onClick={() => setStrategyType('BUY')}
+										onClick={() => onStrategyTypeChange('BUY')}
 										className={cn(
 											'flex items-center gap-3 px-6 py-3 rounded-lg border-2 transition-all duration-200 cursor-pointer',
 											strategyType === 'BUY'
@@ -223,7 +74,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 											name="strategyType"
 											value="buy"
 											checked={strategyType === 'BUY'}
-											onChange={() => setStrategyType('BUY')}
+											onChange={() => onStrategyTypeChange('BUY')}
 											className="sr-only"
 										/>
 										<div className="flex items-center gap-2">
@@ -249,7 +100,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 									</button>
 									<button
 										type="button"
-										onClick={() => setStrategyType('SELL')}
+										onClick={() => onStrategyTypeChange('SELL')}
 										className={cn(
 											'flex items-center gap-3 px-6 py-3 rounded-lg border-2 transition-all duration-200 cursor-pointer',
 											strategyType === 'SELL'
@@ -262,7 +113,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 											name="strategyType"
 											value="sell"
 											checked={strategyType === 'SELL'}
-											onChange={() => setStrategyType('SELL')}
+											onChange={() => onStrategyTypeChange('SELL')}
 											className="sr-only"
 										/>
 										<div className="flex items-center gap-2">
@@ -295,7 +146,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 			default:
 				return null;
 		}
-	};
+	}, [currentStep, children]);
 
 	return (
 		<div className={cn('flex flex-col h-full bg-custom-gray-bg', className)}>
@@ -313,7 +164,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 					{currentStep === 2 && (
 						<Button
 							variant="outline"
-							onClick={handlePrev}
+							onClick={onPrev}
 							className="flex items-center gap-2"
 						>
 							<ChevronLeft className="w-4 h-4" />
@@ -382,17 +233,20 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 						<Input
 							placeholder="전략 이름을 입력해주세요"
 							value={strategyName}
-							onChange={(e) => setStrategyName(e.target.value)}
+							onChange={(e) => onStrategyNameChange(e.target.value)}
 							className="w-64"
 						/>
-						<Button className="bg-blue-600 hover:bg-blue-700">
+						<Button
+							className="bg-blue-600 hover:bg-blue-700"
+							onClick={onCreateStrategy}
+						>
 							전략 생성하기
 						</Button>
 					</div>
 				)}
 			</div>
 			{/* 메인 콘텐츠 */}
-			<div className="flex-1">{renderStepContent()}</div>
+			<div className="flex-1">{renderStepContent}</div>
 		</div>
 	);
 };

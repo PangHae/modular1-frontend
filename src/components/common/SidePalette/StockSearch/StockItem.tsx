@@ -11,11 +11,15 @@ interface Props {
 		changeType: string;
 		tradeVolume: string;
 	};
+	onClick: (stock: { name: string; code: string }) => void;
 }
 
-const StockItem = ({ stock }: Props) => {
+const StockItem = ({ stock, onClick }: Props) => {
 	return (
-		<div className="flex items-center justify-between p-2 hover:bg-gray-50 cursor-pointer transition-colors">
+		<div
+			className="flex items-center justify-between p-2 hover:bg-gray-50 cursor-pointer transition-colors"
+			onClick={() => onClick({ name: stock.companyKr, code: stock.company })}
+		>
 			<div className="flex items-center gap-2">
 				<div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-lg">
 					{stock.logo}
