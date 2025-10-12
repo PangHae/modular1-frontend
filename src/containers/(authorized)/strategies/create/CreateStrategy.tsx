@@ -1,7 +1,13 @@
+import { CreateStrategyProvider } from '@/components/providers/CreateStrategyProvider';
+
 import CreateStrategyClient from './CreateStrategy.client';
 
 const CreateStrategy = () => {
-	return <CreateStrategyClient />;
+	return (
+		<CreateStrategyProvider>
+			<CreateStrategyClient />
+		</CreateStrategyProvider>
+	);
 };
 
 export default CreateStrategy;

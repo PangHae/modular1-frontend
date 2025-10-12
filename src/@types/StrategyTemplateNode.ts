@@ -39,12 +39,19 @@ export type Operand =
 	| PriceOperand
 	| IndicatorOperand
 	| LevelOperand
-	| ProfitLossOperand;
+	| ProfitLossOperand
+	| ConstantOperand;
+
+// === CONSTANT ===
+export interface ConstantOperand {
+	kind: 'CONSTANT';
+	constant: { value: number };
+}
 
 // === PRICE ===
 export interface PriceOperand {
 	kind: 'PRICE';
-	field: 'open' | 'high' | 'low' | 'close';
+	field: 'high' | 'low' | 'close';
 	timeframe: string;
 }
 

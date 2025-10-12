@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react';
+import { ComponentProps, FC, PropsWithChildren } from 'react';
 
 import { Input } from '@/components/ui/input';
 import {
@@ -23,10 +23,10 @@ const BlockTitle: FC<PropsWithChildren<{ className?: string }>> = ({
 	);
 };
 
-interface InputProps {
+interface InputProps extends ComponentProps<'input'> {
 	placeholder: string;
-	value: string;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	value?: string;
+	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	className?: string;
 }
 
@@ -49,11 +49,18 @@ const BlockInput: FC<InputProps> = ({
 interface DropdownProps {
 	placeholder: string;
 	items: { category: string; options: { label: string; value: string }[] }[];
+	value: string;
+	onChange: (value: string) => void;
 }
 
-const BlockDropdown: FC<DropdownProps> = ({ placeholder, items }) => {
+const BlockDropdown: FC<DropdownProps> = ({
+	placeholder,
+	items,
+	onChange,
+	value,
+}) => {
 	return (
-		<Select>
+		<Select value={value} onValueChange={(value) => onChange(value)}>
 			<SelectTrigger>
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>
