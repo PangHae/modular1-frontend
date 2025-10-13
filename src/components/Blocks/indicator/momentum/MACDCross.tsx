@@ -85,22 +85,22 @@ const MACDCross: FC<BlockProps> = ({ ref }) => {
 					value={timeframe}
 					onChange={handleChangeTimeframe}
 				/>
-				간의 MACD선이 시그널선보다
+				간의 MACD선이 시그널선을
 				<Block.dropdown
 					placeholder="기준"
 					items={[
 						{
 							category: '',
 							options: [
-								{ label: '높을', value: 'UP' },
-								{ label: '낮을', value: 'DOWN' },
+								{ label: '돌파', value: 'UP' },
+								{ label: '이탈', value: 'DOWN' },
 							],
 						},
 					]}
 					value={direction}
 					onChange={handleChangeDirection}
 				/>
-				때
+				할 때
 			</div>
 		</Block>
 	);
