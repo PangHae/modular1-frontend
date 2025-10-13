@@ -7,6 +7,7 @@ export type EMAPeriodType = '5' | '20' | '60' | '120';
 export type DirectionType = 'UP' | 'DOWN';
 export type ComparisonType = '>' | '<' | '>=' | '<=' | '==' | '!=';
 export type RSIPeriodType = '7' | '14' | '21';
+export type BollingerBandBaseLineType = 'upper' | 'lower';
 
 export interface BlockProps {
 	ref: React.RefObject<{ [key: string]: () => Node } | null>;
