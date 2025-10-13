@@ -1,14 +1,10 @@
 import { FC, useEffect, useState } from 'react';
 
-import { Node } from '@/@types/StrategyTemplateNode';
+import { BlockProps, Node } from '@/@types/StrategyTemplateNode';
 
 import Block from '../../Block';
 
-interface Props {
-	ref: React.RefObject<{ [key: string]: () => Node } | null>;
-}
-
-const EMACross: FC<Props> = ({ ref }) => {
+const EMACross: FC<BlockProps> = ({ ref }) => {
 	const [leftEMA, setLeftEMA] = useState<string>('5');
 	const [rightEMA, setRightEMA] = useState<string>('60');
 

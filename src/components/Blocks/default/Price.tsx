@@ -2,7 +2,11 @@
 
 import { FC, useEffect, useRef, useState } from 'react';
 
-import { ConstantOperand, Node } from '@/@types/StrategyTemplateNode';
+import {
+	BlockProps,
+	ConstantOperand,
+	Node,
+} from '@/@types/StrategyTemplateNode';
 
 import Block from '../Block';
 
@@ -11,11 +15,7 @@ type PriceType = 'high' | 'low' | 'close';
 type TimeframeType = 'tick' | '1m' | '5m' | '15m' | '30m' | '1h' | '4h' | '1d';
 type ComparisonType = '<=' | '>=';
 
-interface Props {
-	ref: React.RefObject<{ [key: string]: () => Node } | null>;
-}
-
-const Price: FC<Props> = ({ ref }) => {
+const Price: FC<BlockProps> = ({ ref }) => {
 	const rightPriceRef = useRef<HTMLInputElement>(null);
 
 	const [leftValue, setLeftValue] = useState<PriceType>('high');

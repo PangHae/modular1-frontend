@@ -2,7 +2,11 @@
 
 import { FC, useEffect, useRef, useState } from 'react';
 
-import { ConstantOperand, Node } from '@/@types/StrategyTemplateNode';
+import {
+	BlockProps,
+	ConstantOperand,
+	Node,
+} from '@/@types/StrategyTemplateNode';
 
 import Block from '../Block';
 
@@ -10,11 +14,7 @@ type TradeMetricType = 'CUMULATIVE_VOLUME' | 'CUMULATIVE_AMOUNT';
 type ComparisonType = '<=' | '>=' | '>' | '==';
 type ValueType = 'constant' | 'reference' | 'average';
 
-interface Props {
-	ref: React.RefObject<{ [key: string]: () => Node } | null>;
-}
-
-const TradingMetric: FC<Props> = ({ ref }) => {
+const TradingMetric: FC<BlockProps> = ({ ref }) => {
 	const rightVolumeValueRef = useRef<HTMLInputElement>(null);
 	const rightAmountValueRef = useRef<HTMLInputElement>(null);
 

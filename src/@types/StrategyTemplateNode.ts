@@ -1,3 +1,7 @@
+export interface BlockProps {
+	ref: React.RefObject<{ [key: string]: () => Node } | null>;
+}
+
 // 공통 필드
 export interface BaseNode {
 	type: string;
