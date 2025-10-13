@@ -119,15 +119,15 @@ const RSICross: FC<BlockProps> = ({ ref }) => {
 						{
 							category: '',
 							options: [
-								{ label: '상향 돌파', value: 'UP' },
-								{ label: '하향 돌파', value: 'DOWN' },
+								{ label: '클', value: 'UP' },
+								{ label: '작을', value: 'DOWN' },
 							],
 						},
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
 				/>
-				할 때
+				때
 			</div>
 		</Block>
 	);

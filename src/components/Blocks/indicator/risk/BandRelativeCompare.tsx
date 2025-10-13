@@ -81,21 +81,22 @@ const BandRelativeCompare: FC<BlockProps> = ({ ref }) => {
 					value={timeframe}
 					onChange={handleChangeTimeframe}
 				/>
-				기준 볼린저 밴드의 폭이 직전봉 폭보다
+				기준 볼린저밴드의 폭이 직전봉 폭보다
 				<Block.dropdown
 					placeholder="비교"
 					items={[
 						{
 							category: '',
 							options: [
-								{ label: '클 때', value: '>=' },
-								{ label: '작을 때', value: '<=' },
+								{ label: '클', value: '>=' },
+								{ label: '작을', value: '<=' },
 							],
 						},
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
 				/>
+				때
 			</div>
 		</Block>
 	);
