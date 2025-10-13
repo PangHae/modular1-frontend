@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 import {
 	BlockProps,
@@ -9,7 +9,9 @@ import {
 
 import Block from '../../Block';
 
-const BandRelativeCompare: FC<BlockProps> = ({ ref }) => {
+const BandAbsoluteCompare: FC<BlockProps> = ({ ref }) => {
+	const rightValueRef = useRef<HTMLInputElement>(null);
+
 	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
 	const [rightComparison, setRightComparison] = useState<ComparisonType>('>=');
 
@@ -24,7 +26,7 @@ const BandRelativeCompare: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'COMPARE',
-			label: 'band_relative_compare',
+			label: 'band_absolute_compare',
 			operator: rightComparison,
 			left: {
 				kind: 'INDICATOR',
@@ -36,23 +38,18 @@ const BandRelativeCompare: FC<BlockProps> = ({ ref }) => {
 				timeframe,
 			},
 			right: {
-				kind: 'INDICATOR',
-				name: 'BOLLINGER_BANDSWIDTH',
-				args: {
-					period: 20,
-				},
-				timeframe,
-				lookback: 1,
+				kind: 'CONSTANT',
+				constant: { value: rightValueRef.current?.value, unit: 'percent' },
 			},
 		} as unknown as Node;
 	};
 
 	useEffect(() => {
 		if (ref?.current) {
-			ref.current.bandRelativeCompare = createJson;
+			ref.current.bandAbsoluteCompare = createJson;
 		} else {
 			ref.current = {
-				bandRelativeCompare: createJson,
+				bandAbsoluteCompare: createJson,
 			};
 		}
 	}, [timeframe, rightComparison]);
@@ -60,7 +57,7 @@ const BandRelativeCompare: FC<BlockProps> = ({ ref }) => {
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-papaya-orange rounded-lg bg-papaya-orange-bg">
 			<Block.subtitle className="text-papaya-orange">
-				볼린저밴드 폭 상대값 대비 변화 감지
+				볼린저밴드 폭 절대값 대비 변화 감지
 			</Block.subtitle>
 			<div className="flex items-center gap-1">
 				<Block.dropdown
@@ -82,6 +79,13 @@ const BandRelativeCompare: FC<BlockProps> = ({ ref }) => {
 					onChange={handleChangeTimeframe}
 				/>
 				기준 볼린저 밴드의 폭이 직전봉 폭보다
+				<Block.input
+					ref={rightValueRef}
+					type="number"
+					className="w-[100px]"
+					placeholder="값 입력"
+				/>
+				%
 				<Block.dropdown
 					placeholder="비교"
 					items={[
@@ -101,4 +105,4 @@ const BandRelativeCompare: FC<BlockProps> = ({ ref }) => {
 	);
 };
 
-export default BandRelativeCompare;
+export default BandAbsoluteCompare;
