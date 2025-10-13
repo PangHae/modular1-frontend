@@ -52,6 +52,10 @@
 	--color-status-pending-bg: var(--color-status-pending-bg);
 	--color-status-pending-text: var(--color-status-pending-text);
 	--color-shinhan-blue: var(--color-shinhan-blue);
+	--color-papaya-orange: var(--color-papaya-orange);
+	--color-papaya-orange-bg: var(--color-papaya-orange-bg);
+	--color-yeondu: var(--color-yeondu);
+	--color-yeondu-bg: var(--color-yeondu-bg);
 
 	--text-heading1: var(--font-size-heading1); /* 34px*/
 	--text-heading2: var(--font-size-heading2); /* 24px*/
@@ -110,6 +114,10 @@
 	--color-status-pending-bg: rgba(132, 132, 132, 0.2);
 	--color-status-pending-text: #848484;
 	--color-shinhan-blue: #0046ff;
+	--color-papaya-orange: #f98e1d;
+	--color-papaya-orange-bg: #fff5ed;
+	--color-yeondu: #5e9b25;
+	--color-yeondu-bg: #f3f9ed;
 
 	/* custom text sizes */
 	--font-size-heading1: 34px;

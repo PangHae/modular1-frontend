@@ -46,7 +46,8 @@ const ChangeRate: FC<Props> = ({ ref }) => {
 		}
 	}, [rightComparison]);
 	return (
-		<Block className="flex gap-2 p-4 border-2 border-custom-gray-border rounded-lg bg-custom-gray-bg">
+		<Block className="flex gap-2 p-4 border-2 border-yeondu rounded-lg bg-yeondu-bg!">
+			<Block.subtitle className="text-yeondu">변화율</Block.subtitle>
 			<div className="flex items-center gap-1">
 				현재가가 전일 대비
 				<Block.input

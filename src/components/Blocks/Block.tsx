@@ -23,6 +23,17 @@ const BlockTitle: FC<PropsWithChildren<{ className?: string }>> = ({
 	);
 };
 
+const BlockSubtitle: FC<PropsWithChildren<{ className?: string }>> = ({
+	className,
+	children,
+}) => {
+	return (
+		<span className={cn('text-[18px] font-semibold', className)}>
+			{children}
+		</span>
+	);
+};
+
 interface InputProps extends ComponentProps<'input'> {
 	placeholder: string;
 	value?: string;
@@ -38,7 +49,7 @@ const BlockInput: FC<InputProps> = ({
 }) => {
 	return (
 		<Input
-			className={className}
+			className={cn('bg-white!', className)}
 			placeholder={placeholder}
 			value={value}
 			onChange={onChange}
@@ -61,7 +72,7 @@ const BlockDropdown: FC<DropdownProps> = ({
 }) => {
 	return (
 		<Select value={value} onValueChange={(value) => onChange(value)}>
-			<SelectTrigger>
+			<SelectTrigger className="bg-white!">
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>
 			<SelectContent>
@@ -95,6 +106,7 @@ const Block = Object.assign(BlockContainer, {
 	dropdown: BlockDropdown,
 	input: BlockInput,
 	title: BlockTitle,
+	subtitle: BlockSubtitle,
 });
 
 export default Block;

@@ -5,11 +5,13 @@ import { FC } from 'react';
 import { Cuboid, Shapes } from 'lucide-react';
 
 import ChangeRate from '@/components/Blocks/default/ChangeRate';
-import Execution from '@/components/Blocks/default/Execution';
-import Price from '@/components/Blocks/default/Price';
-import TradingMetric from '@/components/Blocks/default/TradingMetric';
+// import Execution from '@/components/Blocks/default/Execution';
+// import Price from '@/components/Blocks/default/Price';
+// import TradingMetric from '@/components/Blocks/default/TradingMetric';
+import EMACross from '@/components/Blocks/indicator/momentum/EMACross';
 import All from '@/components/Blocks/logical/All';
 import Any from '@/components/Blocks/logical/Any';
+import Buy from '@/components/Blocks/trade/Buy';
 import Sell from '@/components/Blocks/trade/Sell';
 import SidePalette from '@/components/common/SidePalette/SidePalette';
 import { useCreateStrategyContext } from '@/hooks/contexts/useCreateStrategyContext';
@@ -52,15 +54,25 @@ const StrategyConfigurationClient: FC<Props> = ({ strategyType }) => {
 			<div className="flex gap-4 flex-1 bg-white rounded-[8px] border border-custom-gray-border/40 p-4">
 				<Sell>
 					<All>
-						<Price ref={ref} />
+						{/* <Price ref={ref} />
 						<TradingMetric ref={ref} />
-						<Execution ref={ref} />
+						<Execution ref={ref} /> */}
 						<ChangeRate ref={ref} />
+						<EMACross ref={ref} />
 					</All>
 					<Any></Any>
 				</Sell>
 
-				{/* <Buy></Buy> */}
+				<Buy>
+					<All>
+						{/* <Price ref={ref} />
+						<TradingMetric ref={ref} />
+						<Execution ref={ref} /> */}
+						<ChangeRate ref={ref} />
+						<EMACross ref={ref} />
+					</All>
+					<Any></Any>
+				</Buy>
 			</div>
 		</div>
 	);

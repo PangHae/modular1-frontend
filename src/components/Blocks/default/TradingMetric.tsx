@@ -130,7 +130,8 @@ const TradingMetric: FC<Props> = ({ ref }) => {
 	]);
 
 	return (
-		<Block className="flex gap-2 p-4 border-2 border-custom-gray-border rounded-lg bg-custom-gray-bg">
+		<Block className="flex gap-2 p-4 border-2 border-yeondu rounded-lg bg-yeondu-bg!">
+			<Block.subtitle className="text-yeondu">거래</Block.subtitle>
 			<div className="flex items-center gap-1">
 				<Block.dropdown
 					placeholder="거래 지표"
