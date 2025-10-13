@@ -6,13 +6,13 @@ import {
 	BlockProps,
 	ConstantOperand,
 	Node,
+	TimeframeType,
 } from '@/@types/StrategyTemplateNode';
 
 import Block from '../Block';
 
 type ValueType = 'constant' | 'reference';
 type PriceType = 'high' | 'low' | 'close';
-type TimeframeType = 'tick' | '1m' | '5m' | '15m' | '30m' | '1h' | '4h' | '1d';
 type ComparisonType = '<=' | '>=';
 
 const Price: FC<BlockProps> = ({ ref }) => {

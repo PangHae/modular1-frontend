@@ -42,6 +42,9 @@ export type PriceType = 'high' | 'low' | 'close';
 export type TradeMetricType = 'CUMULATIVE_VOLUME' | 'CUMULATIVE_AMOUNT';
 export type ExecutionType = 'TRADE_VOLUME';
 export type ChangeRateType = 'change_rate';
+export type TimeframeType = 'tick' | '1m' | '5m' | '15m' | '1h' | '4h' | '1d';
+export type PeriodType = '5' | '20' | '60' | '120';
+export type DirectionType = 'UP' | 'DOWN';
 
 // === 가능한 피연산자 ===
 export type Operand =
