@@ -2,12 +2,15 @@
 
 import { FC, useEffect, useRef, useState } from 'react';
 
-import { BlockProps, Node } from '@/@types/StrategyTemplateNode';
+import {
+	BlockProps,
+	ComparisonType,
+	Node,
+} from '@/@types/StrategyTemplateNode';
 
 import Block from '../Block';
 
 type ValueType = 'constant' | 'average';
-type ComparisonType = '<=' | '>=' | '>' | '<' | '==';
 
 const Execution: FC<BlockProps> = ({ ref }) => {
 	const rightExecutionRef = useRef<HTMLInputElement>(null);

@@ -4,7 +4,7 @@ import {
 	BlockProps,
 	DirectionType,
 	Node,
-	PeriodType,
+	EMAPeriodType,
 	TimeframeType,
 } from '@/@types/StrategyTemplateNode';
 
@@ -13,7 +13,7 @@ import Block from '../../Block';
 const EMACompare: FC<BlockProps> = ({ ref }) => {
 	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
 	const [direction, setDirection] = useState<DirectionType>('UP');
-	const [rightValue, setRightValue] = useState<PeriodType>('5');
+	const [rightValue, setRightValue] = useState<EMAPeriodType>('5');
 
 	const handleChangeTimeframe = (value: string) => {
 		setTimeframe(value as TimeframeType);
@@ -24,7 +24,7 @@ const EMACompare: FC<BlockProps> = ({ ref }) => {
 	};
 
 	const handleChangeRightValue = (value: string) => {
-		setRightValue(value as PeriodType);
+		setRightValue(value as EMAPeriodType);
 	};
 
 	const createJson = () => {

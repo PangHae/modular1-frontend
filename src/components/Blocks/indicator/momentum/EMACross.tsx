@@ -1,19 +1,19 @@
 import { FC, useEffect, useState } from 'react';
 
-import { BlockProps, Node, PeriodType } from '@/@types/StrategyTemplateNode';
+import { BlockProps, Node, EMAPeriodType } from '@/@types/StrategyTemplateNode';
 
 import Block from '../../Block';
 
 const EMACross: FC<BlockProps> = ({ ref }) => {
-	const [leftEMA, setLeftEMA] = useState<PeriodType>('5');
-	const [rightEMA, setRightEMA] = useState<PeriodType>('60');
+	const [leftEMA, setLeftEMA] = useState<EMAPeriodType>('5');
+	const [rightEMA, setRightEMA] = useState<EMAPeriodType>('60');
 
 	const handleChangeLeftEMA = (value: string) => {
-		setLeftEMA(value as PeriodType);
+		setLeftEMA(value as EMAPeriodType);
 	};
 
 	const handleChangeRightEMA = (value: string) => {
-		setRightEMA(value as PeriodType);
+		setRightEMA(value as EMAPeriodType);
 	};
 
 	const createJson = () => {

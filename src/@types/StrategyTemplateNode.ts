@@ -1,3 +1,13 @@
+export type PriceType = 'high' | 'low' | 'close';
+export type TradeMetricType = 'CUMULATIVE_VOLUME' | 'CUMULATIVE_AMOUNT';
+export type ExecutionType = 'TRADE_VOLUME';
+export type ChangeRateType = 'change_rate';
+export type TimeframeType = 'tick' | '1m' | '5m' | '15m' | '1h' | '4h' | '1d';
+export type EMAPeriodType = '5' | '20' | '60' | '120';
+export type DirectionType = 'UP' | 'DOWN';
+export type ComparisonType = '>' | '<' | '>=' | '<=' | '==' | '!=';
+export type RSIPeriodType = '7' | '14' | '21';
+
 export interface BlockProps {
 	ref: React.RefObject<{ [key: string]: () => Node } | null>;
 }
@@ -18,7 +28,7 @@ export interface GroupNode extends BaseNode {
 // === COMPARE 노드 ===
 export interface CompareNode extends BaseNode {
 	type: 'COMPARE';
-	operator: '>' | '<' | '>=' | '<=' | '==' | '!=';
+	operator: ComparisonType;
 	left: Operand;
 	right: Operand;
 }
@@ -26,7 +36,7 @@ export interface CompareNode extends BaseNode {
 // === CROSS 노드 ===
 export interface CrossNode extends BaseNode {
 	type: 'CROSS';
-	direction: 'UP' | 'DOWN';
+	direction: DirectionType;
 	left: Operand;
 	right: Operand;
 }
@@ -37,14 +47,6 @@ export interface HoldNode extends BaseNode {
 	condition: Node; // 내부 조건 노드
 	period: string; // 예: "15m", "1h"
 }
-
-export type PriceType = 'high' | 'low' | 'close';
-export type TradeMetricType = 'CUMULATIVE_VOLUME' | 'CUMULATIVE_AMOUNT';
-export type ExecutionType = 'TRADE_VOLUME';
-export type ChangeRateType = 'change_rate';
-export type TimeframeType = 'tick' | '1m' | '5m' | '15m' | '1h' | '4h' | '1d';
-export type PeriodType = '5' | '20' | '60' | '120';
-export type DirectionType = 'UP' | 'DOWN';
 
 // === 가능한 피연산자 ===
 export type Operand =

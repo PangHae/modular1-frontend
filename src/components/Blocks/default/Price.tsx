@@ -4,16 +4,16 @@ import { FC, useEffect, useRef, useState } from 'react';
 
 import {
 	BlockProps,
+	ComparisonType,
 	ConstantOperand,
 	Node,
+	PriceType,
 	TimeframeType,
 } from '@/@types/StrategyTemplateNode';
 
 import Block from '../Block';
 
 type ValueType = 'constant' | 'reference';
-type PriceType = 'high' | 'low' | 'close';
-type ComparisonType = '<=' | '>=';
 
 const Price: FC<BlockProps> = ({ ref }) => {
 	const rightPriceRef = useRef<HTMLInputElement>(null);
