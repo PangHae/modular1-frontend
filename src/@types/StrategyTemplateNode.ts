@@ -1,4 +1,9 @@
 export type PriceType = 'high' | 'low' | 'close';
+export type PreviousPriceType =
+	| 'PREVIOUS_HIGH'
+	| 'PREVIOUS_LOW'
+	| 'PREVIOUS_OPEN'
+	| 'PREVIOUS_CLOSE';
 export type TradeMetricType = 'CUMULATIVE_VOLUME' | 'CUMULATIVE_AMOUNT';
 export type ExecutionType = 'TRADE_VOLUME';
 export type ChangeRateType = 'change_rate';
