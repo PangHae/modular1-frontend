@@ -2,13 +2,16 @@
 
 import { FC, useEffect, useState } from 'react';
 
-import { BlockProps, Node } from '@/@types/StrategyTemplateNode';
+import {
+	BlockProps,
+	ComparisonType,
+	Node,
+} from '@/@types/StrategyTemplateNode';
 
 import Block from '../Block';
 
 type TradeMetricType = 'CUMULATIVE_VOLUME' | 'CUMULATIVE_AMOUNT';
-type ComparisonType = '<=' | '>=' | '>' | '==';
-type ValueType = 'constant' | 'reference' | 'average';
+type ValueType = 'reference' | 'average';
 
 const TradingMetric: FC<BlockProps> = ({ ref }) => {
 	const [leftValueType, setLeftValueType] =
