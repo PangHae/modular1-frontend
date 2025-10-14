@@ -12,6 +12,8 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+
 const BlockTitle: FC<PropsWithChildren<{ className?: string }>> = ({
 	className,
 	children,
@@ -41,19 +43,25 @@ interface InputProps extends ComponentProps<'input'> {
 	className?: string;
 }
 
-const BlockInput: FC<InputProps> = ({
+const BlockInput: FC<PropsWithChildren<InputProps>> = ({
 	placeholder,
 	value,
 	onChange,
 	className,
+	children,
 }) => {
 	return (
-		<Input
-			className={cn('bg-white!', className)}
-			placeholder={placeholder}
-			value={value}
-			onChange={onChange}
-		/>
+		<Tooltip>
+			<TooltipTrigger>
+				<Input
+					className={cn('bg-white!', className)}
+					placeholder={placeholder}
+					value={value}
+					onChange={onChange}
+				/>
+			</TooltipTrigger>
+			<TooltipContent>{children}</TooltipContent>
+		</Tooltip>
 	);
 };
 
