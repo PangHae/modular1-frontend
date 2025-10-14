@@ -15,6 +15,7 @@ export type RSIPeriodType = '7' | '14' | '21';
 export type BollingerBandBaseLineType = 'upper' | 'lower';
 export type RVOLThreshold = '0.8' | '1.0' | '1.5' | '2.0';
 export type OpeningRangeSubfieldType = 'high' | 'low';
+export type YearHighLowType = '52_WEEK_HIGH' | '52_WEEK_LOW';
 
 export interface BlockProps {
 	ref: React.RefObject<{ [key: string]: () => Node } | null>;
