@@ -45,8 +45,8 @@ const ExitWithProfit: FC<BlockProps> = ({ ref }) => {
 	}, []);
 
 	return (
-		<Block className="flex gap-2 p-4 border-2 border-papaya-orange rounded-lg bg-papaya-orange-bg">
-			<Block.subtitle className="text-papaya-orange">익절 조건</Block.subtitle>
+		<Block className="flex gap-2 p-4 border-2 border-teal-600 rounded-lg bg-teal-50">
+			<Block.subtitle className="text-teal-600">익절 조건</Block.subtitle>
 			<div className="flex items-center gap-1">
 				수익이
 				<Block.input type="number" className="w-[100px]" placeholder="값 입력">
