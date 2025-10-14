@@ -56,7 +56,9 @@ const ChangeRate: FC<BlockProps> = ({ ref }) => {
 					type="number"
 					className="w-[100px]"
 					placeholder="값 입력"
-				/>
+				>
+					-100부터 100 사이의 값을 입력해주세요.
+				</Block.input>
 				%{' '}
 				<Block.dropdown
 					placeholder="비교"

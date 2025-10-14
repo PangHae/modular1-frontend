@@ -1,12 +1,8 @@
 'use client';
 
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
-import {
-	BlockProps,
-	ConstantOperand,
-	Node,
-} from '@/@types/StrategyTemplateNode';
+import { BlockProps, Node } from '@/@types/StrategyTemplateNode';
 
 import Block from '../Block';
 
@@ -15,16 +11,13 @@ type ComparisonType = '<=' | '>=' | '>' | '==';
 type ValueType = 'constant' | 'reference' | 'average';
 
 const TradingMetric: FC<BlockProps> = ({ ref }) => {
-	const rightVolumeValueRef = useRef<HTMLInputElement>(null);
-	const rightAmountValueRef = useRef<HTMLInputElement>(null);
-
 	const [leftValueType, setLeftValueType] =
 		useState<TradeMetricType>('CUMULATIVE_VOLUME');
 	const [rightComparison, setRightComparison] = useState<ComparisonType>('<=');
 	const [rightVolumeValueType, setRightVolumeValueType] =
-		useState<ValueType>('constant');
+		useState<ValueType>('reference');
 	const [rightAmountValueType, setRightAmountValueType] =
-		useState<ValueType>('constant');
+		useState<ValueType>('reference');
 
 	const handleChangeLeftValue = (value: string) => {
 		setLeftValueType(value as TradeMetricType);
@@ -45,15 +38,7 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		let right = {};
 		if (leftValueType === 'CUMULATIVE_VOLUME') {
-			if (rightAmountValueType === 'constant') {
-				if (!rightAmountValueRef.current) {
-					return {} as Node;
-				}
-				right = {
-					kind: 'CONSTANT',
-					constant: { value: rightAmountValueRef.current?.value },
-				} as unknown as ConstantOperand;
-			} else if (rightAmountValueType === 'reference') {
+			if (rightVolumeValueType === 'reference') {
 				right = {
 					kind: 'INDICATOR',
 					name: 'CUMULATIVE_VOLUME',
@@ -72,15 +57,7 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 				};
 			}
 		} else {
-			if (rightVolumeValueType === 'constant') {
-				if (!rightVolumeValueRef.current) {
-					return {} as Node;
-				}
-				right = {
-					kind: 'CONSTANT',
-					constant: { value: rightVolumeValueRef.current?.value },
-				} as unknown as ConstantOperand;
-			} else if (rightVolumeValueType === 'reference') {
+			if (rightAmountValueType === 'reference') {
 				right = {
 					kind: 'INDICATOR',
 					name: 'CUMULATIVE_TRADE_VALUE',
@@ -131,7 +108,9 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-yeondu rounded-lg bg-yeondu-bg!">
-			<Block.subtitle className="text-yeondu">거래</Block.subtitle>
+			<Block.subtitle className="text-yeondu">
+				누적 거래량/누적 거래 대금
+			</Block.subtitle>
 			<div className="flex items-center gap-1">
 				<Block.dropdown
 					placeholder="거래 지표"
@@ -149,76 +128,48 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 				/>
 				이
 				{leftValueType === 'CUMULATIVE_VOLUME' && (
-					<>
-						<Block.dropdown
-							placeholder="값"
-							items={[
-								{
-									category: '',
-									options: [
-										{
-											label: '지정가',
-											value: 'constant',
-										},
-										{
-											label: '전일 종가',
-											value: 'reference',
-										},
-										{
-											label: '평균',
-											value: 'average',
-										},
-									],
-								},
-							]}
-							value={rightVolumeValueType}
-							onChange={handleChangeRightVolumeValueType}
-						/>
-						{rightVolumeValueType === 'constant' && (
-							<Block.input
-								ref={rightVolumeValueRef}
-								type="number"
-								className="w-[100px]"
-								placeholder="값 입력"
-							/>
-						)}
-					</>
+					<Block.dropdown
+						placeholder="값"
+						items={[
+							{
+								category: '',
+								options: [
+									{
+										label: '전일 종가',
+										value: 'reference',
+									},
+									{
+										label: '평균',
+										value: 'average',
+									},
+								],
+							},
+						]}
+						value={rightVolumeValueType}
+						onChange={handleChangeRightVolumeValueType}
+					/>
 				)}
 				{leftValueType === 'CUMULATIVE_AMOUNT' && (
-					<>
-						<Block.dropdown
-							placeholder="값"
-							items={[
-								{
-									category: '',
-									options: [
-										{
-											label: '지정가',
-											value: 'constant',
-										},
-										{
-											label: '전일 종가',
-											value: 'reference',
-										},
-										{
-											label: '평균',
-											value: 'average',
-										},
-									],
-								},
-							]}
-							value={rightAmountValueType}
-							onChange={handleChangeRightAmountValueType}
-						/>
-						{rightAmountValueType === 'constant' && (
-							<Block.input
-								ref={rightAmountValueRef}
-								type="number"
-								className="w-[100px]"
-								placeholder="값 입력"
-							/>
-						)}
-					</>
+					<Block.dropdown
+						placeholder="값"
+						items={[
+							{
+								category: '',
+								options: [
+									{
+										label: '전일 종가',
+										value: 'reference',
+									},
+									{
+										label: '평균',
+										value: 'average',
+									},
+								],
+							},
+						]}
+						value={rightAmountValueType}
+						onChange={handleChangeRightAmountValueType}
+					/>
 				)}
 				<Block.dropdown
 					placeholder="비교"
@@ -229,7 +180,7 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 								{ label: '이상', value: '>=' },
 								{ label: '이하', value: '<=' },
 								{ label: '초과', value: '>' },
-								{ label: '같음', value: '==' },
+								{ label: '미만', value: '<' },
 							],
 						},
 					]}

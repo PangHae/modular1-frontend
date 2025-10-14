@@ -78,8 +78,8 @@ const Execution: FC<BlockProps> = ({ ref }) => {
 						{
 							category: '',
 							options: [
-								{ label: '지정가', value: 'constant' },
-								{ label: '평균 체결강도', value: 'average' },
+								{ label: '지정 비율', value: 'constant' },
+								{ label: '평균 체결 강도', value: 'average' },
 							],
 						},
 					]}
@@ -87,12 +87,17 @@ const Execution: FC<BlockProps> = ({ ref }) => {
 					onChange={handleChangeRightValueType}
 				/>
 				{rightValueType === 'constant' && (
-					<Block.input
-						ref={rightExecutionRef}
-						type="number"
-						className="w-[100px]"
-						placeholder="값 입력"
-					/>
+					<>
+						<Block.input
+							ref={rightExecutionRef}
+							type="number"
+							className="w-[100px]"
+							placeholder="값 입력"
+						>
+							0 이상의 값을 입력해주세요.
+						</Block.input>
+						%
+					</>
 				)}
 				<Block.dropdown
 					placeholder="비교"
@@ -104,7 +109,6 @@ const Execution: FC<BlockProps> = ({ ref }) => {
 								{ label: '이하', value: '<=' },
 								{ label: '초과', value: '>' },
 								{ label: '미만', value: '<' },
-								{ label: '같음', value: '==' },
 							],
 						},
 					]}

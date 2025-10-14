@@ -86,21 +86,6 @@ const Price: FC<BlockProps> = ({ ref }) => {
 			<Block.subtitle className="text-yeondu">가격</Block.subtitle>
 			<div className="flex items-center gap-1">
 				<Block.dropdown
-					placeholder="값"
-					items={[
-						{
-							category: '',
-							options: [
-								{ label: '고가', value: 'high' },
-								{ label: '저가', value: 'low' },
-								{ label: '종가', value: 'close' },
-							],
-						},
-					]}
-					value={leftValue}
-					onChange={handleChangeLeftValue}
-				/>
-				<Block.dropdown
 					placeholder="기준"
 					items={[
 						{
@@ -119,6 +104,22 @@ const Price: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={leftTimeframe}
 					onChange={handleChangeLeftTimeframe}
+				/>
+				기준
+				<Block.dropdown
+					placeholder="값"
+					items={[
+						{
+							category: '',
+							options: [
+								{ label: '고가', value: 'high' },
+								{ label: '저가', value: 'low' },
+								{ label: '종가', value: 'close' },
+							],
+						},
+					]}
+					value={leftValue}
+					onChange={handleChangeLeftValue}
 				/>
 				이(가)
 				<Block.dropdown
@@ -140,25 +141,28 @@ const Price: FC<BlockProps> = ({ ref }) => {
 						ref={rightPriceRef}
 						type="number"
 						className="w-[100px]"
-						placeholder="값 입력"
-					/>
+						placeholder="가격 입력"
+					>
+						원하는 가격을 입력해주세요.
+					</Block.input>
 				)}
-				{rightValueType === 'reference' && (
-					<Block.dropdown
-						placeholder="비교"
-						items={[
-							{
-								category: '',
-								options: [
-									{ label: '이상', value: '>=' },
-									{ label: '이하', value: '<=' },
-								],
-							},
-						]}
-						value={rightComparison}
-						onChange={handleChangeRightComparison}
-					/>
-				)}
+				원
+				<Block.dropdown
+					placeholder="비교"
+					items={[
+						{
+							category: '',
+							options: [
+								{ label: '이상', value: '>=' },
+								{ label: '이하', value: '<=' },
+								{ label: '초과', value: '>' },
+								{ label: '미만', value: '<' },
+							],
+						},
+					]}
+					value={rightComparison}
+					onChange={handleChangeRightComparison}
+				/>
 				일 때
 			</div>
 		</Block>
