@@ -89,29 +89,31 @@ const RSICross: FC<BlockProps> = ({ ref }) => {
 					value={timeframe}
 					onChange={handleChangeTimeframe}
 				/>
-				기준
+				기준 RSI
 				<Block.dropdown
 					placeholder="일자"
 					items={[
 						{
 							category: '',
 							options: [
-								{ label: '7봉', value: '7' },
-								{ label: '14봉', value: '14' },
-								{ label: '21봉', value: '21' },
+								{ label: '7', value: '7' },
+								{ label: '14', value: '14' },
+								{ label: '21', value: '21' },
 							],
 						},
 					]}
 					value={rightValue}
 					onChange={handleChangeRightValue}
 				/>
-				RSI가
+				가
 				<Block.input
 					ref={rightValueRef}
 					type="number"
 					className="w-[100px]"
 					placeholder="값 입력"
-				/>
+				>
+					0부터 100 사이의 값을 입력해주세요.
+				</Block.input>
 				를
 				<Block.dropdown
 					placeholder="비교"
@@ -119,15 +121,15 @@ const RSICross: FC<BlockProps> = ({ ref }) => {
 						{
 							category: '',
 							options: [
-								{ label: '클', value: 'UP' },
-								{ label: '작을', value: 'DOWN' },
+								{ label: '상향 돌파', value: 'UP' },
+								{ label: '하향 돌파', value: 'DOWN' },
 							],
 						},
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
 				/>
-				때
+				할 때
 			</div>
 		</Block>
 	);

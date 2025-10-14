@@ -80,7 +80,7 @@ const PreviousHighLowCompare: FC<BlockProps> = ({ ref }) => {
 					value={timeframe}
 					onChange={handleChangeTimeframe}
 				/>
-				기준 현재 종가가 전일
+				기준 종가가 전일
 				<Block.dropdown
 					placeholder="비교값"
 					items={[

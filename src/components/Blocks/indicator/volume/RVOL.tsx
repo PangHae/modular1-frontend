@@ -58,7 +58,7 @@ const RVOL: FC<BlockProps> = ({ ref }) => {
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-papaya-orange rounded-lg bg-papaya-orange-bg">
 			<Block.subtitle className="text-papaya-orange">
-				RVOL(상대 거래량)
+				RVOL(상대 거래량) 대비 상대 거래량 비교 감지
 			</Block.subtitle>
 			<div className="flex items-center gap-1">
 				<Block.dropdown

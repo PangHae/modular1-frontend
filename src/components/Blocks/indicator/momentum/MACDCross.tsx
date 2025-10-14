@@ -73,27 +73,27 @@ const MACDCross: FC<BlockProps> = ({ ref }) => {
 						{
 							category: '',
 							options: [
-								{ label: '1분', value: '1m' },
-								{ label: '5분', value: '5m' },
-								{ label: '15분', value: '15m' },
-								{ label: '1시간', value: '1h' },
-								{ label: '4시간', value: '4h' },
-								{ label: '1일', value: '1d' },
+								{ label: '1분봉', value: '1m' },
+								{ label: '5분봉', value: '5m' },
+								{ label: '15분봉', value: '15m' },
+								{ label: '1시간봉', value: '1h' },
+								{ label: '4시간봉', value: '4h' },
+								{ label: '1일봉', value: '1d' },
 							],
 						},
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
 				/>
-				간의 MACD선이 시그널선을
+				기준 MACD선이 시그널선을
 				<Block.dropdown
 					placeholder="기준"
 					items={[
 						{
 							category: '',
 							options: [
-								{ label: '돌파', value: 'UP' },
-								{ label: '이탈', value: 'DOWN' },
+								{ label: '상향 돌파', value: 'UP' },
+								{ label: '하향 돌파', value: 'DOWN' },
 							],
 						},
 					]}

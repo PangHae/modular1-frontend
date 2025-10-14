@@ -78,13 +78,15 @@ const BandAbsoluteCompare: FC<BlockProps> = ({ ref }) => {
 					value={timeframe}
 					onChange={handleChangeTimeframe}
 				/>
-				기준 볼린저 밴드의 폭이 직전봉 폭보다
+				기준 볼린저밴드의 폭이 직전봉 폭
 				<Block.input
 					ref={rightValueRef}
 					type="number"
 					className="w-[100px]"
 					placeholder="값 입력"
-				/>
+				>
+					2부터 5 사이의 값을 입력해주세요.
+				</Block.input>
 				%
 				<Block.dropdown
 					placeholder="비교"
@@ -92,14 +94,17 @@ const BandAbsoluteCompare: FC<BlockProps> = ({ ref }) => {
 						{
 							category: '',
 							options: [
-								{ label: '클 때', value: '>=' },
-								{ label: '작을 때', value: '<=' },
+								{ label: '이상', value: '>=' },
+								{ label: '이하', value: '<=' },
+								{ label: '초과', value: '>' },
+								{ label: '미만', value: '<' },
 							],
 						},
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
 				/>
+				일 때
 			</div>
 		</Block>
 	);

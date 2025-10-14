@@ -13,7 +13,7 @@ import Block from '../../Block';
 const YearHighLowCompare: FC<BlockProps> = ({ ref }) => {
 	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
 	const [rightValue, setRightValue] = useState<YearHighLowType>('52_WEEK_HIGH');
-	const [rightComparison, setRightComparison] = useState<ComparisonType>('>');
+	const [rightComparison, setRightComparison] = useState<ComparisonType>('>=');
 
 	const handleChangeTimeframe = (value: string) => {
 		setTimeframe(value as TimeframeType);
@@ -59,7 +59,7 @@ const YearHighLowCompare: FC<BlockProps> = ({ ref }) => {
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-papaya-orange rounded-lg bg-papaya-orange-bg">
 			<Block.subtitle className="text-papaya-orange">
-				연간 고점 또는 저점 대비 현재가 비교 감지
+				52주 고점/저점 대비 종가 비교 감지
 			</Block.subtitle>
 			<div className="flex items-center gap-1">
 				<Block.dropdown
@@ -101,6 +101,8 @@ const YearHighLowCompare: FC<BlockProps> = ({ ref }) => {
 						{
 							category: '',
 							options: [
+								{ label: '이상', value: '>=' },
+								{ label: '이하', value: '<=' },
 								{ label: '초과', value: '>' },
 								{ label: '미만', value: '<' },
 							],

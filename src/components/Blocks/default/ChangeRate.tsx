@@ -20,6 +20,10 @@ const ChangeRate: FC<BlockProps> = ({ ref }) => {
 	};
 
 	const createJson = () => {
+		if (!rightChangeRateRef.current) {
+			return {} as Node;
+		}
+
 		return {
 			type: 'COMPARE',
 			label: 'change_rate_compare',

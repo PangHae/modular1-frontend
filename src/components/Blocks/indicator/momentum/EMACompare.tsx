@@ -61,7 +61,7 @@ const EMACompare: FC<BlockProps> = ({ ref }) => {
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-papaya-orange rounded-lg bg-papaya-orange-bg">
 			<Block.subtitle className="text-papaya-orange">
-				지수이동평균선 종가 비교
+				지수이동평균선 종가 비교 감지
 			</Block.subtitle>
 			<div className="flex items-center gap-1">
 				<Block.dropdown
@@ -70,19 +70,19 @@ const EMACompare: FC<BlockProps> = ({ ref }) => {
 						{
 							category: '',
 							options: [
-								{ label: '1분', value: '1m' },
-								{ label: '5분', value: '5m' },
+								{ label: '1분봉', value: '1m' },
+								{ label: '5분봉', value: '5m' },
 								{ label: '15분', value: '15m' },
-								{ label: '1시간', value: '1h' },
-								{ label: '4시간', value: '4h' },
-								{ label: '1일', value: '1d' },
+								{ label: '1시간봉', value: '1h' },
+								{ label: '4시간봉', value: '4h' },
+								{ label: '1일봉', value: '1d' },
 							],
 						},
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
 				/>
-				전 종가가 EMA
+				기준 종가가 EMA
 				<Block.dropdown
 					placeholder="기준"
 					items={[

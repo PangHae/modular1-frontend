@@ -56,7 +56,7 @@ const VWAP: FC<BlockProps> = ({ ref }) => {
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-papaya-orange rounded-lg bg-papaya-orange-bg">
 			<Block.subtitle className="text-papaya-orange">
-				VWAP(거래량 가중치 평균가)
+				VWAP(거래량 가중치 평균가) 대비 종가 추세 감지
 			</Block.subtitle>
 			<div className="flex items-center gap-1">
 				<Block.dropdown
@@ -77,7 +77,7 @@ const VWAP: FC<BlockProps> = ({ ref }) => {
 					value={timeframe}
 					onChange={handleChangeTimeframe}
 				/>
-				종가가 VWAP를
+				기준 종가가 VWAP를
 				<Block.dropdown
 					placeholder="추세"
 					items={[

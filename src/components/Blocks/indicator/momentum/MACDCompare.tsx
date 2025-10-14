@@ -1,9 +1,10 @@
 'use client';
 
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import {
 	BlockProps,
+	ComparisonType,
 	ConstantOperand,
 	Node,
 	TimeframeType,
@@ -12,21 +13,22 @@ import {
 import Block from '../../Block';
 
 const MACDCompare: FC<BlockProps> = ({ ref }) => {
-	const rightValueRef = useRef<HTMLInputElement>(null);
 	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
+	const [rightValue, setRightValue] = useState<ComparisonType>('>');
 
 	const handleChangeTimeframe = (value: string) => {
 		setTimeframe(value as TimeframeType);
 	};
 
+	const handleChangeRightValue = (value: string) => {
+		setRightValue(value as ComparisonType);
+	};
+
 	const createJson = () => {
-		if (!rightValueRef.current) {
-			return {} as Node;
-		}
 		return {
 			type: 'COMPARE',
 			label: 'macd_compare',
-			operator: '>',
+			operator: rightValue,
 			left: {
 				kind: 'INDICATOR',
 				name: 'MACD',
@@ -40,7 +42,7 @@ const MACDCompare: FC<BlockProps> = ({ ref }) => {
 			},
 			right: {
 				kind: 'CONSTANT',
-				constant: { value: rightValueRef.current?.value },
+				constant: { value: 0 },
 			} as unknown as ConstantOperand,
 		} as unknown as Node;
 	};
@@ -66,26 +68,34 @@ const MACDCompare: FC<BlockProps> = ({ ref }) => {
 						{
 							category: '',
 							options: [
-								{ label: '1분', value: '1m' },
-								{ label: '5분', value: '5m' },
-								{ label: '15분', value: '15m' },
-								{ label: '1시간', value: '1h' },
-								{ label: '4시간', value: '4h' },
-								{ label: '1일', value: '1d' },
+								{ label: '1분봉', value: '1m' },
+								{ label: '5분봉', value: '5m' },
+								{ label: '15분봉', value: '15m' },
+								{ label: '1시간봉', value: '1h' },
+								{ label: '4시간봉', value: '4h' },
+								{ label: '1일봉', value: '1d' },
 							],
 						},
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
 				/>
-				간의 MACD 선이
-				<Block.input
-					ref={rightValueRef}
-					type="number"
-					className="w-[100px]"
-					placeholder="값 입력"
+				기준 MACD 히스토그램 값이
+				<Block.dropdown
+					placeholder="기준"
+					items={[
+						{
+							category: '',
+							options: [
+								{ label: '양수', value: '>' },
+								{ label: '음수', value: '<' },
+							],
+						},
+					]}
+					value={rightValue}
+					onChange={handleChangeRightValue}
 				/>
-				보다 클 때
+				일 때
 			</div>
 		</Block>
 	);
