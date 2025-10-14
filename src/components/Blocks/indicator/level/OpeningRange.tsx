@@ -76,7 +76,7 @@ const OpeningRange: FC<BlockProps> = ({ ref }) => {
 					value={subfield}
 					onChange={handleChangeSubfield}
 				/>
-				보다 현재 시가가
+				보다 종가가
 				<Block.dropdown
 					placeholder="비교"
 					items={[
