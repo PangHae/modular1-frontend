@@ -80,7 +80,7 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 		}
 		const json = {
 			type: 'COMPARE',
-			label: 'trading_metric_compare',
+			label: 'tradeMetricCompare',
 			operator: rightComparison,
 			left: {
 				kind: 'PRICE',
@@ -96,10 +96,10 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 
 	useEffect(() => {
 		if (ref?.current) {
-			ref.current.tradingMetric = createJson;
+			ref.current.tradeMetricCompare = createJson;
 		} else {
 			ref.current = {
-				tradingMetric: createJson,
+				tradeMetricCompare: createJson,
 			};
 		}
 	}, [

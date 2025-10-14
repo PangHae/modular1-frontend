@@ -26,7 +26,7 @@ const ChangeRate: FC<BlockProps> = ({ ref }) => {
 
 		return {
 			type: 'COMPARE',
-			label: 'change_rate_compare',
+			label: 'changeRateCompare',
 			operator: rightComparison,
 			left: {
 				kind: 'PRICE',
@@ -42,10 +42,10 @@ const ChangeRate: FC<BlockProps> = ({ ref }) => {
 
 	useEffect(() => {
 		if (ref?.current) {
-			ref.current.changeRate = createJson;
+			ref.current.changeRateCompare = createJson;
 		} else {
 			ref.current = {
-				changeRate: createJson,
+				changeRateCompare: createJson,
 			};
 		}
 	}, [rightComparison]);

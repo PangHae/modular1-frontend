@@ -19,7 +19,7 @@ const EMACross: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'CROSS',
-			label: 'ema_cross',
+			label: 'emaCross',
 			direction: 'UP',
 			left: {
 				kind: 'INDICATOR',

@@ -34,7 +34,7 @@ const RSICompare: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'COMPARE',
-			label: 'rsi_compare',
+			label: 'rsiCompare',
 			operator: rightComparison,
 			left: {
 				kind: 'INDICATOR',

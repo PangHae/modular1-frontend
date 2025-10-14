@@ -30,7 +30,7 @@ const EMACompare: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'CROSS',
-			label: 'EMA-COMPARE-WITH_CLOSE',
+			label: 'emaCompare',
 			direction,
 			left: {
 				kind: 'PRICE',

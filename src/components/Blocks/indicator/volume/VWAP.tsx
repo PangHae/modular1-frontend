@@ -26,7 +26,7 @@ const VWAP: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'CROSS',
-			label: 'vwap_cross',
+			label: 'vwapCross',
 			direction,
 			left: {
 				kind: 'PRICE',
@@ -45,10 +45,10 @@ const VWAP: FC<BlockProps> = ({ ref }) => {
 
 	useEffect(() => {
 		if (ref?.current) {
-			ref.current.vwap = createJson;
+			ref.current.vwapCross = createJson;
 		} else {
 			ref.current = {
-				vwap: createJson,
+				vwapCross: createJson,
 			};
 		}
 	}, [timeframe, direction]);

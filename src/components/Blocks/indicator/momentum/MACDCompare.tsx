@@ -27,7 +27,7 @@ const MACDCompare: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'COMPARE',
-			label: 'macd_compare',
+			label: 'macdCompare',
 			operator: rightValue,
 			left: {
 				kind: 'INDICATOR',

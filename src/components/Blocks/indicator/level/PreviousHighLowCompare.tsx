@@ -31,7 +31,7 @@ const PreviousHighLowCompare: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'COMPARE',
-			label: 'previous_high_low_compare',
+			label: 'previousHighLowCompare',
 			operator: rightComparison,
 			left: {
 				kind: 'PRICE',

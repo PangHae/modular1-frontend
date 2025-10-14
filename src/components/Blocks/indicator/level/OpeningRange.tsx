@@ -26,7 +26,7 @@ const OpeningRange: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'CROSS',
-			label: 'opening_range_cross',
+			label: 'openingRangeCross',
 			direction,
 			left: {
 				kind: 'PRICE',
@@ -47,10 +47,10 @@ const OpeningRange: FC<BlockProps> = ({ ref }) => {
 
 	useEffect(() => {
 		if (ref?.current) {
-			ref.current.openingRange = createJson;
+			ref.current.openingRangeCross = createJson;
 		} else {
 			ref.current = {
-				openingRange: createJson,
+				openingRangeCross: createJson,
 			};
 		}
 	}, [subfield, direction]);

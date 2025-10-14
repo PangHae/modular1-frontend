@@ -30,7 +30,7 @@ const BandCross: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'CROSS',
-			label: 'band_cross',
+			label: 'bandCross',
 			direction,
 			left: {
 				kind: 'PRICE',

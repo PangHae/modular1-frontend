@@ -24,7 +24,7 @@ const MACDCross: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'CROSS',
-			label: 'macd_cross',
+			label: 'macdCross',
 			direction,
 			left: {
 				kind: 'INDICATOR',

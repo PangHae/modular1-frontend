@@ -46,7 +46,7 @@ const Execution: FC<BlockProps> = ({ ref }) => {
 
 		return {
 			type: 'COMPARE',
-			label: 'execution_compare',
+			label: 'executionCompare',
 			operator: rightComparison,
 			left: {
 				kind: 'PRICE',
@@ -59,10 +59,10 @@ const Execution: FC<BlockProps> = ({ ref }) => {
 
 	useEffect(() => {
 		if (ref?.current) {
-			ref.current.execution = createJson;
+			ref.current.executionCompare = createJson;
 		} else {
 			ref.current = {
-				execution: createJson,
+				executionCompare: createJson,
 			};
 		}
 	}, [rightValueType, rightComparison]);

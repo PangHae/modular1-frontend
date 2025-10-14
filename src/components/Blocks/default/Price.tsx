@@ -60,7 +60,7 @@ const Price: FC<BlockProps> = ({ ref }) => {
 		}
 		return {
 			type: 'COMPARE',
-			label: 'price_compare',
+			label: 'priceCompare',
 			operator: rightComparison,
 			left: {
 				kind: 'PRICE',
@@ -73,10 +73,10 @@ const Price: FC<BlockProps> = ({ ref }) => {
 
 	useEffect(() => {
 		if (ref?.current) {
-			ref.current.price = createJson;
+			ref.current.priceCompare = createJson;
 		} else {
 			ref.current = {
-				price: createJson,
+				priceCompare: createJson,
 			};
 		}
 	}, [leftValue, leftTimeframe, rightValueType, rightComparison]);

@@ -30,7 +30,7 @@ const YearHighLowCompare: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'COMPARE',
-			label: 'year_high_low_compare',
+			label: 'yearHighLowCompare',
 			operator: rightComparison,
 			left: {
 				kind: 'PRICE',

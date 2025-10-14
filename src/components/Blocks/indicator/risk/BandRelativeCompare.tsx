@@ -24,7 +24,7 @@ const BandRelativeCompare: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'COMPARE',
-			label: 'band_relative_compare',
+			label: 'bandRelativeCompare',
 			operator: rightComparison,
 			left: {
 				kind: 'INDICATOR',

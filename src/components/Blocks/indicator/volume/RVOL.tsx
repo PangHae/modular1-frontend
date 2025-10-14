@@ -30,7 +30,7 @@ const RVOL: FC<BlockProps> = ({ ref }) => {
 	const createJson = () => {
 		return {
 			type: 'COMPARE',
-			label: 'rvol_compare',
+			label: 'rvolCompare',
 			operator: rightComparison,
 			left: {
 				kind: 'INDICATOR',
@@ -47,10 +47,10 @@ const RVOL: FC<BlockProps> = ({ ref }) => {
 
 	useEffect(() => {
 		if (ref?.current) {
-			ref.current.rvol = createJson;
+			ref.current.rvolCompare = createJson;
 		} else {
 			ref.current = {
-				rvol: createJson,
+				rvolCompare: createJson,
 			};
 		}
 	}, [timeframe, rightValue]);

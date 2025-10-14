@@ -38,7 +38,7 @@ const RSICross: FC<BlockProps> = ({ ref }) => {
 
 		return {
 			type: 'CROSS',
-			label: 'rsi-cross',
+			label: 'rsiCross',
 			direction: rightComparison,
 			left: {
 				kind: 'INDICATOR',
