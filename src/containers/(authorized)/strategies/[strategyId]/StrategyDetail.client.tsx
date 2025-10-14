@@ -9,10 +9,18 @@ import {
 	TrendingUp,
 	TrendingDown,
 	BarChart3,
+	Play,
+	Trash,
+	Square,
 } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { useExecutionById } from '@/hooks/api/execution/useExecutionById';
 import { useStrategyDetail } from '@/hooks/api/strategy/useStrategyDetail';
 import { cn } from '@/lib/utils';
@@ -76,9 +84,25 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 								</div>
 							</div>
 						</div>
-						<Button variant="ghost" size="sm">
-							<MoreVertical className="w-4 h-4" />
-						</Button>
+						<DropdownMenu>
+							<DropdownMenuTrigger className="cursor-pointer">
+								<MoreVertical className="w-4 h-4" />
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="start">
+								<DropdownMenuItem className="cursor-pointer">
+									<Play className="w-[16px] h-[16px]" />
+									전략 실행
+								</DropdownMenuItem>
+								<DropdownMenuItem className="cursor-pointer">
+									<Square className="w-[16px] h-[16px]" />
+									전략 정지
+								</DropdownMenuItem>
+								<DropdownMenuItem className="cursor-pointer">
+									<Trash className="w-[16px] h-[16px]" />
+									전략 삭제
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
 					</div>
 
 					{/* 성과 지표 카드 */}
