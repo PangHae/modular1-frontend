@@ -1,3 +1,27 @@
+export type PriceType = 'high' | 'low' | 'close';
+export type PreviousPriceType =
+	| 'PREVIOUS_HIGH'
+	| 'PREVIOUS_LOW'
+	| 'PREVIOUS_OPEN'
+	| 'PREVIOUS_CLOSE';
+export type TradeMetricType = 'CUMULATIVE_VOLUME' | 'CUMULATIVE_AMOUNT';
+export type ExecutionType = 'TRADE_VOLUME';
+export type ChangeRateType = 'change_rate';
+export type TimeframeType = 'tick' | '1m' | '5m' | '15m' | '1h' | '4h' | '1d';
+export type EMAPeriodType = '5' | '20' | '60' | '120';
+export type DirectionType = 'UP' | 'DOWN';
+export type ComparisonType = '>' | '<' | '>=' | '<=';
+export type RSIPeriodType = '7' | '14' | '21';
+export type BollingerBandBaseLineType = 'upper' | 'lower';
+export type RVOLThreshold = '0.8' | '1.0' | '1.5' | '2.0';
+export type OpeningRangeSubfieldType = 'high' | 'low';
+export type YearHighLowType = '52_WEEK_HIGH' | '52_WEEK_LOW';
+
+export interface BlockProps {
+	ref: React.RefObject<{ [key: string]: () => Node } | null> | null;
+	disabled?: boolean;
+}
+
 // 공통 필드
 export interface BaseNode {
 	type: string;
@@ -14,7 +38,7 @@ export interface GroupNode extends BaseNode {
 // === COMPARE 노드 ===
 export interface CompareNode extends BaseNode {
 	type: 'COMPARE';
-	operator: '>' | '<' | '>=' | '<=' | '==' | '!=';
+	operator: ComparisonType;
 	left: Operand;
 	right: Operand;
 }
@@ -22,16 +46,9 @@ export interface CompareNode extends BaseNode {
 // === CROSS 노드 ===
 export interface CrossNode extends BaseNode {
 	type: 'CROSS';
-	direction: 'UP' | 'DOWN';
+	direction: DirectionType;
 	left: Operand;
 	right: Operand;
-}
-
-// === HOLD 노드 ===
-export interface HoldNode extends BaseNode {
-	type: 'HOLD';
-	condition: Node; // 내부 조건 노드
-	period: string; // 예: "15m", "1h"
 }
 
 // === 가능한 피연산자 ===
@@ -45,13 +62,13 @@ export type Operand =
 // === CONSTANT ===
 export interface ConstantOperand {
 	kind: 'CONSTANT';
-	constant: { value: number };
+	constant: { value: number; unit?: string };
 }
 
 // === PRICE ===
 export interface PriceOperand {
 	kind: 'PRICE';
-	field: 'high' | 'low' | 'close';
+	field: PriceType | TradeMetricType | ExecutionType | ChangeRateType;
 	timeframe: string;
 }
 
@@ -67,15 +84,20 @@ export interface IndicatorOperand {
 // === LEVEL ===
 export interface LevelOperand {
 	kind: 'LEVEL';
+	level_name: string;
 	value: number;
 }
 
 // === PROFIT/LOSS ===
 export interface ProfitLossOperand {
 	kind: 'PROFIT_AND_LOSS';
-	field: 'profit' | 'loss' | 'pnl';
-	timeframe?: string;
+	profit_and_loss_field: 'percent';
+}
+
+export interface TradeNode {
+	orderQuantity: number;
+	node: Node;
 }
 
 // === 최종 Node 타입 (Union)
-export type Node = GroupNode | CompareNode | CrossNode | HoldNode;
+export type Node = GroupNode | CompareNode | CrossNode;

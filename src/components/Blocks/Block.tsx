@@ -12,6 +12,8 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+
 const BlockTitle: FC<PropsWithChildren<{ className?: string }>> = ({
 	className,
 	children,
@@ -23,26 +25,51 @@ const BlockTitle: FC<PropsWithChildren<{ className?: string }>> = ({
 	);
 };
 
+const BlockSubtitle: FC<PropsWithChildren<{ className?: string }>> = ({
+	className,
+	children,
+}) => {
+	return (
+		<span className={cn('text-[18px] font-semibold', className)}>
+			{children}
+		</span>
+	);
+};
+
 interface InputProps extends ComponentProps<'input'> {
 	placeholder: string;
 	value?: string;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	className?: string;
+	showTooltip?: boolean;
 }
 
-const BlockInput: FC<InputProps> = ({
+const BlockInput: FC<PropsWithChildren<InputProps>> = ({
 	placeholder,
 	value,
 	onChange,
 	className,
+	children,
+	disabled = false,
+	showTooltip = true,
+	...props
 }) => {
 	return (
-		<Input
-			className={className}
-			placeholder={placeholder}
-			value={value}
-			onChange={onChange}
-		/>
+		<Tooltip>
+			<TooltipTrigger>
+				<Input
+					className={cn('bg-white!', className)}
+					placeholder={placeholder}
+					value={value}
+					onChange={onChange}
+					disabled={disabled}
+					{...props}
+				/>
+			</TooltipTrigger>
+			{disabled || !showTooltip ? null : (
+				<TooltipContent>{children}</TooltipContent>
+			)}
+		</Tooltip>
 	);
 };
 
@@ -51,6 +78,7 @@ interface DropdownProps {
 	items: { category: string; options: { label: string; value: string }[] }[];
 	value: string;
 	onChange: (value: string) => void;
+	disabled?: boolean;
 }
 
 const BlockDropdown: FC<DropdownProps> = ({
@@ -58,10 +86,15 @@ const BlockDropdown: FC<DropdownProps> = ({
 	items,
 	onChange,
 	value,
+	disabled = false,
 }) => {
 	return (
-		<Select value={value} onValueChange={(value) => onChange(value)}>
-			<SelectTrigger>
+		<Select
+			value={value}
+			onValueChange={(value) => onChange(value)}
+			disabled={disabled}
+		>
+			<SelectTrigger className="bg-white!">
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>
 			<SelectContent>
@@ -95,6 +128,7 @@ const Block = Object.assign(BlockContainer, {
 	dropdown: BlockDropdown,
 	input: BlockInput,
 	title: BlockTitle,
+	subtitle: BlockSubtitle,
 });
 
 export default Block;

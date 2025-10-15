@@ -149,7 +149,12 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 	}, [currentStep, children]);
 
 	return (
-		<div className={cn('flex flex-col h-full bg-custom-gray-bg', className)}>
+		<div
+			className={cn(
+				'flex flex-col h-full bg-custom-gray-bg overflow-y-auto',
+				className
+			)}
+		>
 			{/* 상단 진행 표시바 */}
 			<div className="relative flex items-center justify-between gap-4 px-6 py-8 bg-white">
 				<div className="flex gap-4 items-center">

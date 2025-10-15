@@ -19,6 +19,7 @@ const chartConfig = {
 const ProfitRateCard: FC<Props> = ({ profitRateSeries }) => {
 	const [selectedPeriod, setSelectedPeriod] =
 		useState<ProfitDataKey>('oneMonth');
+	const noProfitRateData = profitRateSeries[selectedPeriod].length === 0;
 	return (
 		<Card className="flex-1">
 			<CardHeader>
@@ -89,12 +90,17 @@ const ProfitRateCard: FC<Props> = ({ profitRateSeries }) => {
 				</div>
 			</CardHeader>
 			<CardContent className="h-full pl-0">
-				<ProfitRateLineChart
-					id="strategy-profit-rate-chart"
-					chartConfig={chartConfig}
-					chartLineData={profitRateSeries[selectedPeriod]}
-					dataKey="cumulativeProfitRate"
-				/>
+				{!noProfitRateData && (
+					<ProfitRateLineChart
+						id="strategy-profit-rate-chart"
+						chartConfig={chartConfig}
+						chartLineData={profitRateSeries[selectedPeriod]}
+						dataKey="cumulativeProfitRate"
+					/>
+				)}
+				{noProfitRateData && (
+					<div className="text-center text-gray-400 py-8">No data</div>
+				)}
 			</CardContent>
 		</Card>
 	);
