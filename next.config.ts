@@ -11,25 +11,28 @@ const nextConfig: NextConfig = {
 		],
 	},
 	rewrites: async () => {
-		return [
-			{
-				source: '/api/v1/auth/:path*',
-				destination: `${process.env.AUTH_SERVICE_URL}/api/v1/auth/:path*`,
-			},
+		if (process.env.NODE_ENV === 'development') {
+			return [
+				{
+					source: '/api/v1/auth/:path*',
+					destination: `${process.env.AUTH_SERVICE_URL}/api/v1/auth/:path*`,
+				},
 
-			{
-				source: '/api/v1/strategies/:path*',
-				destination: `${process.env.STRATEGIES_SERVICE_URL}/api/v1/strategies/:path*`,
-			},
-			{
-				source: '/api/v1/trade/:path*',
-				destination: `${process.env.TRADING_SERVICE_URL}/api/v1/trade/:path*`,
-			},
-			{
-				source: '/api/v1/accounts/:path*',
-				destination: `${process.env.STRATEGIES_SERVICE_URL}/api/v1/accounts/:path*`,
-			},
-		];
+				{
+					source: '/api/v1/strategies/:path*',
+					destination: `${process.env.STRATEGIES_SERVICE_URL}/api/v1/strategies/:path*`,
+				},
+				{
+					source: '/api/v1/trade/:path*',
+					destination: `${process.env.TRADING_SERVICE_URL}/api/v1/trade/:path*`,
+				},
+				{
+					source: '/api/v1/accounts/:path*',
+					destination: `${process.env.STRATEGIES_SERVICE_URL}/api/v1/accounts/:path*`,
+				},
+			];
+		}
+		return [];
 	},
 };
 
