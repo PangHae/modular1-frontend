@@ -41,6 +41,7 @@ interface InputProps extends ComponentProps<'input'> {
 	value?: string;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	className?: string;
+	showTooltip?: boolean;
 }
 
 const BlockInput: FC<PropsWithChildren<InputProps>> = ({
@@ -49,6 +50,9 @@ const BlockInput: FC<PropsWithChildren<InputProps>> = ({
 	onChange,
 	className,
 	children,
+	disabled = false,
+	showTooltip = true,
+	...props
 }) => {
 	return (
 		<Tooltip>
@@ -58,9 +62,13 @@ const BlockInput: FC<PropsWithChildren<InputProps>> = ({
 					placeholder={placeholder}
 					value={value}
 					onChange={onChange}
+					disabled={disabled}
+					{...props}
 				/>
 			</TooltipTrigger>
-			<TooltipContent>{children}</TooltipContent>
+			{disabled || !showTooltip ? null : (
+				<TooltipContent>{children}</TooltipContent>
+			)}
 		</Tooltip>
 	);
 };
@@ -70,6 +78,7 @@ interface DropdownProps {
 	items: { category: string; options: { label: string; value: string }[] }[];
 	value: string;
 	onChange: (value: string) => void;
+	disabled?: boolean;
 }
 
 const BlockDropdown: FC<DropdownProps> = ({
@@ -77,9 +86,14 @@ const BlockDropdown: FC<DropdownProps> = ({
 	items,
 	onChange,
 	value,
+	disabled = false,
 }) => {
 	return (
-		<Select value={value} onValueChange={(value) => onChange(value)}>
+		<Select
+			value={value}
+			onValueChange={(value) => onChange(value)}
+			disabled={disabled}
+		>
 			<SelectTrigger className="bg-white!">
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>

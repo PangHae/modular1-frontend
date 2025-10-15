@@ -9,11 +9,25 @@ import {
 } from '@/@types/StrategyTemplateNode';
 
 import Block from '../../Block';
+interface RVOLProps extends BlockProps {
+	initialTimeframe?: TimeframeType;
+	initialRightValue?: RVOLThreshold;
+	initialRightComparison?: ComparisonType;
+}
 
-const RVOL: FC<BlockProps> = ({ ref }) => {
-	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
-	const [rightValue, setRightValue] = useState<RVOLThreshold>('0.8');
-	const [rightComparison, setRightComparison] = useState<ComparisonType>('>=');
+const RVOL: FC<RVOLProps> = ({
+	ref,
+	initialTimeframe = '1d',
+	initialRightValue = '0.8',
+	initialRightComparison = '>=',
+	disabled = false,
+}) => {
+	const [timeframe, setTimeframe] = useState<TimeframeType>(initialTimeframe);
+	const [rightValue, setRightValue] =
+		useState<RVOLThreshold>(initialRightValue);
+	const [rightComparison, setRightComparison] = useState<ComparisonType>(
+		initialRightComparison
+	);
 
 	const handleChangeTimeframe = (value: string) => {
 		setTimeframe(value as TimeframeType);
@@ -46,12 +60,14 @@ const RVOL: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.rvolCompare = createJson;
-		} else {
-			ref.current = {
-				rvolCompare: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.rvolCompare = createJson;
+			} else {
+				ref.current = {
+					rvolCompare: createJson,
+				};
+			}
 		}
 	}, [timeframe, rightValue]);
 
@@ -78,6 +94,7 @@ const RVOL: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
+					disabled={disabled}
 				/>
 				기준 상대 거래량이
 				<Block.dropdown
@@ -95,6 +112,7 @@ const RVOL: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightValue}
 					onChange={handleChangeRightValue}
+					disabled={disabled}
 				/>
 				<Block.dropdown
 					placeholder="비교"
@@ -111,6 +129,7 @@ const RVOL: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
+					disabled={disabled}
 				/>
 				일 때
 			</div>

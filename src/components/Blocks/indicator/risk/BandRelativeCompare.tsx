@@ -9,9 +9,21 @@ import {
 
 import Block from '../../Block';
 
-const BandRelativeCompare: FC<BlockProps> = ({ ref }) => {
-	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
-	const [rightComparison, setRightComparison] = useState<ComparisonType>('>=');
+interface BandRelativeCompareProps extends BlockProps {
+	initialTimeframe?: TimeframeType;
+	initialRightComparison?: ComparisonType;
+}
+
+const BandRelativeCompare: FC<BandRelativeCompareProps> = ({
+	ref,
+	initialTimeframe = '1d',
+	initialRightComparison = '>=',
+	disabled = false,
+}) => {
+	const [timeframe, setTimeframe] = useState<TimeframeType>(initialTimeframe);
+	const [rightComparison, setRightComparison] = useState<ComparisonType>(
+		initialRightComparison
+	);
 
 	const handleChangeTimeframe = (value: string) => {
 		setTimeframe(value as TimeframeType);
@@ -48,12 +60,15 @@ const BandRelativeCompare: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.bandRelativeCompare = createJson;
+		if (ref) {
+			if (ref.current) {
+				ref.current.bandRelativeCompare = createJson;
+			} else {
+				ref.current = {
+					bandRelativeCompare: createJson,
+				};
+			}
 		} else {
-			ref.current = {
-				bandRelativeCompare: createJson,
-			};
 		}
 	}, [timeframe, rightComparison]);
 
@@ -80,6 +95,7 @@ const BandRelativeCompare: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
+					disabled={disabled}
 				/>
 				기준 볼린저밴드의 폭이 직전봉 폭
 				<Block.dropdown
@@ -97,6 +113,7 @@ const BandRelativeCompare: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
+					disabled={disabled}
 				/>
 				일 때
 			</div>

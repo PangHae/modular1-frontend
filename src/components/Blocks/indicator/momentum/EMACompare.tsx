@@ -10,10 +10,23 @@ import {
 
 import Block from '../../Block';
 
-const EMACompare: FC<BlockProps> = ({ ref }) => {
-	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
-	const [direction, setDirection] = useState<DirectionType>('UP');
-	const [rightValue, setRightValue] = useState<EMAPeriodType>('5');
+interface EMACompareProps extends BlockProps {
+	initialTimeframe?: TimeframeType;
+	initialDirection?: DirectionType;
+	initialRightValue?: EMAPeriodType;
+}
+
+const EMACompare: FC<EMACompareProps> = ({
+	ref,
+	initialTimeframe = '1d',
+	initialDirection = 'UP',
+	initialRightValue = '5',
+	disabled = false,
+}) => {
+	const [timeframe, setTimeframe] = useState<TimeframeType>(initialTimeframe);
+	const [direction, setDirection] = useState<DirectionType>(initialDirection);
+	const [rightValue, setRightValue] =
+		useState<EMAPeriodType>(initialRightValue);
 
 	const handleChangeTimeframe = (value: string) => {
 		setTimeframe(value as TimeframeType);
@@ -49,12 +62,14 @@ const EMACompare: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.emaCompare = createJson;
-		} else {
-			ref.current = {
-				emaCompare: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.emaCompare = createJson;
+			} else {
+				ref.current = {
+					emaCompare: createJson,
+				};
+			}
 		}
 	}, [timeframe, direction, rightValue]);
 
@@ -81,6 +96,7 @@ const EMACompare: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
+					disabled={disabled}
 				/>
 				기준 종가가 EMA
 				<Block.dropdown
@@ -98,6 +114,7 @@ const EMACompare: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightValue}
 					onChange={handleChangeRightValue}
+					disabled={disabled}
 				/>
 				보다
 				<Block.dropdown
@@ -113,6 +130,7 @@ const EMACompare: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={direction}
 					onChange={handleChangeDirection}
+					disabled={disabled}
 				/>
 				때
 			</div>

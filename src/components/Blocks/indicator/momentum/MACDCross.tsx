@@ -9,9 +9,19 @@ import {
 
 import Block from '../../Block';
 
-const MACDCross: FC<BlockProps> = ({ ref }) => {
-	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
-	const [direction, setDirection] = useState<DirectionType>('UP');
+interface MACDCrossProps extends BlockProps {
+	initialTimeframe?: TimeframeType;
+	initialDirection?: DirectionType;
+}
+
+const MACDCross: FC<MACDCrossProps> = ({
+	ref,
+	initialTimeframe = '1d',
+	initialDirection = 'UP',
+	disabled = false,
+}) => {
+	const [timeframe, setTimeframe] = useState<TimeframeType>(initialTimeframe);
+	const [direction, setDirection] = useState<DirectionType>(initialDirection);
 
 	const handleChangeTimeframe = (value: string) => {
 		setTimeframe(value as TimeframeType);
@@ -52,12 +62,14 @@ const MACDCross: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.macdCross = createJson;
-		} else {
-			ref.current = {
-				macdCross: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.macdCross = createJson;
+			} else {
+				ref.current = {
+					macdCross: createJson,
+				};
+			}
 		}
 	}, []);
 
@@ -84,6 +96,7 @@ const MACDCross: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
+					disabled={disabled}
 				/>
 				기준 MACD선이 시그널선을
 				<Block.dropdown
@@ -99,6 +112,7 @@ const MACDCross: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={direction}
 					onChange={handleChangeDirection}
+					disabled={disabled}
 				/>
 				할 때
 			</div>

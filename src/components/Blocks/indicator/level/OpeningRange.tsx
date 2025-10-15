@@ -11,9 +11,20 @@ import {
 
 import Block from '../../Block';
 
-const OpeningRange: FC<BlockProps> = ({ ref }) => {
-	const [subfield, setSubfield] = useState<OpeningRangeSubfieldType>('high');
-	const [direction, setDirection] = useState<DirectionType>('UP');
+interface OpeningRangeProps extends BlockProps {
+	initialSubfield?: OpeningRangeSubfieldType;
+	initialDirection?: DirectionType;
+}
+
+const OpeningRange: FC<OpeningRangeProps> = ({
+	ref,
+	initialSubfield = 'high',
+	initialDirection = 'UP',
+	disabled = false,
+}) => {
+	const [subfield, setSubfield] =
+		useState<OpeningRangeSubfieldType>(initialSubfield);
+	const [direction, setDirection] = useState<DirectionType>(initialDirection);
 
 	const handleChangeSubfield = (value: string) => {
 		setSubfield(value as OpeningRangeSubfieldType);
@@ -46,12 +57,14 @@ const OpeningRange: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.openingRangeCross = createJson;
-		} else {
-			ref.current = {
-				openingRangeCross: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.openingRangeCross = createJson;
+			} else {
+				ref.current = {
+					openingRangeCross: createJson,
+				};
+			}
 		}
 	}, [subfield, direction]);
 
@@ -75,6 +88,7 @@ const OpeningRange: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={subfield}
 					onChange={handleChangeSubfield}
+					disabled={disabled}
 				/>
 				보다 종가가
 				<Block.dropdown
@@ -90,6 +104,7 @@ const OpeningRange: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={direction}
 					onChange={handleChangeDirection}
+					disabled={disabled}
 				/>
 				질 때
 			</div>

@@ -12,12 +12,29 @@ import {
 
 import Block from '../../Block';
 
-const RSICompare: FC<BlockProps> = ({ ref }) => {
-	const rightValueRef = useRef<HTMLInputElement>(null);
+interface RSICompareProps extends BlockProps {
+	initialTimeframe?: TimeframeType;
+	initialRightValue?: RSIPeriodType;
+	initialRightComparison?: ComparisonType;
+	initialRSICompareValue?: string;
+}
 
-	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
-	const [rightValue, setRightValue] = useState<RSIPeriodType>('14');
-	const [rightComparison, setRightComparison] = useState<ComparisonType>('>=');
+const RSICompare: FC<RSICompareProps> = ({
+	ref,
+	initialTimeframe = '1d',
+	initialRightValue = '14',
+	initialRightComparison = '>=',
+	initialRSICompareValue = '',
+	disabled = false,
+}) => {
+	const rsiCompareValueRef = useRef<HTMLInputElement>(null);
+
+	const [timeframe, setTimeframe] = useState<TimeframeType>(initialTimeframe);
+	const [rightValue, setRightValue] =
+		useState<RSIPeriodType>(initialRightValue);
+	const [rightComparison, setRightComparison] = useState<ComparisonType>(
+		initialRightComparison
+	);
 
 	const handleChangeTimeframe = (value: string) => {
 		setTimeframe(value as TimeframeType);
@@ -46,18 +63,20 @@ const RSICompare: FC<BlockProps> = ({ ref }) => {
 			},
 			right: {
 				kind: 'CONSTANT',
-				constant: { value: rightValueRef.current?.value },
+				constant: { value: rsiCompareValueRef.current?.value },
 			},
 		} as unknown as Node;
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.rsiCompare = createJson;
-		} else {
-			ref.current = {
-				rsiCompare: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.rsiCompare = createJson;
+			} else {
+				ref.current = {
+					rsiCompare: createJson,
+				};
+			}
 		}
 	}, [timeframe, rightValue, rightComparison]);
 
@@ -84,6 +103,7 @@ const RSICompare: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
+					disabled={disabled}
 				/>
 				기준 RSI
 				<Block.dropdown
@@ -100,13 +120,16 @@ const RSICompare: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightValue}
 					onChange={handleChangeRightValue}
+					disabled={disabled}
 				/>
 				가
 				<Block.input
-					ref={rightValueRef}
+					ref={rsiCompareValueRef}
 					type="number"
 					className="w-[100px]"
 					placeholder="값 입력"
+					defaultValue={initialRSICompareValue}
+					disabled={disabled}
 				>
 					0부터 100 사이의 값을 입력해주세요.
 				</Block.input>
@@ -125,6 +148,7 @@ const RSICompare: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
+					disabled={disabled}
 				/>
 				일 때
 			</div>

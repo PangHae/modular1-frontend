@@ -33,16 +33,12 @@ export interface StrategyMetaData {
 }
 
 export interface StrategyTemplate {
-	id: string;
-	strategyName: string;
+	strategy_name: string;
 	version: number;
-	strategyId: number;
-	ownerId: string;
+	owner_id: string;
 	meta: StrategyMetaData;
-	sell: { node: GroupNode } | null;
-	buy: { node: GroupNode } | null;
-	createdAt: string;
-	updatedAt: string;
+	sell?: { node: GroupNode };
+	buy?: { node: GroupNode };
 }
 
 export interface StrategyAiSummary {

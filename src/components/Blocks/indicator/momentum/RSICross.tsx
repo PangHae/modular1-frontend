@@ -12,12 +12,29 @@ import {
 
 import Block from '../../Block';
 
-const RSICross: FC<BlockProps> = ({ ref }) => {
-	const rightValueRef = useRef<HTMLInputElement>(null);
+interface RSICrossProps extends BlockProps {
+	initialTimeframe?: TimeframeType;
+	initialRightValue?: RSIPeriodType;
+	initialRightComparison?: DirectionType;
+	initialRSICrossValue?: string;
+}
 
-	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
-	const [rightValue, setRightValue] = useState<RSIPeriodType>('14');
-	const [rightComparison, setRightComparison] = useState<DirectionType>('UP');
+const RSICross: FC<RSICrossProps> = ({
+	ref,
+	initialTimeframe = '1d',
+	initialRightValue = '14',
+	initialRightComparison = 'UP',
+	initialRSICrossValue = '',
+	disabled = false,
+}) => {
+	const rsiCrossValueRef = useRef<HTMLInputElement>(null);
+
+	const [timeframe, setTimeframe] = useState<TimeframeType>(initialTimeframe);
+	const [rightValue, setRightValue] =
+		useState<RSIPeriodType>(initialRightValue);
+	const [rightComparison, setRightComparison] = useState<DirectionType>(
+		initialRightComparison
+	);
 
 	const handleChangeTimeframe = (value: string) => {
 		setTimeframe(value as TimeframeType);
@@ -32,7 +49,7 @@ const RSICross: FC<BlockProps> = ({ ref }) => {
 	};
 
 	const createJson = () => {
-		if (!rightValueRef.current) {
+		if (!rsiCrossValueRef.current) {
 			return {} as Node;
 		}
 
@@ -50,18 +67,20 @@ const RSICross: FC<BlockProps> = ({ ref }) => {
 			},
 			right: {
 				kind: 'CONSTANT',
-				constant: { value: rightValueRef.current?.value },
+				constant: { value: rsiCrossValueRef.current?.value },
 			},
 		} as unknown as Node;
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.rsiCross = createJson;
-		} else {
-			ref.current = {
-				rsiCross: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.rsiCross = createJson;
+			} else {
+				ref.current = {
+					rsiCross: createJson,
+				};
+			}
 		}
 	}, [timeframe, rightValue, rightComparison]);
 
@@ -88,6 +107,7 @@ const RSICross: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
+					disabled={disabled}
 				/>
 				기준 RSI
 				<Block.dropdown
@@ -104,13 +124,16 @@ const RSICross: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightValue}
 					onChange={handleChangeRightValue}
+					disabled={disabled}
 				/>
 				가
 				<Block.input
-					ref={rightValueRef}
+					ref={rsiCrossValueRef}
 					type="number"
 					className="w-[100px]"
 					placeholder="값 입력"
+					disabled={disabled}
+					defaultValue={initialRSICrossValue}
 				>
 					0부터 100 사이의 값을 입력해주세요.
 				</Block.input>
@@ -128,6 +151,7 @@ const RSICross: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
+					disabled={disabled}
 				/>
 				할 때
 			</div>

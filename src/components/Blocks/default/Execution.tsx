@@ -12,11 +12,25 @@ import Block from '../Block';
 
 type ValueType = 'constant' | 'average';
 
-const Execution: FC<BlockProps> = ({ ref }) => {
+interface ExecutionProps extends BlockProps {
+	initialValueType?: ValueType;
+	initialComparison?: ComparisonType;
+	initialValue?: string;
+}
+
+const Execution: FC<ExecutionProps> = ({
+	ref,
+	initialValueType = 'constant',
+	initialValue = '',
+	initialComparison = '<=',
+	disabled = false,
+}) => {
 	const rightExecutionRef = useRef<HTMLInputElement>(null);
 
-	const [rightValueType, setRightValueType] = useState<ValueType>('constant');
-	const [rightComparison, setRightComparison] = useState<ComparisonType>('<=');
+	const [rightValueType, setRightValueType] =
+		useState<ValueType>(initialValueType);
+	const [rightComparison, setRightComparison] =
+		useState<ComparisonType>(initialComparison);
 
 	const handleChangeRightValueType = (value: string) => {
 		setRightValueType(value as ValueType);
@@ -58,12 +72,14 @@ const Execution: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.executionCompare = createJson;
-		} else {
-			ref.current = {
-				executionCompare: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.executionCompare = createJson;
+			} else {
+				ref.current = {
+					executionCompare: createJson,
+				};
+			}
 		}
 	}, [rightValueType, rightComparison]);
 
@@ -85,6 +101,7 @@ const Execution: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightValueType}
 					onChange={handleChangeRightValueType}
+					disabled={disabled}
 				/>
 				{rightValueType === 'constant' && (
 					<>
@@ -93,6 +110,8 @@ const Execution: FC<BlockProps> = ({ ref }) => {
 							type="number"
 							className="w-[100px]"
 							placeholder="값 입력"
+							defaultValue={initialValue}
+							disabled={disabled}
 						>
 							0 이상의 값을 입력해주세요.
 						</Block.input>
@@ -114,6 +133,7 @@ const Execution: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
+					disabled={disabled}
 				/>
 				일 때
 			</div>

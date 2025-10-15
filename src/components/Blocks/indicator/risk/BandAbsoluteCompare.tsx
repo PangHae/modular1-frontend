@@ -9,11 +9,25 @@ import {
 
 import Block from '../../Block';
 
-const BandAbsoluteCompare: FC<BlockProps> = ({ ref }) => {
-	const rightValueRef = useRef<HTMLInputElement>(null);
+interface BandAbsoluteCompareProps extends BlockProps {
+	initialTimeframe?: TimeframeType;
+	initialRightComparison?: ComparisonType;
+	initialBandAbsoluteCompareValue?: string;
+}
 
-	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
-	const [rightComparison, setRightComparison] = useState<ComparisonType>('>=');
+const BandAbsoluteCompare: FC<BandAbsoluteCompareProps> = ({
+	ref,
+	initialTimeframe = '1d',
+	initialRightComparison = '>=',
+	initialBandAbsoluteCompareValue = '',
+	disabled = false,
+}) => {
+	const bandAbsoluteCompareValueRef = useRef<HTMLInputElement>(null);
+
+	const [timeframe, setTimeframe] = useState<TimeframeType>(initialTimeframe);
+	const [rightComparison, setRightComparison] = useState<ComparisonType>(
+		initialRightComparison
+	);
 
 	const handleChangeTimeframe = (value: string) => {
 		setTimeframe(value as TimeframeType);
@@ -39,18 +53,23 @@ const BandAbsoluteCompare: FC<BlockProps> = ({ ref }) => {
 			},
 			right: {
 				kind: 'CONSTANT',
-				constant: { value: rightValueRef.current?.value, unit: 'percent' },
+				constant: {
+					value: bandAbsoluteCompareValueRef.current?.value,
+					unit: 'percent',
+				},
 			},
 		} as unknown as Node;
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.bandAbsoluteCompare = createJson;
-		} else {
-			ref.current = {
-				bandAbsoluteCompare: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.bandAbsoluteCompare = createJson;
+			} else {
+				ref.current = {
+					bandAbsoluteCompare: createJson,
+				};
+			}
 		}
 	}, [timeframe, rightComparison]);
 
@@ -77,13 +96,16 @@ const BandAbsoluteCompare: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
+					disabled={disabled}
 				/>
 				기준 볼린저밴드의 폭이 직전봉 폭
 				<Block.input
-					ref={rightValueRef}
+					ref={bandAbsoluteCompareValueRef}
 					type="number"
 					className="w-[100px]"
 					placeholder="값 입력"
+					disabled={disabled}
+					defaultValue={initialBandAbsoluteCompareValue}
 				>
 					2부터 5 사이의 값을 입력해주세요.
 				</Block.input>
@@ -103,6 +125,7 @@ const BandAbsoluteCompare: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
+					disabled={disabled}
 				/>
 				일 때
 			</div>

@@ -12,9 +12,20 @@ import {
 
 import Block from '../../Block';
 
-const MACDCompare: FC<BlockProps> = ({ ref }) => {
-	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
-	const [rightValue, setRightValue] = useState<ComparisonType>('>');
+interface MACDCompareProps extends BlockProps {
+	initialTimeframe?: TimeframeType;
+	initialRightValue?: ComparisonType;
+}
+
+const MACDCompare: FC<MACDCompareProps> = ({
+	ref,
+	initialTimeframe = '1d',
+	initialRightValue = '>',
+	disabled = false,
+}) => {
+	const [timeframe, setTimeframe] = useState<TimeframeType>(initialTimeframe);
+	const [rightValue, setRightValue] =
+		useState<ComparisonType>(initialRightValue);
 
 	const handleChangeTimeframe = (value: string) => {
 		setTimeframe(value as TimeframeType);
@@ -48,12 +59,14 @@ const MACDCompare: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.macdCompare = createJson;
-		} else {
-			ref.current = {
-				macdCompare: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.macdCompare = createJson;
+			} else {
+				ref.current = {
+					macdCompare: createJson,
+				};
+			}
 		}
 	}, [timeframe]);
 	return (
@@ -79,6 +92,7 @@ const MACDCompare: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
+					disabled={disabled}
 				/>
 				기준 MACD 히스토그램 값이
 				<Block.dropdown
@@ -94,6 +108,7 @@ const MACDCompare: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightValue}
 					onChange={handleChangeRightValue}
+					disabled={disabled}
 				/>
 				일 때
 			</div>

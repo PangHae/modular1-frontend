@@ -10,10 +10,23 @@ import {
 
 import Block from '../../Block';
 
-const BandCross: FC<BlockProps> = ({ ref }) => {
-	const [baseLine, setBaseLine] = useState<BollingerBandBaseLineType>('upper');
-	const [direction, setDirection] = useState<DirectionType>('UP');
-	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
+interface BandCrossProps extends BlockProps {
+	initialTimeframe?: TimeframeType;
+	initialBaseLine?: BollingerBandBaseLineType;
+	initialDirection?: DirectionType;
+}
+
+const BandCross: FC<BandCrossProps> = ({
+	ref,
+	initialTimeframe = '1d',
+	initialBaseLine = 'upper',
+	initialDirection = 'UP',
+	disabled = false,
+}) => {
+	const [baseLine, setBaseLine] =
+		useState<BollingerBandBaseLineType>(initialBaseLine);
+	const [direction, setDirection] = useState<DirectionType>(initialDirection);
+	const [timeframe, setTimeframe] = useState<TimeframeType>(initialTimeframe);
 
 	const handleChangeBaseLine = (value: string) => {
 		setBaseLine(value as BollingerBandBaseLineType);
@@ -51,12 +64,14 @@ const BandCross: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.bandCross = createJson;
-		} else {
-			ref.current = {
-				bandCross: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.bandCross = createJson;
+			} else {
+				ref.current = {
+					bandCross: createJson,
+				};
+			}
 		}
 	}, [baseLine, direction, timeframe]);
 
@@ -83,6 +98,7 @@ const BandCross: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
+					disabled={disabled}
 				/>
 				기준 종가가 볼린저밴드의
 				<Block.dropdown
@@ -98,6 +114,7 @@ const BandCross: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={baseLine}
 					onChange={handleChangeBaseLine}
+					disabled={disabled}
 				/>
 				을
 				<Block.dropdown
@@ -113,6 +130,7 @@ const BandCross: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={direction}
 					onChange={handleChangeDirection}
+					disabled={disabled}
 				/>
 				할 때
 			</div>

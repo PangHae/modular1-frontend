@@ -11,9 +11,19 @@ import {
 
 import Block from '../../Block';
 
-const VWAP: FC<BlockProps> = ({ ref }) => {
-	const [timeframe, setTimeframe] = useState<TimeframeType>('1d');
-	const [direction, setDirection] = useState<DirectionType>('UP');
+interface VWAPProps extends BlockProps {
+	initialTimeframe?: TimeframeType;
+	initialDirection?: DirectionType;
+}
+
+const VWAP: FC<VWAPProps> = ({
+	ref,
+	initialTimeframe = '1d',
+	initialDirection = 'UP',
+	disabled = false,
+}) => {
+	const [timeframe, setTimeframe] = useState<TimeframeType>(initialTimeframe);
+	const [direction, setDirection] = useState<DirectionType>(initialDirection);
 
 	const handleChangeTimeframe = (value: string) => {
 		setTimeframe(value as TimeframeType);
@@ -44,12 +54,14 @@ const VWAP: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.vwapCross = createJson;
-		} else {
-			ref.current = {
-				vwapCross: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.vwapCross = createJson;
+			} else {
+				ref.current = {
+					vwapCross: createJson,
+				};
+			}
 		}
 	}, [timeframe, direction]);
 
@@ -76,6 +88,7 @@ const VWAP: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={timeframe}
 					onChange={handleChangeTimeframe}
+					disabled={disabled}
 				/>
 				기준 종가가 VWAP를
 				<Block.dropdown
@@ -91,6 +104,7 @@ const VWAP: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={direction}
 					onChange={handleChangeDirection}
+					disabled={disabled}
 				/>
 				할 때
 			</div>

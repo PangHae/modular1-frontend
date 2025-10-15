@@ -15,15 +15,34 @@ import Block from '../Block';
 
 type ValueType = 'constant' | 'reference';
 
-const Price: FC<BlockProps> = ({ ref }) => {
+interface PriceProps extends BlockProps {
+	initialValueType?: ValueType;
+	initialComparison?: ComparisonType;
+	initialTimeframe?: TimeframeType;
+	initialPriceType?: PriceType;
+	initialPriceValue?: string;
+}
+
+const Price: FC<PriceProps> = ({
+	ref,
+	initialValueType = 'constant',
+	initialComparison = '<=',
+	initialTimeframe = 'tick',
+	initialPriceType = 'high',
+	disabled = false,
+	initialPriceValue = '',
+}) => {
 	const rightPriceRef = useRef<HTMLInputElement>(null);
 
-	const [leftValue, setLeftValue] = useState<PriceType>('high');
-	const [leftTimeframe, setLeftTimeframe] = useState<TimeframeType>('tick');
+	const [leftValue, setLeftValue] = useState<PriceType>(initialPriceType);
+	const [leftTimeframe, setLeftTimeframe] =
+		useState<TimeframeType>(initialTimeframe);
 
-	const [rightValueType, setRightValueType] = useState<ValueType>('constant');
+	const [rightValueType, setRightValueType] =
+		useState<ValueType>(initialValueType);
 
-	const [rightComparison, setRightComparison] = useState<ComparisonType>('<=');
+	const [rightComparison, setRightComparison] =
+		useState<ComparisonType>(initialComparison);
 
 	const handleChangeRightValueType = (value: string) => {
 		setRightValueType(value as ValueType);
@@ -72,12 +91,14 @@ const Price: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.priceCompare = createJson;
-		} else {
-			ref.current = {
-				priceCompare: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.priceCompare = createJson;
+			} else {
+				ref.current = {
+					priceCompare: createJson,
+				};
+			}
 		}
 	}, [leftValue, leftTimeframe, rightValueType, rightComparison]);
 
@@ -104,6 +125,7 @@ const Price: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={leftTimeframe}
 					onChange={handleChangeLeftTimeframe}
+					disabled={disabled}
 				/>
 				기준
 				<Block.dropdown
@@ -120,6 +142,7 @@ const Price: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={leftValue}
 					onChange={handleChangeLeftValue}
+					disabled={disabled}
 				/>
 				이(가)
 				<Block.dropdown
@@ -135,6 +158,7 @@ const Price: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightValueType}
 					onChange={handleChangeRightValueType}
+					disabled={disabled}
 				/>
 				{rightValueType === 'constant' && (
 					<Block.input
@@ -142,6 +166,8 @@ const Price: FC<BlockProps> = ({ ref }) => {
 						type="number"
 						className="w-[100px]"
 						placeholder="가격 입력"
+						disabled={disabled}
+						defaultValue={initialPriceValue}
 					>
 						원하는 가격을 입력해주세요.
 					</Block.input>
@@ -162,6 +188,7 @@ const Price: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
+					disabled={disabled}
 				/>
 				일 때
 			</div>

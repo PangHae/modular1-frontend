@@ -13,14 +13,29 @@ import Block from '../Block';
 type TradeMetricType = 'CUMULATIVE_VOLUME' | 'CUMULATIVE_AMOUNT';
 type ValueType = 'reference' | 'average';
 
-const TradingMetric: FC<BlockProps> = ({ ref }) => {
+interface TradingMetricProps extends BlockProps {
+	initialValueType?: TradeMetricType;
+	initialComparison?: ComparisonType;
+	initialVolumeValueType?: ValueType;
+}
+
+const TradingMetric: FC<TradingMetricProps> = ({
+	ref,
+	initialValueType = 'CUMULATIVE_VOLUME',
+	initialComparison = '<=',
+	initialVolumeValueType = 'reference',
+	disabled = false,
+}) => {
 	const [leftValueType, setLeftValueType] =
-		useState<TradeMetricType>('CUMULATIVE_VOLUME');
-	const [rightComparison, setRightComparison] = useState<ComparisonType>('<=');
-	const [rightVolumeValueType, setRightVolumeValueType] =
-		useState<ValueType>('reference');
-	const [rightAmountValueType, setRightAmountValueType] =
-		useState<ValueType>('reference');
+		useState<TradeMetricType>(initialValueType);
+	const [rightComparison, setRightComparison] =
+		useState<ComparisonType>(initialComparison);
+	const [rightVolumeValueType, setRightVolumeValueType] = useState<ValueType>(
+		initialVolumeValueType
+	);
+	const [rightAmountValueType, setRightAmountValueType] = useState<ValueType>(
+		initialVolumeValueType
+	);
 
 	const handleChangeLeftValue = (value: string) => {
 		setLeftValueType(value as TradeMetricType);
@@ -84,7 +99,7 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 			operator: rightComparison,
 			left: {
 				kind: 'PRICE',
-				name: leftValueType,
+				field: leftValueType,
 				timeframe: 'tick',
 				lookback: 1,
 			},
@@ -95,12 +110,14 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.tradeMetricCompare = createJson;
-		} else {
-			ref.current = {
-				tradeMetricCompare: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.tradeMetricCompare = createJson;
+			} else {
+				ref.current = {
+					tradeMetricCompare: createJson,
+				};
+			}
 		}
 	}, [
 		leftValueType,
@@ -128,6 +145,7 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={leftValueType}
 					onChange={handleChangeLeftValue}
+					disabled={disabled}
 				/>
 				이
 				{leftValueType === 'CUMULATIVE_VOLUME' && (
@@ -150,6 +168,7 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 						]}
 						value={rightVolumeValueType}
 						onChange={handleChangeRightVolumeValueType}
+						disabled={disabled}
 					/>
 				)}
 				{leftValueType === 'CUMULATIVE_AMOUNT' && (
@@ -172,6 +191,7 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 						]}
 						value={rightAmountValueType}
 						onChange={handleChangeRightAmountValueType}
+						disabled={disabled}
 					/>
 				)}
 				<Block.dropdown
@@ -189,6 +209,7 @@ const TradingMetric: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
+					disabled={disabled}
 				/>
 				일 때
 			</div>

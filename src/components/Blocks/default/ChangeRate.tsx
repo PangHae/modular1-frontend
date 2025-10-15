@@ -2,18 +2,28 @@ import { FC, useEffect, useRef, useState } from 'react';
 
 import {
 	BlockProps,
+	ComparisonType,
 	ConstantOperand,
 	Node,
 } from '@/@types/StrategyTemplateNode';
 
 import Block from '../Block';
 
-type ComparisonType = '<=' | '>=' | '>' | '<';
+interface ChangeRateProps extends BlockProps {
+	initialValue?: number;
+	initialComparison?: ComparisonType;
+}
 
-const ChangeRate: FC<BlockProps> = ({ ref }) => {
+const ChangeRate: FC<ChangeRateProps> = ({
+	ref,
+	initialValue = '',
+	initialComparison = '<=',
+	disabled = false,
+}) => {
 	const rightChangeRateRef = useRef<HTMLInputElement>(null);
 
-	const [rightComparison, setRightComparison] = useState<ComparisonType>('<=');
+	const [rightComparison, setRightComparison] =
+		useState<ComparisonType>(initialComparison);
 
 	const handleChangeRightComparison = (value: string) => {
 		setRightComparison(value as ComparisonType);
@@ -41,12 +51,14 @@ const ChangeRate: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.changeRateCompare = createJson;
-		} else {
-			ref.current = {
-				changeRateCompare: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.changeRateCompare = createJson;
+			} else {
+				ref.current = {
+					changeRateCompare: createJson,
+				};
+			}
 		}
 	}, [rightComparison]);
 
@@ -60,6 +72,8 @@ const ChangeRate: FC<BlockProps> = ({ ref }) => {
 					type="number"
 					className="w-[100px]"
 					placeholder="값 입력"
+					defaultValue={initialValue}
+					disabled={disabled}
 				>
 					-100부터 100 사이의 값을 입력해주세요.
 				</Block.input>
@@ -79,6 +93,7 @@ const ChangeRate: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightComparison}
 					onChange={handleChangeRightComparison}
+					disabled={disabled}
 				/>
 				일 때
 			</div>

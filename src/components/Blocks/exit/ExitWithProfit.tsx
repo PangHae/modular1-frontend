@@ -8,7 +8,15 @@ import {
 
 import Block from '../Block';
 
-const ExitWithProfit: FC<BlockProps> = ({ ref }) => {
+interface ExitWithProfitProps extends BlockProps {
+	initialValue?: string;
+}
+
+const ExitWithProfit: FC<ExitWithProfitProps> = ({
+	ref,
+	initialValue = '',
+	disabled = false,
+}) => {
 	const rightProfitRef = useRef<HTMLInputElement>(null);
 
 	const createJson = () => {
@@ -35,12 +43,14 @@ const ExitWithProfit: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.exitWithProfit = createJson;
-		} else {
-			ref.current = {
-				exitWithProfit: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.exitWithProfit = createJson;
+			} else {
+				ref.current = {
+					exitWithProfit: createJson,
+				};
+			}
 		}
 	}, []);
 
@@ -48,9 +58,15 @@ const ExitWithProfit: FC<BlockProps> = ({ ref }) => {
 		<Block className="flex gap-2 p-4 border-2 border-teal-600 rounded-lg bg-teal-50">
 			<Block.subtitle className="text-teal-600">익절 조건</Block.subtitle>
 			<div className="flex items-center gap-1">
-				수익이
-				<Block.input type="number" className="w-[100px]" placeholder="값 입력">
-					0 이상의 값을 입력해주세요.
+				수익률이
+				<Block.input
+					type="number"
+					className="w-[100px]"
+					placeholder="값 입력"
+					defaultValue={initialValue}
+					disabled={disabled}
+				>
+					양수를 입력해주세요.
 				</Block.input>
 				% 이상일 때 전략 종료
 			</div>

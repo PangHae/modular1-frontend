@@ -4,9 +4,19 @@ import { BlockProps, Node, EMAPeriodType } from '@/@types/StrategyTemplateNode';
 
 import Block from '../../Block';
 
-const EMACross: FC<BlockProps> = ({ ref }) => {
-	const [leftEMA, setLeftEMA] = useState<EMAPeriodType>('5');
-	const [rightEMA, setRightEMA] = useState<EMAPeriodType>('60');
+interface EMACrossProps extends BlockProps {
+	initialLeftEMA?: EMAPeriodType;
+	initialRightEMA?: EMAPeriodType;
+}
+
+const EMACross: FC<EMACrossProps> = ({
+	ref,
+	initialLeftEMA = '5',
+	initialRightEMA = '60',
+	disabled = false,
+}) => {
+	const [leftEMA, setLeftEMA] = useState<EMAPeriodType>(initialLeftEMA);
+	const [rightEMA, setRightEMA] = useState<EMAPeriodType>(initialRightEMA);
 
 	const handleChangeLeftEMA = (value: string) => {
 		setLeftEMA(value as EMAPeriodType);
@@ -41,12 +51,14 @@ const EMACross: FC<BlockProps> = ({ ref }) => {
 	};
 
 	useEffect(() => {
-		if (ref?.current) {
-			ref.current.emaCross = createJson;
-		} else {
-			ref.current = {
-				emaCross: createJson,
-			};
+		if (ref) {
+			if (ref.current) {
+				ref.current.emaCross = createJson;
+			} else {
+				ref.current = {
+					emaCross: createJson,
+				};
+			}
 		}
 	}, [leftEMA, rightEMA]);
 
@@ -72,6 +84,7 @@ const EMACross: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={leftEMA}
 					onChange={handleChangeLeftEMA}
+					disabled={disabled}
 				/>
 				이(가) EMA
 				<Block.dropdown
@@ -89,6 +102,7 @@ const EMACross: FC<BlockProps> = ({ ref }) => {
 					]}
 					value={rightEMA}
 					onChange={handleChangeRightEMA}
+					disabled={disabled}
 				/>
 				을 돌파할 때
 			</div>
