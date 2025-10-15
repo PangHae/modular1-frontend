@@ -21,6 +21,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Tabs, TabsTrigger, TabsList, TabsContent } from '@/components/ui/tabs';
 import { useExecutionById } from '@/hooks/api/execution/useExecutionById';
 import { useStrategyDetail } from '@/hooks/api/strategy/useStrategyDetail';
 import { cn } from '@/lib/utils';
@@ -37,8 +38,6 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 		useStrategyDetail(strategyId);
 	const { data: executions, isLoading: isExecutionsLoading } =
 		useExecutionById(strategyId);
-
-	console.log(strategyDetail);
 
 	if (isStrategyDetailLoading || isExecutionsLoading) {
 		return (
@@ -146,59 +145,71 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 							</div>
 						</CardContent>
 					</Card>
+					<Tabs defaultValue="preview">
+						<TabsList>
+							<TabsTrigger className="cursor-pointer" value="preview">
+								전략 미리보기
+							</TabsTrigger>
+							<TabsTrigger className="cursor-pointer" value="detail">
+								전략 상세 정보
+							</TabsTrigger>
+						</TabsList>
+						<TabsContent value="preview">
+							{/* 전략 미리보기 카드 */}
+							<Card>
+								<CardContent className="p-6">
+									<div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
+										<div className="text-gray-500">전략 미리보기</div>
+									</div>
+								</CardContent>
+							</Card>
+						</TabsContent>
+						<TabsContent value="detail">
+							{/* 전략 상세 정보 */}
+							<div className="grid grid-cols-1 md:grid-rows-3 gap-4">
+								<Card>
+									<CardHeader>
+										<CardTitle className="flex items-center gap-2">
+											<BarChart3 className="w-5 h-5" />
+											전략 요약
+										</CardTitle>
+									</CardHeader>
+									<CardContent>
+										<p className="text-sm text-gray-600 leading-relaxed">
+											{strategyDetail.strategySummary.summaryOverview}
+										</p>
+									</CardContent>
+								</Card>
+								<Card>
+									<CardHeader>
+										<CardTitle className="flex items-center gap-2">
+											<TrendingUp className="w-5 h-5" />
+											리스크 관리
+										</CardTitle>
+									</CardHeader>
+									<CardContent>
+										<p className="text-sm text-gray-600 leading-relaxed">
+											{strategyDetail.strategySummary.summaryRisk}
+										</p>
+									</CardContent>
+								</Card>
 
-					{/* 전략 미리보기 카드 */}
-					<Card>
-						<CardContent className="p-6">
-							<div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
-								<div className="text-gray-500">전략 미리보기</div>
+								<Card>
+									<CardHeader>
+										<CardTitle className="flex items-center gap-2">
+											<TrendingDown className="w-5 h-5" />
+											조건 한 눈에 보기
+										</CardTitle>
+									</CardHeader>
+									<CardContent>
+										<p className="text-sm text-gray-600 leading-relaxed">
+											{strategyDetail.strategySummary.summaryCondition}
+										</p>
+									</CardContent>
+								</Card>
 							</div>
-						</CardContent>
-					</Card>
-
-					{/* 전략 상세 정보 */}
-					<div className="grid grid-cols-1 md:grid-rows-3 gap-4">
-						<Card>
-							<CardHeader>
-								<CardTitle className="flex items-center gap-2">
-									<BarChart3 className="w-5 h-5" />
-									전략 요약
-								</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<p className="text-sm text-gray-600 leading-relaxed">
-									{strategyDetail.strategySummary.summaryOverview}
-								</p>
-							</CardContent>
-						</Card>
-						<Card>
-							<CardHeader>
-								<CardTitle className="flex items-center gap-2">
-									<TrendingUp className="w-5 h-5" />
-									리스크 관리
-								</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<p className="text-sm text-gray-600 leading-relaxed">
-									{strategyDetail.strategySummary.summaryRisk}
-								</p>
-							</CardContent>
-						</Card>
-
-						<Card>
-							<CardHeader>
-								<CardTitle className="flex items-center gap-2">
-									<TrendingDown className="w-5 h-5" />
-									조건 한 눈에 보기
-								</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<p className="text-sm text-gray-600 leading-relaxed">
-									{strategyDetail.strategySummary.summaryCondition}
-								</p>
-							</CardContent>
-						</Card>
-					</div>
+						</TabsContent>
+					</Tabs>
 				</div>
 
 				{/* 우측 컬럼 */}

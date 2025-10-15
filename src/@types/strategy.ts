@@ -1,4 +1,5 @@
 import { Stock } from './stock';
+import { GroupNode } from './StrategyTemplateNode';
 
 export interface StrategySummary {
 	id: number;
@@ -38,8 +39,8 @@ export interface StrategyTemplate {
 	strategyId: number;
 	ownerId: string;
 	meta: StrategyMetaData;
-	sell: Node | null;
-	buy: Node | null;
+	sell: { node: GroupNode } | null;
+	buy: { node: GroupNode } | null;
 	createdAt: string;
 	updatedAt: string;
 }
