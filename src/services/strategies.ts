@@ -46,3 +46,26 @@ export const getStrategyDetailById = async (strategyId: number) => {
 		throw error;
 	}
 };
+
+export const deleteStrategyById = async (strategyId: number) => {
+	try {
+		const response = await fetch(`${STRATEGIES_API_URL}/${strategyId}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (!response.ok) {
+			throw response;
+		}
+
+		const res: Response<null> = await response.json();
+
+		return res;
+	} catch (error) {
+		const errorRes = await (error as globalThis.Response).json();
+		console.log(errorRes);
+		throw errorRes;
+	}
+};

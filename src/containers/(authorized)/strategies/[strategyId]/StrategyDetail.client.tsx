@@ -3,7 +3,9 @@
 import { FC } from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
+import { useQueryClient } from '@tanstack/react-query';
 import {
 	MoreVertical,
 	TrendingUp,
@@ -13,7 +15,9 @@ import {
 	Trash,
 	Square,
 } from 'lucide-react';
+import { toast } from 'sonner';
 
+import { Response } from '@/@types/service';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
 	DropdownMenu,
@@ -23,6 +27,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tabs, TabsTrigger, TabsList, TabsContent } from '@/components/ui/tabs';
 import { useExecutionById } from '@/hooks/api/execution/useExecutionById';
+import { useDeleteStrategy } from '@/hooks/api/strategy/useDeleteStrategy';
 import { useStrategyDetail } from '@/hooks/api/strategy/useStrategyDetail';
 import { cn } from '@/lib/utils';
 
@@ -35,11 +40,30 @@ interface Props {
 }
 
 const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
+	const router = useRouter();
+	const queryClient = useQueryClient();
 	const { data: strategyDetail, isLoading: isStrategyDetailLoading } =
 		useStrategyDetail(strategyId);
 	const { data: executions, isLoading: isExecutionsLoading } =
 		useExecutionById(strategyId);
-	console.log(strategyDetail);
+
+	const { mutate: deleteStrategy } = useDeleteStrategy({
+		onSuccess: (data: Response<null>) => {
+			toast.success(data.message);
+			queryClient.invalidateQueries({
+				queryKey: ['strategies'],
+			});
+			router.push('/strategies');
+		},
+		onError: (error) => {
+			toast.error(error.message);
+		},
+	});
+
+	const handleDeleteStrategy = () => {
+		deleteStrategy(strategyId);
+	};
+
 	if (isStrategyDetailLoading || isExecutionsLoading) {
 		return (
 			<div className="flex items-center justify-center h-64">
@@ -96,7 +120,10 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 								<Square className="w-[16px] h-[16px]" />
 								전략 정지
 							</DropdownMenuItem>
-							<DropdownMenuItem className="cursor-pointer">
+							<DropdownMenuItem
+								className="cursor-pointer"
+								onClick={handleDeleteStrategy}
+							>
 								<Trash className="w-[16px] h-[16px]" />
 								전략 삭제
 							</DropdownMenuItem>
