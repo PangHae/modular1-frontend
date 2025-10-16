@@ -19,14 +19,14 @@ const Menu: FC<MenuProps> = ({ menus }) => {
 interface MenuItemProps {
 	icon: React.ReactNode;
 	title: string;
+	isActive?: boolean;
 }
 
-const MenuItem: FC<MenuItemProps> = ({ icon, title }) => {
-	const isActive = true;
+const MenuItem: FC<MenuItemProps> = ({ icon, title, isActive = false }) => {
 	const colorClass = isActive ? 'text-custom-main' : 'text-custom-sub';
 	return (
 		<div
-			className={`flex flex-col items-center justify-center gap-1 w-full text-xs transition-colors duration-200 ${colorClass}`}
+			className={`flex flex-col items-center justify-center gap-1 w-full text-xs transition-colors duration-200 cursor-pointer ${colorClass}`}
 		>
 			<div className={colorClass}>{icon}</div>
 			{title}

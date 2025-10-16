@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { ChevronRight, Compass } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 import SidePalette from '@/components/common/SidePalette';
 import StockSearch from '@/components/common/SidePalette/StockSearch';
@@ -33,7 +33,7 @@ const StockSelectClient = ({ selectedStock, onSelectStock, onNext }: Props) => {
 			<div className="flex flex-1 gap-4">
 				{/* 검색 입력 */}
 				<SidePalette>
-					<SidePalette.menuList
+					{/* <SidePalette.menuList
 						menus={[
 							{
 								title: '종목 검색',
@@ -41,11 +41,12 @@ const StockSelectClient = ({ selectedStock, onSelectStock, onNext }: Props) => {
 									<SidePalette.menuItem
 										title="종목 검색"
 										icon={<Compass strokeWidth={1} />}
+										isActive
 									/>
 								),
 							},
 						]}
-					/>
+					/> */}
 					<StockSearch onClick={handleSelectStock} />
 				</SidePalette>
 				<Card className="w-full">

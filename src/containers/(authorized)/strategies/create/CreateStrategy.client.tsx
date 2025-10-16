@@ -23,9 +23,7 @@ const CreateStrategyClient = () => {
 	return (
 		<CreateStrategyLayout
 			currentStep={currentStep}
-			strategyType={strategyType}
 			strategyName={strategyName}
-			onStrategyTypeChange={setStrategyType}
 			onStrategyNameChange={setStrategyName}
 			onNext={handleNext}
 			onPrev={handlePrev}
@@ -40,7 +38,10 @@ const CreateStrategyClient = () => {
 				/>
 			)}
 			{currentStep === 2 && (
-				<StrategyConfigurationClient strategyType={strategyType} />
+				<StrategyConfigurationClient
+					strategyType={strategyType}
+					onStrategyTypeChange={setStrategyType}
+				/>
 			)}
 		</CreateStrategyLayout>
 	);
