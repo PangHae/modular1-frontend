@@ -14,12 +14,13 @@ import { useAllStrategies } from '@/hooks/api/strategy/useAllStrategies';
 const StrategiesClient = () => {
 	const { data, isLoading } = useAllStrategies();
 
+	const [searchQuery, setSearchQuery] = useState('');
 	const [filterStatus, setFilterStatus] = useState<
 		'all' | 'ACTIVATED' | 'PENDING'
 	>('all');
 
 	const handleSearch = (keyword: string) => {
-		console.log(keyword);
+		setSearchQuery(keyword);
 	};
 
 	const handleChangeFilterStatus = (
@@ -39,7 +40,7 @@ const StrategiesClient = () => {
 	return (
 		<div className="flex flex-col gap-8 h-full overflow-y-auto relative px-10">
 			<div className="flex align-center justify-center flex-shrink-0 sticky top-0 bg-custom-gray-bg px-10 pt-14 pb-8">
-				<SearchInput onSearch={handleSearch} />
+				<SearchInput searchQuery={searchQuery} onSearch={handleSearch} />
 			</div>
 			<div className="flex flex-col flex-1 min-h-0 w-full mx-auto gap-4">
 				<div className="flex justify-between px-1">
@@ -61,20 +62,25 @@ const StrategiesClient = () => {
 							}
 							return strategy.activatedStatus === filterStatus;
 						})
-						.map((strategy) => (
-							<StrategyCard
-								key={strategy.id}
-								id={strategy.id}
-								title={strategy.strategyName}
-								stock={strategy.stockInfo.stockName}
-								imageUrl={`https://images.tossinvest.com/https%3A%2F%2Fstatic.toss.im%2Fpng-icons%2Fsecurities%2Ficn-sec-fill-${strategy.stockInfo.stockCode}.png?width=64&height=64`}
-								status={strategy.activatedStatus}
-								profitAmount={strategy.profitAmount}
-								profitRate={strategy.profitRate}
-								avgPrice={strategy.avgPrice}
-								currentPrice={strategy.currentPrice}
-							/>
-						))}
+						.map((strategy) => {
+							if (!strategy.strategyName.includes(searchQuery)) {
+								return null;
+							}
+							return (
+								<StrategyCard
+									key={strategy.id}
+									id={strategy.id}
+									title={strategy.strategyName}
+									stock={strategy.stockInfo.stockName}
+									imageUrl={`https://images.tossinvest.com/https%3A%2F%2Fstatic.toss.im%2Fpng-icons%2Fsecurities%2Ficn-sec-fill-${strategy.stockInfo.stockCode}.png?width=64&height=64`}
+									status={strategy.activatedStatus}
+									profitAmount={strategy.profitAmount}
+									profitRate={strategy.profitRate}
+									avgPrice={strategy.avgPrice}
+									currentPrice={strategy.currentPrice}
+								/>
+							);
+						})}
 				</CardGridLayout>
 			</div>
 		</div>

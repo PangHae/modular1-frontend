@@ -7,22 +7,13 @@ import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Props {
+	searchQuery: string;
 	onSearch: (keyword: string) => void;
 	className?: string;
 }
 
-const SearchInput: FC<Props> = ({ onSearch, className }) => {
+const SearchInput: FC<Props> = ({ searchQuery, onSearch, className }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
-
-	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Enter') {
-			onSearch(inputRef.current?.value || '');
-		}
-	};
-
-	const handleClickSearch = () => {
-		onSearch(inputRef.current?.value || '');
-	};
 
 	return (
 		<label
@@ -35,13 +26,10 @@ const SearchInput: FC<Props> = ({ onSearch, className }) => {
 				ref={inputRef}
 				className="w-full h-full focus:outline-none pl-5"
 				placeholder="검색어를 입력해주세요."
-				onKeyUp={handleKeyUp}
+				value={searchQuery}
+				onChange={(e) => onSearch(e.target.value)}
 			/>
-			<button
-				className="cursor-pointer"
-				type="button"
-				onClick={handleClickSearch}
-			>
+			<button className="cursor-pointer" type="button">
 				<Search className="" strokeWidth={1} />
 			</button>
 		</label>
