@@ -25,6 +25,7 @@ const CreateStrategyClient = () => {
 			currentStep={currentStep}
 			strategyName={strategyName}
 			onStrategyNameChange={setStrategyName}
+			selectedStock={selectedStock}
 			onNext={handleNext}
 			onPrev={handlePrev}
 			onCreateStrategy={handleCreateStrategy}
@@ -34,7 +35,6 @@ const CreateStrategyClient = () => {
 				<StockSelectClient
 					selectedStock={selectedStock}
 					onSelectStock={setSelectedStock}
-					onNext={handleNext}
 				/>
 			)}
 			{currentStep === 2 && (

@@ -4,7 +4,7 @@ import { FC, PropsWithChildren } from 'react';
 
 import Link from 'next/link';
 
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,6 +15,7 @@ type Step = 1 | 2;
 interface Props {
 	className?: string;
 	currentStep: Step;
+	selectedStock: string;
 	strategyName: string;
 	onStrategyNameChange: (name: string) => void;
 	onNext: () => void;
@@ -39,6 +40,8 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 	children,
 	currentStep,
 	strategyName,
+	selectedStock,
+	onNext,
 	onStrategyNameChange,
 	onPrev,
 	onCreateStrategy,
@@ -128,6 +131,18 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 						</div>
 					</div>
 				</div>
+				{currentStep === 1 && (
+					<div className="flex items-center gap-4">
+						<Button
+							className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-8 cursor-pointer"
+							onClick={onNext}
+							disabled={!selectedStock.trim()}
+						>
+							다음
+							<ChevronRight className="w-4 h-4" />
+						</Button>
+					</div>
+				)}
 				{currentStep === 2 && (
 					<div className="flex items-center gap-4">
 						<Input

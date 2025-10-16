@@ -30,6 +30,10 @@ const nextConfig: NextConfig = {
 					source: '/api/v1/accounts/:path*',
 					destination: `${process.env.STRATEGIES_SERVICE_URL}/api/v1/accounts/:path*`,
 				},
+				{
+					source: '/api/v1/stocks/:path*',
+					destination: `${process.env.STRATEGIES_SERVICE_URL}/api/v1/stocks/:path*`,
+				},
 			];
 		}
 		return [];

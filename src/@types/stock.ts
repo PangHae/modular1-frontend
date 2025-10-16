@@ -1,6 +1,6 @@
 export interface Stock {
 	stockCode: string;
-	stockImgUri: string;
+	image: string;
 	stockName: string;
 }
 

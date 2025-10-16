@@ -1,45 +1,27 @@
-import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 interface Props {
-	stock: {
-		id: number;
-		company: string;
-		companyKr: string;
-		logo: string;
-		price: string;
-		changeRate: string;
-		changeType: string;
-		tradeVolume: string;
-	};
+	stockCode: string;
+	stockName: string;
 	onClick: (stock: { name: string; code: string }) => void;
 }
 
-const StockItem = ({ stock, onClick }: Props) => {
+const StockItem = ({ stockCode, stockName, onClick }: Props) => {
 	return (
 		<div
-			className="flex items-center justify-between p-2 hover:bg-gray-50 cursor-pointer transition-colors"
-			onClick={() => onClick({ name: stock.companyKr, code: stock.company })}
+			className="flex items-center p-2 hover:bg-gray-50 cursor-pointer transition-colors gap-2"
+			onClick={() => onClick({ name: stockName, code: stockCode })}
 		>
-			<div className="flex items-center gap-2">
-				<div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-lg">
-					{stock.logo}
-				</div>
-				<div className="font-medium text-gray-900">{stock.companyKr}</div>
+			<div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-lg">
+				<Image
+					className="object-cover rounded-full"
+					src={`https://images.tossinvest.com/https%3A%2F%2Fstatic.toss.im%2Fpng-icons%2Fsecurities%2Ficn-sec-fill-${stockCode}.png?width=64&height=64`}
+					alt={stockName}
+					width={32}
+					height={32}
+				/>
 			</div>
-			<div className="text-right">
-				<div className="font-semibold text-gray-900">{stock.price}원</div>
-				<div
-					className={cn('text-sm', {
-						'text-red-500': stock.changeType === 'positive',
-						'text-blue-500': stock.changeType === 'negative',
-						'text-gray-500':
-							stock.changeType !== 'positive' &&
-							stock.changeType !== 'negative',
-					})}
-				>
-					{stock.changeRate}
-				</div>
-			</div>
+			<div className="font-medium text-gray-900 text-body2!">{stockName}</div>
 		</div>
 	);
 };
