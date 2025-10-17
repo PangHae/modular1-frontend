@@ -24,3 +24,25 @@ export const getStocks = async () => {
 		throw errorRes;
 	}
 };
+
+export const getMyStocks = async () => {
+	try {
+		const response = await fetch(`${STOCKS_API_URL}/my-stocks`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (!response.ok) {
+			throw response;
+		}
+
+		const res: Response<{ stocks: Stock[] }> = await response.json();
+
+		return res;
+	} catch (error) {
+		const errorRes = await (error as globalThis.Response).json();
+		console.log(errorRes);
+		throw errorRes;
+	}
+};

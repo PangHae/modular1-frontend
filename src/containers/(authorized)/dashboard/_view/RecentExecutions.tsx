@@ -18,17 +18,18 @@ const RecentExecutions = () => {
 		}
 	}, [inView, fetchNextPage, hasNextPage]);
 
-	if (!data) {
-		return <div>No data</div>;
-	}
-
 	return (
 		<Card className="flex-1 flex flex-col overflow-hidden">
 			<CardHeader>
 				<CardTitle>최근 체결 내역</CardTitle>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
-				{data.pages.map((page) =>
+				{!data && (
+					<div className="flex items-center justify-center h-64">
+						<div className="text-lg text-gray-500">No data</div>
+					</div>
+				)}
+				{data?.pages.map((page) =>
 					page.data.items.map((item) => (
 						<TradeExecutionItem
 							key={item.transactionId}

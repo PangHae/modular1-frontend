@@ -6,19 +6,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { useQueryClient } from '@tanstack/react-query';
-import {
-	MoreVertical,
-	TrendingUp,
-	TrendingDown,
-	BarChart3,
-	Play,
-	Trash,
-	Square,
-} from 'lucide-react';
+import { MoreVertical, Play, Trash, Square } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { Response } from '@/@types/service';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -34,6 +26,7 @@ import { cn } from '@/lib/utils';
 import PreviewStrategy from './_view/PreviewStrategy';
 import ProfitRateCard from './_view/ProfitRateCard';
 import RecentExecution from './_view/RecentExecution';
+import StrategyAIDetail from './_view/StrategyAIDetail';
 
 interface Props {
 	strategyId: number;
@@ -133,7 +126,7 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 
 				{/* 성과 지표 카드 */}
 				<Card>
-					<CardContent className="p-6">
+					<CardContent className="p-1">
 						<div className="grid grid-cols-3 gap-6">
 							<div className="text-center">
 								<div className="text-sm text-gray-600 mb-1">누적 수익률</div>
@@ -173,65 +166,32 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 					</CardContent>
 				</Card>
 				<Tabs defaultValue="preview">
-					<TabsList>
-						<TabsTrigger className="cursor-pointer" value="preview">
-							전략 미리보기
+					<TabsList className="bg-transparent p-0 h-auto gap-2">
+						<TabsTrigger
+							className="cursor-pointer data-[state=active]:bg-shinhan-blue! data-[state=active]:text-white! data-[state=active]:border-shinhan-blue data-[state=inactive]:bg-shinhan-blue/8 data-[state=inactive]:text-black data-[state=inactive]:border-shinhan-blue/20 border rounded-full px-4 py-2 h-[36px] text-button transition-all duration-200"
+							value="preview"
+						>
+							미리보기
 						</TabsTrigger>
-						<TabsTrigger className="cursor-pointer" value="detail">
-							전략 상세 정보
+						<TabsTrigger
+							className="cursor-pointer data-[state=active]:bg-shinhan-blue! data-[state=active]:text-white! data-[state=active]:border-shinhan-blue data-[state=inactive]:bg-shinhan-blue/8 data-[state=inactive]:text-black data-[state=inactive]:border-shinhan-blue/20 border rounded-full px-4 py-2 h-[36px] text-button transition-all duration-200"
+							value="summary"
+						>
+							전략 요약
 						</TabsTrigger>
 					</TabsList>
 					<TabsContent value="preview">
-						{/* 전략 미리보기 카드 */}
 						<PreviewStrategy
 							sell={strategyDetail.strategyTemplate?.sell || null}
 							buy={strategyDetail.strategyTemplate?.buy || null}
 						/>
 					</TabsContent>
-					<TabsContent value="detail">
-						{/* 전략 상세 정보 */}
-						<div className="grid grid-cols-1 md:grid-rows-3 gap-4">
-							<Card>
-								<CardHeader>
-									<CardTitle className="flex items-center gap-2">
-										<BarChart3 className="w-5 h-5" />
-										전략 요약
-									</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<p className="text-sm text-gray-600 leading-relaxed">
-										{strategyDetail.strategySummary.summaryOverview}
-									</p>
-								</CardContent>
-							</Card>
-							<Card>
-								<CardHeader>
-									<CardTitle className="flex items-center gap-2">
-										<TrendingUp className="w-5 h-5" />
-										리스크 관리
-									</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<p className="text-sm text-gray-600 leading-relaxed">
-										{strategyDetail.strategySummary.summaryRisk}
-									</p>
-								</CardContent>
-							</Card>
-
-							<Card>
-								<CardHeader>
-									<CardTitle className="flex items-center gap-2">
-										<TrendingDown className="w-5 h-5" />
-										조건 한 눈에 보기
-									</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<p className="text-sm text-gray-600 leading-relaxed">
-										{strategyDetail.strategySummary.summaryCondition}
-									</p>
-								</CardContent>
-							</Card>
-						</div>
+					<TabsContent value="summary">
+						<StrategyAIDetail
+							summaryOverview={strategyDetail.strategySummary.summaryOverview}
+							summaryCondition={strategyDetail.strategySummary.summaryCondition}
+							summaryRisk={strategyDetail.strategySummary.summaryRisk}
+						/>
 					</TabsContent>
 				</Tabs>
 			</div>

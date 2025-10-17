@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query';
 
 import { CreateStrategyProvider } from '@/components/providers/CreateStrategyProvider';
-import { getStocks } from '@/services/stocks';
+import { getMyStocks, getStocks } from '@/services/stocks';
 
 import CreateStrategyClient from './CreateStrategy.client';
 
@@ -15,6 +15,11 @@ const CreateStrategy = async () => {
 	await queryClient.prefetchQuery({
 		queryKey: ['stocks'],
 		queryFn: getStocks,
+	});
+
+	await queryClient.prefetchQuery({
+		queryKey: ['stocks', 'my'],
+		queryFn: getMyStocks,
 	});
 
 	return (

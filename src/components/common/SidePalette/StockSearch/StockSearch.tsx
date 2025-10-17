@@ -11,10 +11,12 @@ import SearchInput from '../../SearchInput';
 interface Props {
 	onClick: (stock: { name: string; code: string }) => void;
 	stocks: Stock[];
+	myStocks: Stock[];
 }
 
 const StockSearch: FC<Props> = ({ onClick, stocks }) => {
 	const [searchQuery, setSearchQuery] = useState('');
+	const [filterType, setFilterType] = useState<string>('all');
 
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);
@@ -30,8 +32,16 @@ const StockSearch: FC<Props> = ({ onClick, stocks }) => {
 				/>
 			</div>
 			<div className="flex gap-2">
-				<StockFilterChip selected={true} type="all" onChange={() => {}} />
-				<StockFilterChip selected={false} type="my" onChange={() => {}} />
+				<StockFilterChip
+					selected={filterType === 'all'}
+					type="all"
+					onChange={() => setFilterType('all')}
+				/>
+				<StockFilterChip
+					selected={filterType === 'my'}
+					type="my"
+					onChange={() => setFilterType('my')}
+				/>
 			</div>
 			<StockList
 				onClick={onClick}

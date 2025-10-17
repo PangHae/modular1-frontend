@@ -42,7 +42,7 @@ const StrategiesClient = () => {
 			<div className="flex align-center justify-center flex-shrink-0 sticky top-0 bg-custom-gray-bg px-10 pt-14 pb-8">
 				<SearchInput searchQuery={searchQuery} onSearch={handleSearch} />
 			</div>
-			<div className="flex flex-col flex-1 min-h-0 w-full mx-auto gap-4">
+			<div className="flex flex-col flex-1 min-h-0 mx-auto gap-4 w-[1280px]">
 				<div className="flex justify-between px-1">
 					<StrategyStatusFilterMenu
 						value={filterStatus}

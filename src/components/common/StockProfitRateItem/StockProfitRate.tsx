@@ -12,7 +12,7 @@ const StockProfitRateItemMain = ({
 	return (
 		<div
 			className={cn(
-				'flex justify-between items-center px-4 py-2 bg-white rounded-lg border border-custom-gray-border',
+				'flex justify-between items-center px-4 py-2 bg-white rounded-lg border border-custom-gray-border/40',
 				className
 			)}
 		>
@@ -28,9 +28,7 @@ interface StockNameProps {
 
 const StockName = ({ children, className }: StockNameProps) => {
 	return (
-		<span className={cn('text-caption font-semibold', className)}>
-			{children}
-		</span>
+		<span className={cn('text-sub2 font-semibold', className)}>{children}</span>
 	);
 };
 
@@ -43,7 +41,7 @@ const StockAmountChip = ({ children, className }: StockAmountChipProps) => {
 	return (
 		<div
 			className={cn(
-				'flex items-center justify-center px-1 py-0.5 border border-custom-gray-border rounded-full min-w-[50px] h-[22px]',
+				'flex items-center justify-center px-1 py-0.5 border border-custom-gray-border/40 rounded-full min-w-[50px] h-[22px]',
 				className
 			)}
 		>
@@ -59,7 +57,7 @@ interface StockCodeProps {
 
 const StockCode = ({ children, className }: StockCodeProps) => {
 	return (
-		<span className={cn('text-overline text-custom-sub-text!', className)}>
+		<span className={cn('text-caption text-custom-sub-text!', className)}>
 			{children}
 		</span>
 	);

@@ -24,10 +24,6 @@ const PortfolioProfitChartCard = () => {
 		return <div>Loading...</div>;
 	}
 
-	if (!data) {
-		return <div>No data</div>;
-	}
-
 	return (
 		<Card className="flex-1 min-h-0">
 			<CardHeader>
@@ -36,7 +32,7 @@ const PortfolioProfitChartCard = () => {
 					<menu className="flex bg-gray-200 rounded-lg p-1">
 						<li>
 							<button
-								className={`px-4 py-2 text-caption font-medium rounded-md transition-all duration-200 ${
+								className={`px-4 py-1 text-caption font-medium rounded-md transition-all duration-200 ${
 									selectedPeriod === 'oneMonth'
 										? 'bg-white text-black shadow-sm'
 										: 'text-gray-600 hover:text-black'
@@ -48,7 +44,7 @@ const PortfolioProfitChartCard = () => {
 						</li>
 						<li>
 							<button
-								className={`px-4 py-2 text-caption  font-medium rounded-md transition-all duration-200 ${
+								className={`px-4 py-1 text-caption  font-medium rounded-md transition-all duration-200 ${
 									selectedPeriod === 'threeMonth'
 										? 'bg-white text-black shadow-sm'
 										: 'text-gray-600 hover:text-black'
@@ -60,7 +56,7 @@ const PortfolioProfitChartCard = () => {
 						</li>
 						<li>
 							<button
-								className={`px-4 py-2 text-caption font-medium rounded-md transition-all duration-200 ${
+								className={`px-4 py-1 text-caption font-medium rounded-md transition-all duration-200 ${
 									selectedPeriod === 'sixMonth'
 										? 'bg-white text-black shadow-sm'
 										: 'text-gray-600 hover:text-black'
@@ -72,7 +68,7 @@ const PortfolioProfitChartCard = () => {
 						</li>
 						<li>
 							<button
-								className={`px-4 py-2 text-caption font-medium rounded-md transition-all duration-200 ${
+								className={`px-4 py-1 text-caption font-medium rounded-md transition-all duration-200 ${
 									selectedPeriod === 'oneYear'
 										? 'bg-white text-black shadow-sm'
 										: 'text-gray-600 hover:text-black'
@@ -84,7 +80,7 @@ const PortfolioProfitChartCard = () => {
 						</li>
 						<li>
 							<button
-								className={`px-4 py-2 text-caption font-medium rounded-md transition-all duration-200 ${
+								className={`px-4 py-1 text-caption font-medium rounded-md transition-all duration-200 ${
 									selectedPeriod === 'all'
 										? 'bg-white text-black shadow-sm'
 										: 'text-gray-600 hover:text-black'
@@ -98,10 +94,15 @@ const PortfolioProfitChartCard = () => {
 				</div>
 			</CardHeader>
 			<CardContent className="max-h-[calc(100%-72px)] pl-0">
+				{!data && (
+					<div className="flex items-center justify-center h-64">
+						<div className="text-lg text-gray-500">No data</div>
+					</div>
+				)}
 				<ProfitRateLineChart
 					id="portfolio-profit-rate-chart"
 					chartConfig={chartConfig}
-					chartLineData={data.data.profitSeries[selectedPeriod]}
+					chartLineData={data?.data.profitSeries[selectedPeriod] || []}
 					dataKey="cumulativeProfitRate"
 				/>
 			</CardContent>

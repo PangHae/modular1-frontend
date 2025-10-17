@@ -21,11 +21,11 @@ interface Props {
 const RecentExecution: FC<Props> = ({ executions }) => {
 	const noExecutionData = executions.length === 0;
 	return (
-		<Card className="flex-1">
-			<CardHeader>
+		<Card className="flex-1 max-h-[50%] flex flex-col">
+			<CardHeader className="flex-shrink-0">
 				<CardTitle>최근 체결 내역</CardTitle>
 			</CardHeader>
-			<CardContent className="h-full p-0">
+			<CardContent className="flex-1 overflow-hidden">
 				<div className="h-full overflow-y-auto">
 					<Table>
 						<TableHeader>
@@ -58,8 +58,8 @@ const RecentExecution: FC<Props> = ({ executions }) => {
 												className={cn(
 													'px-2 py-1 text-xs rounded-full',
 													execution.tradeExecutionType === 'BUY'
-														? 'bg-blue-100 text-blue-700'
-														: 'bg-red-100 text-red-700'
+														? 'bg-red-100 text-red-700'
+														: 'bg-blue-100 text-blue-700'
 												)}
 											>
 												{execution.tradeExecutionType === 'BUY'

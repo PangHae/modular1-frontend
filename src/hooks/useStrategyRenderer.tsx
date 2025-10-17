@@ -82,13 +82,13 @@ export const useStrategyRenderer = ({
 
 							// 기본 지표들 (Blocks/default)
 							case 'executionCompare':
-								return BlockComponent.execution;
+								return BlockComponent.executionCompare;
 							case 'priceCompare':
-								return BlockComponent.price;
-							case 'tradingMetricCompare':
-								return BlockComponent.tradingMetric;
+								return BlockComponent.priceCompare;
+							case 'tradeMetricCompare':
+								return BlockComponent.tradeMetricCompare;
 							case 'changeRateCompare':
-								return BlockComponent.changeRate;
+								return BlockComponent.changeRateCompare;
 
 							// 보조지표들 (Blocks/indicator)
 							case 'emaCompare':
@@ -123,7 +123,7 @@ export const useStrategyRenderer = ({
 
 							default:
 								// label이 매핑되지 않은 경우 기본 컴포넌트 반환
-								return BlockComponent.price;
+								return BlockComponent.priceCompare;
 						}
 					};
 

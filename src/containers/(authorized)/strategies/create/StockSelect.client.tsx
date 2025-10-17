@@ -3,6 +3,7 @@
 import SidePalette from '@/components/common/SidePalette';
 import StockSearch from '@/components/common/SidePalette/StockSearch';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useMyStocks } from '@/hooks/api/stocks/useMyStocks';
 import { useStocks } from '@/hooks/api/stocks/useStocks';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 
 const StockSelectClient = ({ selectedStock, onSelectStock }: Props) => {
 	const { data: stocks } = useStocks();
+	const { data: myStocks } = useMyStocks();
 
 	const handleSelectStock = (stock: { name: string; code: string }) => {
 		onSelectStock(`${stock.name} (${stock.code})`);
@@ -25,6 +27,7 @@ const StockSelectClient = ({ selectedStock, onSelectStock }: Props) => {
 					<StockSearch
 						onClick={handleSelectStock}
 						stocks={stocks?.data.stocks || []}
+						myStocks={myStocks?.data?.stocks || []}
 					/>
 				</SidePalette>
 				<Card className="w-full">

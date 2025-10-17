@@ -70,11 +70,11 @@ const StrategyCard: FC<Props> = ({
 				>
 					{`${profitAmount.toLocaleString()}원(${profitRate.toLocaleString()}%)`}
 				</p>
-				<div className="flex justify-between w-full text-caption">
+				<div className="flex justify-between w-full text-button">
 					<p className="text-custom-sub-text">현재 가격</p>
 					<p>{`${currentPrice.toLocaleString()}원`}</p>
 				</div>
-				<div className="flex justify-between w-full text-caption">
+				<div className="flex justify-between w-full text-button">
 					<p className="text-custom-sub-text">내 평균 매수 가격</p>
 					<p>{`${avgPrice.toLocaleString()}원`}</p>
 				</div>

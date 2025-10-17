@@ -28,7 +28,7 @@ const ProfitRateCard: FC<Props> = ({ profitRateSeries }) => {
 					<menu className="flex bg-gray-200 rounded-lg p-1">
 						<li>
 							<button
-								className={`px-4 py-2 text-caption font-medium rounded-md transition-all duration-200 ${
+								className={`px-4 py-1 text-caption font-medium rounded-md transition-all duration-200 ${
 									selectedPeriod === 'oneMonth'
 										? 'bg-white text-black shadow-sm'
 										: 'text-gray-600 hover:text-black'
@@ -40,7 +40,7 @@ const ProfitRateCard: FC<Props> = ({ profitRateSeries }) => {
 						</li>
 						<li>
 							<button
-								className={`px-4 py-2 text-caption  font-medium rounded-md transition-all duration-200 ${
+								className={`px-4 py-1 text-caption  font-medium rounded-md transition-all duration-200 ${
 									selectedPeriod === 'threeMonth'
 										? 'bg-white text-black shadow-sm'
 										: 'text-gray-600 hover:text-black'
@@ -52,7 +52,7 @@ const ProfitRateCard: FC<Props> = ({ profitRateSeries }) => {
 						</li>
 						<li>
 							<button
-								className={`px-4 py-2 text-caption font-medium rounded-md transition-all duration-200 ${
+								className={`px-4 py-1 text-caption font-medium rounded-md transition-all duration-200 ${
 									selectedPeriod === 'sixMonth'
 										? 'bg-white text-black shadow-sm'
 										: 'text-gray-600 hover:text-black'
@@ -64,7 +64,7 @@ const ProfitRateCard: FC<Props> = ({ profitRateSeries }) => {
 						</li>
 						<li>
 							<button
-								className={`px-4 py-2 text-caption font-medium rounded-md transition-all duration-200 ${
+								className={`px-4 py-1 text-caption font-medium rounded-md transition-all duration-200 ${
 									selectedPeriod === 'oneYear'
 										? 'bg-white text-black shadow-sm'
 										: 'text-gray-600 hover:text-black'
@@ -76,7 +76,7 @@ const ProfitRateCard: FC<Props> = ({ profitRateSeries }) => {
 						</li>
 						<li>
 							<button
-								className={`px-4 py-2 text-caption font-medium rounded-md transition-all duration-200 ${
+								className={`px-4 py-1 text-caption font-medium rounded-md transition-all duration-200 ${
 									selectedPeriod === 'all'
 										? 'bg-white text-black shadow-sm'
 										: 'text-gray-600 hover:text-black'
