@@ -24,11 +24,10 @@ export const Context = createContext<{
 	ref: React.RefObject<{ [key: string]: () => Node } | null>;
 	currentStep: Step;
 	strategyType: StrategyType;
-	strategyName: string;
 	selectedStock: string;
+	strategyNameRef: React.RefObject<HTMLInputElement | null>;
 	setSelectedStock: (stock: string) => void;
 	setStrategyType: (type: StrategyType) => void;
-	setStrategyName: (name: string) => void;
 	handleNext: () => void;
 	handlePrev: () => void;
 	handleCreateStrategy: () => void;
@@ -41,6 +40,7 @@ export const CreateStrategyProvider = ({
 }: {
 	children: React.ReactNode;
 }) => {
+	const strategyNameRef = useRef<HTMLInputElement>(null);
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const { mutate: createStrategy } = useCreateStrategy({
@@ -57,7 +57,6 @@ export const CreateStrategyProvider = ({
 	const childRef = useRef<{ [key: string]: () => Node }>(null);
 	const [currentStep, setCurrentStep] = useState<Step>(1);
 	const [strategyType, setStrategyType] = useState<StrategyType>('BUY');
-	const [strategyName, setStrategyName] = useState('');
 	const [selectedStock, setSelectedStock] = useState('');
 	const [treeState, setTreeState] = useState<(ArrayTreeNode | null)[]>([
 		{ blockId: 'buy', index: 0 },
@@ -84,7 +83,6 @@ export const CreateStrategyProvider = ({
 	// treeState를 기반으로 JSON 구조 생성 (루트 노드 제외)
 	const buildNodeFromTree = (nodeIndex: number): Node | null => {
 		const node = treeState[nodeIndex];
-		console.log(`buildNodeFromTree(${nodeIndex}):`, node);
 
 		if (!node) return null;
 
@@ -178,7 +176,7 @@ export const CreateStrategyProvider = ({
 			return;
 		}
 
-		if (!strategyName) {
+		if (!strategyNameRef.current) {
 			toast.error('전략 이름을 입력해주세요');
 			return;
 		}
@@ -187,7 +185,7 @@ export const CreateStrategyProvider = ({
 		const rootNode = buildNodeFromTree(0);
 
 		const data: StrategyTemplate = {
-			strategy_name: strategyName,
+			strategy_name: strategyNameRef.current.value,
 			version: 1,
 			meta: {
 				universe: [selectedStock],
@@ -250,14 +248,13 @@ export const CreateStrategyProvider = ({
 	return (
 		<Context.Provider
 			value={{
+				strategyNameRef: strategyNameRef,
 				ref: childRef,
 				currentStep,
 				strategyType,
-				strategyName,
 				selectedStock,
 				setSelectedStock,
 				setStrategyType,
-				setStrategyName,
 				handleNext,
 				handlePrev,
 				handleCreateStrategy,

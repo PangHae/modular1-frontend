@@ -94,17 +94,16 @@ export const useStrategyRenderer = ({
 							case 'emaCompare':
 								return BlockComponent.emaCompare;
 							case 'emaCross':
-								return BlockComponent.emaCross; // EMA Cross는 EMA Compare로 대체
+								return BlockComponent.emaCross;
 							case 'macdCompare':
 								return BlockComponent.macdCompare;
 							case 'macdCross':
-								return BlockComponent.macdCompare; // MACD Cross는 MACD Compare로 대체
+								return BlockComponent.macdCompare;
 							case 'rsiCompare':
 								return BlockComponent.rsiCompare;
 							case 'rsiCross':
 								return BlockComponent.rsiCross;
 							case 'bandAbsoluteCompare':
-								console.log('bandAbsoluteCompare');
 								return BlockComponent.bandAbsoluteCompare;
 							case 'bandRelativeCompare':
 								return BlockComponent.bandRelativeCompare;
