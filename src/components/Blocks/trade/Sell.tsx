@@ -8,6 +8,7 @@ import Block from '../Block';
 
 interface SellProps extends BlockProps {
 	initialValue?: string;
+	childNode?: Node;
 	disabled?: boolean;
 }
 
@@ -15,6 +16,7 @@ const Sell: FC<PropsWithChildren<SellProps>> = ({
 	ref,
 	initialValue = '',
 	children,
+	childNode,
 	disabled = false,
 }) => {
 	const { setNodeRef } = useDroppable({
@@ -25,6 +27,12 @@ const Sell: FC<PropsWithChildren<SellProps>> = ({
 	const createJson = () => {
 		return {
 			orderQuantity: Number(countRef.current?.value),
+			node: childNode || {
+				type: 'GROUP',
+				logic: 'ALL',
+				label: 'all',
+				children: [],
+			},
 		} as TradeNode;
 	};
 
@@ -36,7 +44,7 @@ const Sell: FC<PropsWithChildren<SellProps>> = ({
 				sell: createJson,
 			} as any;
 		}
-	}, []);
+	}, [childNode]);
 
 	return (
 		<Block className="flex-1 gap-2 p-4 border-2 border-shinhan-blue rounded-lg bg-shinhan-blue/10">

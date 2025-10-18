@@ -96,6 +96,7 @@ export interface ProfitLossOperand {
 
 export interface TradeNode {
 	orderQuantity: number;
+	node: Node;
 }
 
 // === 최종 Node 타입 (Union)

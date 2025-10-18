@@ -13,9 +13,16 @@ interface Props {
 }
 
 const PreviewStrategy: FC<Props> = ({ sell, buy }) => {
+	// StrategyTemplate의 buy/sell 객체를 TradeNode로 변환
+	const tradeNode: TradeNode | null = sell
+		? { orderQuantity: sell.orderQuantity, node: sell.node }
+		: buy
+			? { orderQuantity: buy.orderQuantity, node: buy.node }
+			: null;
+
 	const renderStrategy = useStrategyRenderer({
 		ref: null,
-		node: (sell as unknown as TradeNode) || (buy as unknown as TradeNode),
+		node: tradeNode,
 		strategyType: sell ? 'sell' : 'buy',
 		disabled: true,
 	});

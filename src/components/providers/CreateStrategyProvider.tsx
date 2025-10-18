@@ -97,19 +97,8 @@ export const CreateStrategyProvider = ({
 					? buildNodeFromTree(childIndex)
 					: null;
 
-			// 자식이 있으면 GROUP으로 묶어서 반환
-			if (child) {
-				const result = {
-					type: 'GROUP',
-					logic: 'ALL',
-					label: 'all',
-					children: [child],
-				};
-
-				return result as GroupNode;
-			}
-
-			return null;
+			// 자식이 있으면 그대로 반환 (추가 GROUP으로 감싸지 않음)
+			return child;
 		}
 
 		// 논리 블록인 경우 children 배열 생성 (ref 호출보다 먼저 처리)

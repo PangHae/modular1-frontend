@@ -154,7 +154,7 @@ export const useStrategyRenderer = ({
 					key="buy-wrapper"
 					initialValue={node.orderQuantity.toString()}
 					ref={ref}
-					childNode={nodeJson}
+					childNode={nodeJson as any}
 					disabled={disabled}
 				>
 					{renderedComponent}
@@ -166,7 +166,7 @@ export const useStrategyRenderer = ({
 					key="sell-wrapper"
 					initialValue={node.orderQuantity.toString()}
 					ref={ref}
-					childNode={nodeJson}
+					childNode={nodeJson as any}
 					disabled={disabled}
 				>
 					{renderedComponent}
