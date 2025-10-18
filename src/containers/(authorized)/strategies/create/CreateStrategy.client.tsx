@@ -10,10 +10,7 @@ const CreateStrategyClient = () => {
 	const {
 		strategyNameRef,
 		currentStep,
-		strategyType,
 		selectedStock,
-		setSelectedStock,
-		setStrategyType,
 		handleNext,
 		handlePrev,
 		handleCreateStrategy,
@@ -29,18 +26,8 @@ const CreateStrategyClient = () => {
 			onCreateStrategy={handleCreateStrategy}
 			canProceed={currentStep === 1 ? !!selectedStock.trim() : true}
 		>
-			{currentStep === 1 && (
-				<StockSelectClient
-					selectedStock={selectedStock}
-					onSelectStock={setSelectedStock}
-				/>
-			)}
-			{currentStep === 2 && (
-				<StrategyConfigurationClient
-					strategyType={strategyType}
-					onStrategyTypeChange={setStrategyType}
-				/>
-			)}
+			{currentStep === 1 && <StockSelectClient />}
+			{currentStep === 2 && <StrategyConfigurationClient />}
 		</CreateStrategyLayout>
 	);
 };

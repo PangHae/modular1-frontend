@@ -6,21 +6,27 @@ import {
 
 import { CreateStrategyProvider } from '@/components/providers/CreateStrategyProvider';
 import { getMyStocks, getStocks } from '@/services/stocks';
+import { getOneClickTemplates } from '@/services/strategies';
 
 import CreateStrategyClient from './CreateStrategy.client';
 
 const CreateStrategy = async () => {
 	const queryClient = new QueryClient();
 
-	await queryClient.prefetchQuery({
-		queryKey: ['stocks'],
-		queryFn: getStocks,
-	});
-
-	await queryClient.prefetchQuery({
-		queryKey: ['stocks', 'my'],
-		queryFn: getMyStocks,
-	});
+	Promise.all([
+		queryClient.prefetchQuery({
+			queryKey: ['stocks'],
+			queryFn: getStocks,
+		}),
+		queryClient.prefetchQuery({
+			queryKey: ['stocks', 'my'],
+			queryFn: getMyStocks,
+		}),
+		queryClient.prefetchQuery({
+			queryKey: ['strategies', 'templates'],
+			queryFn: getOneClickTemplates,
+		}),
+	]);
 
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>

@@ -13,7 +13,11 @@ import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { ArrayTreeNode, StrategyTemplate } from '@/@types/strategy';
+import {
+	ArrayTreeNode,
+	CreateStrategyRequest,
+	StrategyTemplate,
+} from '@/@types/strategy';
 import { GroupNode, Node } from '@/@types/StrategyTemplateNode';
 import { useCreateStrategy } from '@/hooks/api/strategy/useCreateStrategy';
 
@@ -33,6 +37,8 @@ export const Context = createContext<{
 	handleCreateStrategy: () => void;
 	treeState: (ArrayTreeNode | null)[];
 	handleChangeTreeState: Dispatch<SetStateAction<(ArrayTreeNode | null)[]>>;
+	selectedTemplate: CreateStrategyRequest | null;
+	handleSelectTemplate: (template: CreateStrategyRequest) => void;
 } | null>(null);
 
 export const CreateStrategyProvider = ({
@@ -68,6 +74,69 @@ export const CreateStrategyProvider = ({
 		null,
 		null,
 	]);
+	const [selectedTemplate, setSelectedTemplate] =
+		useState<CreateStrategyRequest | null>(null);
+
+	const handleSelectTemplate = (template: CreateStrategyRequest) => {
+		setSelectedTemplate(template);
+
+		// 템플릿 JSON을 treeState 배열로 변환
+		const convertTemplateToTreeState = (
+			template: CreateStrategyRequest
+		): (ArrayTreeNode | null)[] => {
+			const treeState = new Array(8).fill(null);
+
+			// 루트 노드 설정 (인덱스 0)
+			if (template.buy) {
+				treeState[0] = { blockId: 'buy', index: 0 };
+			} else if (template.sell) {
+				treeState[0] = { blockId: 'sell', index: 0 };
+			}
+
+			// 노드를 재귀적으로 treeState에 추가
+			const addNodeToTreeState = (node: any, nodeIndex: number) => {
+				if (!node || nodeIndex >= 8) return;
+
+				// 현재 노드 정보 저장
+				if (node.type === 'GROUP') {
+					const blockId = node.logic === 'ALL' ? 'all' : 'any';
+					treeState[nodeIndex] = { blockId, index: nodeIndex };
+
+					// 자식 노드들 처리
+					if (node.children && node.children.length > 0) {
+						const leftChildIndex = nodeIndex === 0 ? 1 : 2 * nodeIndex;
+						const rightChildIndex = nodeIndex === 0 ? -1 : 2 * nodeIndex + 1;
+
+						// 첫 번째 자식
+						if (node.children[0] && leftChildIndex < 8) {
+							addNodeToTreeState(node.children[0], leftChildIndex);
+						}
+
+						// 두 번째 자식
+						if (node.children[1] && rightChildIndex < 8) {
+							addNodeToTreeState(node.children[1], rightChildIndex);
+						}
+					}
+				} else if (node.type === 'COMPARE' || node.type === 'CROSS') {
+					// 비교/크로스 노드는 해당 라벨을 blockId로 사용
+					const blockId = node.label || 'priceCompare';
+					treeState[nodeIndex] = { blockId, index: nodeIndex };
+				}
+			};
+
+			// 루트 노드의 자식부터 시작
+			const rootNode = template.buy?.node || template.sell?.node;
+			if (rootNode) {
+				addNodeToTreeState(rootNode, 1); // 루트의 자식은 인덱스 1
+			}
+
+			return treeState;
+		};
+
+		// treeState 업데이트
+		const newTreeState = convertTemplateToTreeState(template);
+		setTreeState(newTreeState);
+	};
 
 	const handleNext = () => {
 		if (currentStep < 2) {
@@ -148,22 +217,7 @@ export const CreateStrategyProvider = ({
 			return refResult;
 		}
 
-		// 일반 블록인 경우 - ref에서 데이터를 가져오지 못한 경우 기본 구조
-		return {
-			label: node.blockId,
-			type: 'COMPARE',
-			operator: 'GT' as any,
-			left: {
-				kind: 'PRICE',
-				field: 'close',
-				timeframe: '1d',
-			},
-			right: {
-				kind: 'PRICE',
-				field: 'close',
-				timeframe: '1d',
-			},
-		};
+		return null;
 	};
 
 	const handleCreateStrategy = () => {
@@ -233,8 +287,10 @@ export const CreateStrategyProvider = ({
 				handleNext,
 				handlePrev,
 				handleCreateStrategy,
+				selectedTemplate,
 				treeState,
 				handleChangeTreeState: setTreeState,
+				handleSelectTemplate,
 			}}
 		>
 			{children}

@@ -98,3 +98,28 @@ export const createStrategy = async (strategy: StrategyTemplate) => {
 		throw errorRes;
 	}
 };
+
+export const getOneClickTemplates = async () => {
+	try {
+		const response = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVICE_URL}/api/v1/strategy-templates`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+
+		if (!response.ok) {
+			throw response;
+		}
+
+		const res: Response<CreateStrategyRequest[]> = await response.json();
+
+		return res;
+	} catch (error) {
+		const errorRes = await (error as globalThis.Response).json();
+		console.log(errorRes);
+		throw errorRes;
+	}
+};
