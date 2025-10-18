@@ -18,7 +18,7 @@ const StockSelectClient = ({ selectedStock, onSelectStock }: Props) => {
 	const handleSelectStock = (stock: { name: string; code: string }) => {
 		onSelectStock(stock.code);
 	};
-
+	console.log(myStocks);
 	return (
 		<div className="flex gap-4 p-6 h-full max-h-full overflow-hidden">
 			<div className="flex flex-1 gap-4">
