@@ -16,7 +16,7 @@ const StockSelectClient = ({ selectedStock, onSelectStock }: Props) => {
 	const { data: myStocks } = useMyStocks();
 
 	const handleSelectStock = (stock: { name: string; code: string }) => {
-		onSelectStock(`${stock.name} (${stock.code})`);
+		onSelectStock(stock.code);
 	};
 
 	return (

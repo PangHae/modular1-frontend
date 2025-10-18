@@ -104,7 +104,7 @@ export const componentPropsFactories: Record<string, ComponentPropsFactory> = {
 	},
 
 	// Price 관련 컴포넌트
-	price: {
+	priceCompare: {
 		getProps: (node) => ({
 			ref: { current: {} },
 			// Price 특화 props
@@ -120,7 +120,7 @@ export const componentPropsFactories: Record<string, ComponentPropsFactory> = {
 	},
 
 	// Execution 관련 컴포넌트
-	execution: {
+	executionCompare: {
 		getProps: (node) => ({
 			ref: { current: {} },
 			// Execution 특화 props
@@ -187,7 +187,7 @@ export const componentPropsFactories: Record<string, ComponentPropsFactory> = {
 	},
 
 	// ChangeRate 관련
-	changeRate: {
+	changeRateCompare: {
 		getProps: (node) => ({
 			ref: { current: {} },
 			// ChangeRate 특화 props

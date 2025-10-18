@@ -35,10 +35,9 @@ export interface StrategyMetaData {
 export interface StrategyTemplate {
 	strategy_name: string;
 	version: number;
-	owner_id: string;
 	meta: StrategyMetaData;
-	sell?: { node: GroupNode };
-	buy?: { node: GroupNode };
+	sell?: { orderQuantity: number; node: GroupNode };
+	buy?: { orderQuantity: number; node: GroupNode };
 }
 
 export interface StrategyAiSummary {
@@ -61,3 +60,20 @@ export interface ProfitData {
 }
 
 export type ProfitDataKey = keyof ProfitDataSeries;
+
+export interface ArrayTreeNode {
+	blockId: string;
+	index: number;
+}
+
+export interface CreateStrategyRequest {
+	id: string;
+	strategyName: string;
+	version: number;
+	meta: StrategyMetaData;
+	strategyId: number;
+	sell?: { node: GroupNode };
+	buy?: { node: GroupNode };
+	createdAt: string;
+	updatedAt: string;
+}
