@@ -50,7 +50,7 @@ export const CreateStrategyProvider = ({
 			router.push(`/strategies/${data.data.strategyId}`);
 		},
 		onError: (error) => {
-			console.log(error);
+			console.error(error);
 			toast.error(error.message);
 		},
 	});
@@ -60,6 +60,7 @@ export const CreateStrategyProvider = ({
 	const [selectedStock, setSelectedStock] = useState('');
 	const [treeState, setTreeState] = useState<(ArrayTreeNode | null)[]>([
 		{ blockId: 'buy', index: 0 },
+		null,
 		null,
 		null,
 		null,
@@ -88,30 +89,21 @@ export const CreateStrategyProvider = ({
 
 		// 루트 노드(buy/sell)는 제외하고 자식 노드들만 처리
 		if (nodeIndex === 0) {
-			// 루트 노드의 자식들을 처리
-			const leftChildIndex = 2 * nodeIndex + 1;
-			const rightChildIndex = 2 * nodeIndex + 2;
+			// 루트 노드의 자식은 인덱스 1에만 있음
+			const childIndex = 1;
 
-			const leftChild =
-				leftChildIndex < treeState.length && treeState[leftChildIndex]
-					? buildNodeFromTree(leftChildIndex)
-					: null;
-			const rightChild =
-				rightChildIndex < treeState.length && treeState[rightChildIndex]
-					? buildNodeFromTree(rightChildIndex)
+			const child =
+				childIndex < treeState.length && treeState[childIndex]
+					? buildNodeFromTree(childIndex)
 					: null;
 
 			// 자식이 있으면 GROUP으로 묶어서 반환
-			if (leftChild || rightChild) {
-				const children = [];
-				if (leftChild) children.push(leftChild);
-				if (rightChild) children.push(rightChild);
-
+			if (child) {
 				const result = {
 					type: 'GROUP',
 					logic: 'ALL',
 					label: 'all',
-					children,
+					children: [child],
 				};
 
 				return result as GroupNode;
@@ -122,15 +114,29 @@ export const CreateStrategyProvider = ({
 
 		// 논리 블록인 경우 children 배열 생성 (ref 호출보다 먼저 처리)
 		if (node.blockId === 'all' || node.blockId === 'any') {
-			const leftChildIndex = 2 * nodeIndex + 1;
-			const rightChildIndex = 2 * nodeIndex + 2;
+			let leftChildIndex: number;
+			let rightChildIndex: number;
+
+			// 루트 노드(인덱스 0)는 특별 처리: 자식이 인덱스 1에만 있음
+			if (nodeIndex === 0) {
+				leftChildIndex = 1;
+				rightChildIndex = -1; // 오른쪽 자식 없음
+			} else {
+				// 다른 노드들은 일반적인 이진트리 인덱스 계산
+				leftChildIndex = 2 * nodeIndex;
+				rightChildIndex = 2 * nodeIndex + 1;
+			}
 
 			const leftChild =
-				leftChildIndex < treeState.length && treeState[leftChildIndex]
+				leftChildIndex < treeState.length &&
+				leftChildIndex >= 0 &&
+				treeState[leftChildIndex]
 					? buildNodeFromTree(leftChildIndex)
 					: null;
 			const rightChild =
-				rightChildIndex < treeState.length && treeState[rightChildIndex]
+				rightChildIndex < treeState.length &&
+				rightChildIndex >= 0 &&
+				treeState[rightChildIndex]
 					? buildNodeFromTree(rightChildIndex)
 					: null;
 
@@ -199,22 +205,12 @@ export const CreateStrategyProvider = ({
 				const buyData = childRef.current.buy() as any;
 				data.buy = {
 					orderQuantity: buyData.orderQuantity || 0,
-					node: (rootNode as any) || {
-						type: 'GROUP',
-						logic: 'ALL',
-						label: 'all',
-						children: [],
-					},
+					node: rootNode as any,
 				};
 			} else {
 				data.buy = {
 					orderQuantity: 0,
-					node: (rootNode as any) || {
-						type: 'GROUP',
-						logic: 'ALL',
-						label: 'all',
-						children: [],
-					},
+					node: rootNode as any,
 				};
 			}
 		} else {
@@ -223,22 +219,12 @@ export const CreateStrategyProvider = ({
 				const sellData = childRef.current.sell() as any;
 				data.sell = {
 					orderQuantity: sellData.orderQuantity || 0,
-					node: (rootNode as any) || {
-						type: 'GROUP',
-						logic: 'ALL',
-						label: 'all',
-						children: [],
-					},
+					node: rootNode as any,
 				};
 			} else {
 				data.sell = {
 					orderQuantity: 0,
-					node: (rootNode as any) || {
-						type: 'GROUP',
-						logic: 'ALL',
-						label: 'all',
-						children: [],
-					},
+					node: rootNode as any,
 				};
 			}
 		}

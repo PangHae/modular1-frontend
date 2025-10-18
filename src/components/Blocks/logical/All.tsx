@@ -8,6 +8,7 @@ import Block from '../Block';
 
 interface AllProps extends BlockProps {
 	childrenNodes: Node[];
+	nodeIndex?: number;
 }
 
 const All: FC<PropsWithChildren<AllProps>> = ({
@@ -15,9 +16,10 @@ const All: FC<PropsWithChildren<AllProps>> = ({
 	children,
 	childrenNodes,
 	disabled = false,
+	nodeIndex,
 }) => {
 	const { setNodeRef } = useDroppable({
-		id: 'all-drop-zone',
+		id: `all-drop-zone-${nodeIndex}`,
 	});
 	const createJson = () => {
 		return {

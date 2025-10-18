@@ -9,6 +9,7 @@ import {
 	Cuboid,
 	Shapes,
 } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { ArrayTreeNode } from '@/@types/strategy';
 import SidePalette from '@/components/common/SidePalette/SidePalette';
@@ -65,24 +66,50 @@ const StrategyConfigurationClient: FC<Props> = ({
 			// 루트 드롭 존 (buy-drop-zone, sell-drop-zone)
 			if (over.id === 'buy-drop-zone' || over.id === 'sell-drop-zone') {
 				// Buy/Sell 블록의 자식으로 추가 (루트 인덱스 0의 자식으로)
-				handleChangeTreeState((prev) => addNodeToArray(prev, blockId, 0));
+				if (event.active.id !== 'all' && event.active.id !== 'any') {
+					toast.error('매수/매도 블록 위에는 논리 블록만 추가할 수 있습니다.');
+					return;
+				}
+
+				// 루트 노드(인덱스 0)에는 1개의 자식만 허용 (인덱스 1)
+				const currentTree = treeState;
+				if (currentTree[1]) {
+					toast.error('매수/매도 블록에는 논리 블록 1개만 추가할 수 있습니다.');
+					return;
+				}
+
+				handleChangeTreeState((prev) => {
+					const newArray = [...prev];
+					newArray[1] = { blockId, index: 1 };
+					return newArray;
+				});
 			}
-			// 논리 블록 드롭 존 (all-drop-zone, any-drop-zone)
-			else if (over.id === 'all-drop-zone' || over.id === 'any-drop-zone') {
+			// 논리 블록 드롭 존 (all-drop-zone-*, any-drop-zone-*)
+			else if (
+				String(over.id).startsWith('all-drop-zone-') ||
+				String(over.id).startsWith('any-drop-zone-')
+			) {
 				// 논리 블록의 자식으로 추가
 				// 드롭 존 ID에서 해당 블록의 인덱스를 찾아서 자식으로 추가
 				const findTargetIndex = (dropZoneId: string): number | undefined => {
-					if (dropZoneId === 'all-drop-zone') {
-						// all 블록의 인덱스 찾기
-						return treeState.findIndex((node) => node?.blockId === 'all');
-					} else if (dropZoneId === 'any-drop-zone') {
-						// any 블록의 인덱스 찾기
-						return treeState.findIndex((node) => node?.blockId === 'any');
+					if (dropZoneId.startsWith('all-drop-zone-')) {
+						// all-drop-zone-{nodeIndex} 형태에서 nodeIndex 추출
+						const nodeIndex = parseInt(
+							dropZoneId.replace('all-drop-zone-', '')
+						);
+						return nodeIndex;
+					} else if (dropZoneId.startsWith('any-drop-zone-')) {
+						// any-drop-zone-{nodeIndex} 형태에서 nodeIndex 추출
+						const nodeIndex = parseInt(
+							dropZoneId.replace('any-drop-zone-', '')
+						);
+						return nodeIndex;
 					}
 					return undefined;
 				};
 
-				const targetIndex = findTargetIndex(over.id);
+				const targetIndex = findTargetIndex(String(over.id));
+
 				if (targetIndex !== -1) {
 					handleChangeTreeState((prev) =>
 						addNodeToArray(prev, blockId, targetIndex)
@@ -101,14 +128,29 @@ const StrategyConfigurationClient: FC<Props> = ({
 		const renderNode = (node: ArrayTreeNode, nodeIndex: number): ReactNode => {
 			const BlockComponentToRender =
 				BlockComponent[node.blockId as keyof typeof BlockComponent];
-			const leftChildIndex = getLeftChildIndex(nodeIndex);
-			const rightChildIndex = getRightChildIndex(nodeIndex);
+
+			let leftChildIndex: number;
+			let rightChildIndex: number;
+
+			// 루트 노드(인덱스 0)는 특별 처리: 자식이 인덱스 1에만 있음
+			if (nodeIndex === 0) {
+				leftChildIndex = 1;
+				rightChildIndex = -1; // 오른쪽 자식 없음
+			} else {
+				// 다른 노드들은 일반적인 이진트리 인덱스 계산
+				leftChildIndex = getLeftChildIndex(nodeIndex);
+				rightChildIndex = getRightChildIndex(nodeIndex);
+			}
 
 			// 자식 노드들 찾기
 			const leftChild =
-				leftChildIndex < MAX_TREE_SIZE ? array[leftChildIndex] : null;
+				leftChildIndex < MAX_TREE_SIZE && leftChildIndex >= 0
+					? array[leftChildIndex]
+					: null;
 			const rightChild =
-				rightChildIndex < MAX_TREE_SIZE ? array[rightChildIndex] : null;
+				rightChildIndex < MAX_TREE_SIZE && rightChildIndex >= 0
+					? array[rightChildIndex]
+					: null;
 
 			// 자식 노드들을 children으로 렌더링
 			const children = [];
@@ -125,6 +167,7 @@ const StrategyConfigurationClient: FC<Props> = ({
 					disabled: false,
 					ref: ref,
 					key: `${node.blockId}-${nodeIndex}`,
+					nodeIndex: nodeIndex,
 				},
 				children.length > 0 ? children : undefined
 			);
@@ -143,10 +186,12 @@ const StrategyConfigurationClient: FC<Props> = ({
 				null,
 				null,
 				null,
+				null,
 			]);
 		} else {
 			handleChangeTreeState([
 				{ blockId: 'buy', index: 0 },
+				null,
 				null,
 				null,
 				null,
