@@ -40,7 +40,7 @@ const StrategyConfigurationClient: FC<Props> = ({
 }) => {
 	const { treeState, handleChangeTreeState } = useCreateStrategyContext();
 	const { ref } = useCreateStrategyContext();
-	const [activeTab, setActiveTab] = useState<TabType>('strategy');
+	const [activeTab, setActiveTab] = useState<TabType>('block');
 	const [activeComponent, setActiveComponent] = useState<{
 		text: string;
 		name: string;
@@ -165,21 +165,6 @@ const StrategyConfigurationClient: FC<Props> = ({
 					<SidePalette.menuList
 						menus={[
 							{
-								title: '전략',
-								item: (
-									<button
-										onClick={() => setActiveTab('strategy')}
-										className="w-full"
-									>
-										<SidePalette.menuItem
-											icon={<Cuboid strokeWidth={1} />}
-											title="전략"
-											isActive={activeTab === 'strategy'}
-										/>
-									</button>
-								),
-							},
-							{
 								title: '블록',
 								item: (
 									<button
@@ -190,6 +175,21 @@ const StrategyConfigurationClient: FC<Props> = ({
 											icon={<Shapes strokeWidth={1} />}
 											title="블록"
 											isActive={activeTab === 'block'}
+										/>
+									</button>
+								),
+							},
+							{
+								title: '전략',
+								item: (
+									<button
+										onClick={() => setActiveTab('strategy')}
+										className="w-full"
+									>
+										<SidePalette.menuItem
+											icon={<Cuboid strokeWidth={1} />}
+											title="전략"
+											isActive={activeTab === 'strategy'}
 										/>
 									</button>
 								),

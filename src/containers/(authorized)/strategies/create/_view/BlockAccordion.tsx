@@ -10,8 +10,29 @@ import BlockItem from './BlockItem';
 const BlockAccordion = () => {
 	return (
 		<Accordion type="multiple" className="w-full">
+			<AccordionItem value="logical">
+				<AccordionTrigger className="cursor-pointer hover:no-underline">
+					논리
+				</AccordionTrigger>
+				<AccordionContent>
+					<div className="space-y-2">
+						<BlockItem
+							id="all"
+							blockName="모든 조건"
+							blockDescription="모든 조건에 대한 기준을 설정합니다."
+						/>
+						<BlockItem
+							id="any"
+							blockName="하나의 조건"
+							blockDescription="하나의 조건에 대한 기준을 설정합니다."
+						/>
+					</div>
+				</AccordionContent>
+			</AccordionItem>
 			<AccordionItem value="indicators">
-				<AccordionTrigger>기본 지표</AccordionTrigger>
+				<AccordionTrigger className="cursor-pointer hover:no-underline">
+					기본 지표
+				</AccordionTrigger>
 				<AccordionContent>
 					<div className="space-y-2">
 						<BlockItem
@@ -38,7 +59,9 @@ const BlockAccordion = () => {
 				</AccordionContent>
 			</AccordionItem>
 			<AccordionItem value="momentum">
-				<AccordionTrigger>모멘텀</AccordionTrigger>
+				<AccordionTrigger className="cursor-pointer hover:no-underline">
+					모멘텀
+				</AccordionTrigger>
 				<AccordionContent>
 					<div className="space-y-2">
 						<BlockItem
@@ -76,7 +99,9 @@ const BlockAccordion = () => {
 			</AccordionItem>
 
 			<AccordionItem value="volume">
-				<AccordionTrigger>거래량</AccordionTrigger>
+				<AccordionTrigger className="cursor-pointer hover:no-underline">
+					거래량
+				</AccordionTrigger>
 				<AccordionContent>
 					<div className="space-y-2">
 						<BlockItem
@@ -94,7 +119,9 @@ const BlockAccordion = () => {
 			</AccordionItem>
 
 			<AccordionItem value="risk">
-				<AccordionTrigger>밴드</AccordionTrigger>
+				<AccordionTrigger className="cursor-pointer hover:no-underline">
+					밴드
+				</AccordionTrigger>
 				<AccordionContent>
 					<div className="space-y-2">
 						<BlockItem
@@ -117,7 +144,9 @@ const BlockAccordion = () => {
 			</AccordionItem>
 
 			<AccordionItem value="level">
-				<AccordionTrigger>레벨</AccordionTrigger>
+				<AccordionTrigger className="cursor-pointer hover:no-underline">
+					레벨
+				</AccordionTrigger>
 				<AccordionContent>
 					<div className="space-y-2">
 						<BlockItem
@@ -138,45 +167,10 @@ const BlockAccordion = () => {
 					</div>
 				</AccordionContent>
 			</AccordionItem>
-
-			<AccordionItem value="logical">
-				<AccordionTrigger>논리</AccordionTrigger>
-				<AccordionContent>
-					<div className="space-y-2">
-						<BlockItem
-							id="all"
-							blockName="모든 조건"
-							blockDescription="모든 조건에 대한 기준을 설정합니다."
-						/>
-						<BlockItem
-							id="any"
-							blockName="하나의 조건"
-							blockDescription="하나의 조건에 대한 기준을 설정합니다."
-						/>
-					</div>
-				</AccordionContent>
-			</AccordionItem>
-
-			<AccordionItem value="trade">
-				<AccordionTrigger>거래</AccordionTrigger>
-				<AccordionContent>
-					<div className="space-y-2">
-						<BlockItem
-							id="buy"
-							blockName="매수"
-							blockDescription="매수에 대한 기준을 설정합니다."
-						/>
-						<BlockItem
-							id="sell"
-							blockName="매도"
-							blockDescription="매도에 대한 기준을 설정합니다."
-						/>
-					</div>
-				</AccordionContent>
-			</AccordionItem>
-
 			<AccordionItem value="exit">
-				<AccordionTrigger>종료</AccordionTrigger>
+				<AccordionTrigger className="cursor-pointer hover:no-underline">
+					종료
+				</AccordionTrigger>
 				<AccordionContent>
 					<div className="space-y-2">
 						<BlockItem
