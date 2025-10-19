@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren, useEffect, useRef } from 'react';
 
 import { useDroppable } from '@dnd-kit/core';
+import { toast } from 'sonner';
 
 import { BlockProps, TradeNode } from '@/@types/StrategyTemplateNode';
 
@@ -25,6 +26,16 @@ const Sell: FC<PropsWithChildren<SellProps>> = ({
 	const countRef = useRef<HTMLInputElement>(null);
 
 	const createJson = () => {
+		if (!countRef.current?.value) {
+			toast.error('매도 수량을 입력해주세요.');
+			return null;
+		}
+
+		if (Number(countRef.current.value) <= 0) {
+			toast.error('매도 수량은 1 이상의 값을 입력해주세요.');
+			return null;
+		}
+
 		return {
 			orderQuantity: Number(countRef.current?.value),
 			node: childNode || {

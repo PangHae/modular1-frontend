@@ -1,5 +1,7 @@
 import { FC, useEffect, useRef } from 'react';
 
+import { toast } from 'sonner';
+
 import {
 	BlockProps,
 	ConstantOperand,
@@ -20,8 +22,14 @@ const ExitWithProfit: FC<ExitWithProfitProps> = ({
 	const rightProfitRef = useRef<HTMLInputElement>(null);
 
 	const createJson = () => {
-		if (!rightProfitRef.current) {
-			return {} as Node;
+		if (!rightProfitRef.current?.value) {
+			toast.error('익절 비율을 입력해주세요.');
+			return null;
+		}
+
+		if (Number(rightProfitRef.current.value) <= 0) {
+			toast.error('익절 비율은 양수를 입력해주세요.');
+			return null;
 		}
 
 		return {

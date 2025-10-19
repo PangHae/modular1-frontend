@@ -18,7 +18,7 @@ export type OpeningRangeSubfieldType = 'high' | 'low';
 export type YearHighLowType = '52_WEEK_HIGH' | '52_WEEK_LOW';
 
 export interface BlockProps {
-	ref: React.RefObject<{ [key: string]: () => Node } | null> | null;
+	ref: React.RefObject<{ [key: string]: () => Node | null } | null> | null;
 	disabled?: boolean;
 }
 

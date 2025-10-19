@@ -1,5 +1,7 @@
 import { FC, useEffect, useRef } from 'react';
 
+import { toast } from 'sonner';
+
 import {
 	BlockProps,
 	ConstantOperand,
@@ -20,8 +22,14 @@ const ExitWithLoss: FC<ExitWithLossProps> = ({
 	const rightLossRef = useRef<HTMLInputElement>(null);
 
 	const createJson = () => {
-		if (!rightLossRef.current) {
-			return {} as Node;
+		if (!rightLossRef.current?.value) {
+			toast.error('손절 비율을 입력해주세요.');
+			return null;
+		}
+
+		if (Number(rightLossRef.current.value) >= 0) {
+			toast.error('손절 비율은 음수를 입력해주세요.');
+			return null;
 		}
 
 		return {

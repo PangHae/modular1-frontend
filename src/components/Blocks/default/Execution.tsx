@@ -2,6 +2,8 @@
 
 import { FC, useEffect, useRef, useState } from 'react';
 
+import { toast } from 'sonner';
+
 import {
 	BlockProps,
 	ComparisonType,
@@ -43,6 +45,16 @@ const Execution: FC<ExecutionProps> = ({
 	const createJson = () => {
 		let right = {};
 		if (rightValueType === 'constant') {
+			if (!rightExecutionRef.current?.value) {
+				toast.error('체결 강도를 입력해주세요.');
+				return null;
+			}
+
+			if (Number(rightExecutionRef.current.value) < 0) {
+				toast.error('체결 강도는 0 이상의 값을 입력해주세요.');
+				return null;
+			}
+
 			right = {
 				kind: 'CONSTANT',
 				constant: { value: rightExecutionRef.current?.value, unit: 'percent' },

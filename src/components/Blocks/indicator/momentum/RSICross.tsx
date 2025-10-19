@@ -2,6 +2,8 @@
 
 import { FC, useEffect, useRef, useState } from 'react';
 
+import { toast } from 'sonner';
+
 import {
 	BlockProps,
 	DirectionType,
@@ -49,8 +51,17 @@ const RSICross: FC<RSICrossProps> = ({
 	};
 
 	const createJson = () => {
-		if (!rsiCrossValueRef.current) {
-			return {} as Node;
+		if (!rsiCrossValueRef.current?.value) {
+			toast.error('RSI 값을 입력해주세요.');
+			return null;
+		}
+
+		if (
+			Number(rsiCrossValueRef.current.value) < 0 ||
+			Number(rsiCrossValueRef.current.value) > 100
+		) {
+			toast.error('RSI 값은 0부터 100 사이의 값을 입력해주세요.');
+			return null;
 		}
 
 		return {

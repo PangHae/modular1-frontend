@@ -1,5 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
 
+import { toast } from 'sonner';
+
 import {
 	BlockProps,
 	ComparisonType,
@@ -30,8 +32,17 @@ const ChangeRate: FC<ChangeRateProps> = ({
 	};
 
 	const createJson = () => {
-		if (!rightChangeRateRef.current) {
-			return {} as Node;
+		if (!rightChangeRateRef.current?.value) {
+			toast.error('변화율을 입력해주세요.');
+			return null;
+		}
+
+		if (
+			Number(rightChangeRateRef.current.value) > 100 ||
+			Number(rightChangeRateRef.current.value) < -100
+		) {
+			toast.error('변화율은 -100부터 100 사이의 값을 입력해주세요.');
+			return null;
 		}
 
 		return {

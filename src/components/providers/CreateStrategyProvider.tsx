@@ -26,7 +26,7 @@ type Step = 1 | 2;
 type StrategyType = 'BUY' | 'SELL';
 
 export const Context = createContext<{
-	ref: React.RefObject<{ [key: string]: () => Node } | null>;
+	ref: React.RefObject<{ [key: string]: () => Node | null } | null>;
 	currentStep: Step;
 	strategyType: StrategyType;
 	selectedStock: string;
@@ -61,7 +61,7 @@ export const CreateStrategyProvider = ({
 			toast.error(error.message);
 		},
 	});
-	const childRef = useRef<{ [key: string]: () => Node }>(null);
+	const childRef = useRef<{ [key: string]: () => Node | null }>(null);
 	const [currentStep, setCurrentStep] = useState<Step>(1);
 	const [strategyType, setStrategyType] = useState<StrategyType>('BUY');
 	const [selectedStock, setSelectedStock] = useState('');
@@ -167,6 +167,11 @@ export const CreateStrategyProvider = ({
 					? buildNodeFromTree(childIndex)
 					: null;
 
+			// 자식이 null이면 전체 결과도 null 반환
+			if (!child) {
+				return null;
+			}
+
 			// 자식이 있으면 그대로 반환 (추가 GROUP으로 감싸지 않음)
 			return child;
 		}
@@ -199,6 +204,11 @@ export const CreateStrategyProvider = ({
 					? buildNodeFromTree(rightChildIndex)
 					: null;
 
+			// 자식이 모두 null이면 전체 결과도 null 반환
+			if (!leftChild || !rightChild) {
+				return null;
+			}
+
 			const children = [];
 			if (leftChild) children.push(leftChild);
 			if (rightChild) children.push(rightChild);
@@ -214,6 +224,9 @@ export const CreateStrategyProvider = ({
 
 		// ref에서 해당 블록의 createJson 함수 호출 (일반 블록만)
 		if (childRef.current && childRef.current[node.blockId]) {
+			if (childRef.current[node.blockId] === null) {
+				return null;
+			}
 			const refResult = childRef.current[node.blockId]();
 			return refResult;
 		}
@@ -233,6 +246,10 @@ export const CreateStrategyProvider = ({
 
 		// 루트 노드(인덱스 0)의 자식들을 처리해서 트리 구조 생성
 		const rootNode = buildNodeFromTree(0);
+
+		if (!rootNode) {
+			return;
+		}
 
 		const data: StrategyTemplate = {
 			strategy_name: strategyNameRef.current.value,

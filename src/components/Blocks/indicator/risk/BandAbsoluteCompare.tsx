@@ -1,5 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
 
+import { toast } from 'sonner';
+
 import {
 	BlockProps,
 	ComparisonType,
@@ -38,6 +40,21 @@ const BandAbsoluteCompare: FC<BandAbsoluteCompareProps> = ({
 	};
 
 	const createJson = () => {
+		if (!bandAbsoluteCompareValueRef.current?.value) {
+			toast.error('볼린저밴드 폭 절대값 대비 변화 감지 값을 입력해주세요.');
+			return null;
+		}
+
+		if (
+			Number(bandAbsoluteCompareValueRef.current.value) < 2 ||
+			Number(bandAbsoluteCompareValueRef.current.value) > 5
+		) {
+			toast.error(
+				'볼린저밴드 폭 절대값 대비 변화 감지 값은 2부터 5 사이의 값을 입력해주세요.'
+			);
+			return null;
+		}
+
 		return {
 			type: 'COMPARE',
 			label: 'bandAbsoluteCompare',
