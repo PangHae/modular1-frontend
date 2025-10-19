@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, RefObject } from 'react';
 
 import Link from 'next/link';
 
@@ -13,11 +13,10 @@ import { cn } from '@/lib/utils';
 type Step = 1 | 2;
 
 interface Props {
+	strategyNameRef: RefObject<HTMLInputElement | null>;
 	className?: string;
 	currentStep: Step;
 	selectedStock: string;
-	strategyName: string;
-	onStrategyNameChange: (name: string) => void;
 	onNext: () => void;
 	onPrev: () => void;
 	onCreateStrategy: () => void;
@@ -36,13 +35,12 @@ const STEP_MAP = {
 };
 
 const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
+	strategyNameRef,
 	className,
 	children,
 	currentStep,
-	strategyName,
 	selectedStock,
 	onNext,
-	onStrategyNameChange,
 	onPrev,
 	onCreateStrategy,
 }) => {
@@ -146,9 +144,8 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 				{currentStep === 2 && (
 					<div className="flex items-center gap-4">
 						<Input
+							ref={strategyNameRef}
 							placeholder="전략 이름을 입력해주세요"
-							value={strategyName}
-							onChange={(e) => onStrategyNameChange(e.target.value)}
 							className="w-64"
 						/>
 						<Button

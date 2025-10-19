@@ -249,6 +249,7 @@ export const groupComponentPropsFactories: Record<
 		getProps: (node) => ({
 			ref: { current: {} },
 			childrenNodes: node.children,
+			disabled: true,
 		}),
 	},
 
@@ -256,6 +257,7 @@ export const groupComponentPropsFactories: Record<
 		getProps: (node) => ({
 			ref: { current: {} },
 			childrenNodes: node.children,
+			disabled: true,
 		}),
 	},
 };

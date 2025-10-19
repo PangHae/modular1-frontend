@@ -14,12 +14,17 @@ interface Props {
 	myStocks: Stock[];
 }
 
-const StockSearch: FC<Props> = ({ onClick, stocks }) => {
-	const [searchQuery, setSearchQuery] = useState('');
+const StockSearch: FC<Props> = ({ onClick, stocks, myStocks }) => {
 	const [filterType, setFilterType] = useState<string>('all');
+	const [searchQuery, setSearchQuery] = useState('');
 
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);
+	};
+
+	const handleFilterChange = (type: string) => {
+		setFilterType(type);
+		setSearchQuery('');
 	};
 
 	return (
@@ -35,18 +40,30 @@ const StockSearch: FC<Props> = ({ onClick, stocks }) => {
 				<StockFilterChip
 					selected={filterType === 'all'}
 					type="all"
-					onChange={() => setFilterType('all')}
+					onChange={() => handleFilterChange('all')}
 				/>
 				<StockFilterChip
 					selected={filterType === 'my'}
 					type="my"
-					onChange={() => setFilterType('my')}
+					onChange={() => handleFilterChange('my')}
 				/>
 			</div>
-			<StockList
-				onClick={onClick}
-				stocks={stocks.filter((stock) => stock.stockName.includes(searchQuery))}
-			/>
+			{filterType === 'all' && (
+				<StockList
+					onClick={onClick}
+					stocks={stocks.filter((stock) =>
+						stock.stockName.includes(searchQuery)
+					)}
+				/>
+			)}
+			{filterType === 'my' && (
+				<StockList
+					onClick={onClick}
+					stocks={myStocks.filter((stock) =>
+						stock.stockName.includes(searchQuery)
+					)}
+				/>
+			)}
 		</div>
 	);
 };

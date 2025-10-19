@@ -8,13 +8,9 @@ import StrategyConfigurationClient from './StrategyConfiguration.client';
 
 const CreateStrategyClient = () => {
 	const {
+		strategyNameRef,
 		currentStep,
-		strategyType,
-		strategyName,
 		selectedStock,
-		setSelectedStock,
-		setStrategyType,
-		setStrategyName,
 		handleNext,
 		handlePrev,
 		handleCreateStrategy,
@@ -22,27 +18,16 @@ const CreateStrategyClient = () => {
 
 	return (
 		<CreateStrategyLayout
+			strategyNameRef={strategyNameRef}
 			currentStep={currentStep}
-			strategyName={strategyName}
-			onStrategyNameChange={setStrategyName}
 			selectedStock={selectedStock}
 			onNext={handleNext}
 			onPrev={handlePrev}
 			onCreateStrategy={handleCreateStrategy}
 			canProceed={currentStep === 1 ? !!selectedStock.trim() : true}
 		>
-			{currentStep === 1 && (
-				<StockSelectClient
-					selectedStock={selectedStock}
-					onSelectStock={setSelectedStock}
-				/>
-			)}
-			{currentStep === 2 && (
-				<StrategyConfigurationClient
-					strategyType={strategyType}
-					onStrategyTypeChange={setStrategyType}
-				/>
-			)}
+			{currentStep === 1 && <StockSelectClient />}
+			{currentStep === 2 && <StrategyConfigurationClient />}
 		</CreateStrategyLayout>
 	);
 };

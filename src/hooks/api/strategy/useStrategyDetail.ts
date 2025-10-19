@@ -8,5 +8,6 @@ export const useStrategyDetail = (strategyId: number) => {
 		queryFn: () => getStrategyDetailById(strategyId),
 		retry: 2,
 		retryDelay: (failureCount) => 1000 * 2 ** failureCount,
+		enabled: strategyId !== -1,
 	});
 };

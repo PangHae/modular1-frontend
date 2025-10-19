@@ -1,22 +1,21 @@
 'use client';
 
+import { FC } from 'react';
+
 import SidePalette from '@/components/common/SidePalette';
 import StockSearch from '@/components/common/SidePalette/StockSearch';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useMyStocks } from '@/hooks/api/stocks/useMyStocks';
 import { useStocks } from '@/hooks/api/stocks/useStocks';
+import { useCreateStrategyContext } from '@/hooks/contexts/useCreateStrategyContext';
 
-interface Props {
-	selectedStock: string;
-	onSelectStock: (stock: string) => void;
-}
-
-const StockSelectClient = ({ selectedStock, onSelectStock }: Props) => {
+const StockSelectClient: FC = () => {
 	const { data: stocks } = useStocks();
 	const { data: myStocks } = useMyStocks();
+	const { selectedStock, setSelectedStock } = useCreateStrategyContext();
 
 	const handleSelectStock = (stock: { name: string; code: string }) => {
-		onSelectStock(stock.code);
+		setSelectedStock(stock.code);
 	};
 
 	return (

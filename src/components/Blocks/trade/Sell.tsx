@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useEffect, useRef } from 'react';
 
 import { useDroppable } from '@dnd-kit/core';
 
-import { BlockProps, Node, TradeNode } from '@/@types/StrategyTemplateNode';
+import { BlockProps, TradeNode } from '@/@types/StrategyTemplateNode';
 
 import Block from '../Block';
 
@@ -27,7 +27,12 @@ const Sell: FC<PropsWithChildren<SellProps>> = ({
 	const createJson = () => {
 		return {
 			orderQuantity: Number(countRef.current?.value),
-			node: childNode,
+			node: childNode || {
+				type: 'GROUP',
+				logic: 'ALL',
+				label: 'all',
+				children: [],
+			},
 		} as TradeNode;
 	};
 
@@ -56,11 +61,12 @@ const Sell: FC<PropsWithChildren<SellProps>> = ({
 			</div>
 			<div className="h-auto space-y-2" ref={setNodeRef}>
 				{children}
-				{(!children || (Array.isArray(children) && children.length < 2)) && (
-					<div className="text-sm text-gray-500 p-4 text-center border-2 border-dashed border-gray-300 rounded">
-						드래그하여 블록을 추가하세요
-					</div>
-				)}
+				{!disabled &&
+					(!children || (Array.isArray(children) && children.length < 1)) && (
+						<div className="text-sm text-gray-500 p-4 text-center border-2 border-dashed border-gray-300 rounded">
+							드래그하여 블록을 추가하세요
+						</div>
+					)}
 			</div>
 		</Block>
 	);

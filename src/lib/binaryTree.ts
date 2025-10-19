@@ -1,15 +1,20 @@
 import { ArrayTreeNode } from '@/@types/strategy';
 
 // 최대 깊이 3의 이진트리 = 배열 길이 7 (2^3 - 1 = 7)
-export const MAX_TREE_SIZE = 7;
+export const MAX_TREE_SIZE = 8;
 
 // 배열 기반 이진트리 유틸리티 함수들
-export const getLeftChildIndex = (index: number): number => 2 * index + 1;
-export const getRightChildIndex = (index: number): number => 2 * index + 2;
+export const getLeftChildIndex = (index: number): number => 2 * index;
+export const getRightChildIndex = (index: number): number => 2 * index + 1;
 export const getParentIndex = (index: number): number =>
 	Math.floor((index - 1) / 2);
-export const getDepth = (index: number): number =>
-	Math.floor(Math.log2(index + 1));
+export const getDepth = (index: number): number => {
+	if (index === 0) return 0;
+	if (index === 1) return 1;
+	if (index === 2 || index === 3) return 2;
+	if (index >= 4 && index <= 7) return 3;
+	return 4; // 최대 깊이 초과
+};
 
 // 배열에 노드 추가 함수
 export const addNodeToArray = (
@@ -22,8 +27,8 @@ export const addNodeToArray = (
 	if (targetIndex !== undefined && targetIndex < MAX_TREE_SIZE) {
 		// 특정 노드의 자식으로 추가
 		const targetNode = array[targetIndex];
-		if (targetNode && getDepth(targetIndex) < 2) {
-			// 최대 높이 3 (depth 0, 1, 2)
+		if (targetNode && getDepth(targetIndex) < 3) {
+			// 최대 높이 4 (depth 0, 1, 2, 3)
 			const leftChildIndex = getLeftChildIndex(targetIndex);
 			const rightChildIndex = getRightChildIndex(targetIndex);
 
