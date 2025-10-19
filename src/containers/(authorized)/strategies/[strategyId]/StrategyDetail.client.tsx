@@ -85,7 +85,7 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 								{strategyDetail.strategyInfo.strategyName}
 							</h1>
 							<div className="flex items-center gap-2 mt-1">
-								<div className="w-6 h-6 bg-gray-200 rounded flex items-center justify-center">
+								<div className="w-6 h-6 rounded flex items-center justify-center">
 									<Image
 										className="rounded-full"
 										src={`https://images.tossinvest.com/https%3A%2F%2Fstatic.toss.im%2Fpng-icons%2Fsecurities%2Ficn-sec-fill-${strategyDetail.stockInfo.stockCode}.png?width=64&height=64`}

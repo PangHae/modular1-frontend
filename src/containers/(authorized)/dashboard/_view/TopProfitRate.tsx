@@ -14,7 +14,7 @@ const TopProfitRate = () => {
 	return (
 		<Card className="flex-1 flex flex-col overflow-hidden">
 			<CardHeader>
-				<CardTitle>수익률 Top 10</CardTitle>
+				<CardTitle>금주 수익률 Top 10</CardTitle>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
 				{!data && (
