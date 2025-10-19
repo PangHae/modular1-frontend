@@ -19,6 +19,7 @@ import {
 	StrategyTemplate,
 } from '@/@types/strategy';
 import { GroupNode, Node } from '@/@types/StrategyTemplateNode';
+import { FullScreenLoading } from '@/components/common/FullScreenLoading';
 import { useCreateStrategy } from '@/hooks/api/strategy/useCreateStrategy';
 
 type Step = 1 | 2;
@@ -49,7 +50,7 @@ export const CreateStrategyProvider = ({
 	const strategyNameRef = useRef<HTMLInputElement>(null);
 	const router = useRouter();
 	const queryClient = useQueryClient();
-	const { mutate: createStrategy } = useCreateStrategy({
+	const { mutate: createStrategy, isPending } = useCreateStrategy({
 		onSuccess: (data) => {
 			toast.success(data.message);
 			queryClient.invalidateQueries({ queryKey: ['strategies'] });
@@ -273,7 +274,6 @@ export const CreateStrategyProvider = ({
 		}
 		createStrategy(data);
 	};
-
 	return (
 		<Context.Provider
 			value={{
@@ -294,6 +294,7 @@ export const CreateStrategyProvider = ({
 			}}
 		>
 			{children}
+			{isPending && <FullScreenLoading message="전략을 생성하고 있습니다..." />}
 		</Context.Provider>
 	);
 };
