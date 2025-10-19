@@ -19,7 +19,7 @@ import {
 	StrategyTemplate,
 } from '@/@types/strategy';
 import { GroupNode, Node } from '@/@types/StrategyTemplateNode';
-import { FullScreenLoading } from '@/components/common/FullScreenLoading';
+import { FullScreenLoading } from '@/components/common/Loading';
 import { useCreateStrategy } from '@/hooks/api/strategy/useCreateStrategy';
 
 type Step = 1 | 2;

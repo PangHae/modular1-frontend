@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { ProfitDataKey } from '@/@types/strategy';
 import ProfitRateLineChart from '@/components/charts/ProfitRateLineChart';
+import { CardLoading } from '@/components/common/Loading';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartConfig } from '@/components/ui/chart';
 import { useAccountProfitRateSeries } from '@/hooks/api/accounts/useAccountProfitRateSeries';
@@ -19,10 +20,6 @@ const PortfolioProfitChartCard = () => {
 	const { data, isLoading } = useAccountProfitRateSeries();
 	const [selectedPeriod, setSelectedPeriod] =
 		useState<ProfitDataKey>('oneMonth');
-
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
 
 	return (
 		<Card className="flex-1 min-h-0">
@@ -94,17 +91,22 @@ const PortfolioProfitChartCard = () => {
 				</div>
 			</CardHeader>
 			<CardContent className="max-h-[calc(100%-72px)] pl-0">
-				{!data && (
+				{isLoading && <CardLoading showBackground={false} />}
+				{!isLoading && !data && (
 					<div className="flex items-center justify-center h-64">
 						<div className="text-lg text-gray-500">No data</div>
 					</div>
 				)}
-				<ProfitRateLineChart
-					id="portfolio-profit-rate-chart"
-					chartConfig={chartConfig}
-					chartLineData={data?.data.profitSeries[selectedPeriod] || []}
-					dataKey="cumulativeProfitRate"
-				/>
+				{!isLoading &&
+					data &&
+					data.data.profitSeries[selectedPeriod].length > 0 && (
+						<ProfitRateLineChart
+							id="portfolio-profit-rate-chart"
+							chartConfig={chartConfig}
+							chartLineData={data?.data.profitSeries[selectedPeriod] || []}
+							dataKey="cumulativeProfitRate"
+						/>
+					)}
 			</CardContent>
 		</Card>
 	);

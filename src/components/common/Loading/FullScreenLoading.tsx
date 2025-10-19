@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import { Spinner } from '@/components/ui/spinner';
 
 interface FullScreenLoadingProps {
@@ -5,10 +7,10 @@ interface FullScreenLoadingProps {
 	showBackground?: boolean;
 }
 
-export const FullScreenLoading = ({
+export const FullScreenLoading: FC<FullScreenLoadingProps> = ({
 	message = '로딩 중...',
 	showBackground = true,
-}: FullScreenLoadingProps) => {
+}) => {
 	return (
 		<div
 			className={`fixed inset-0 z-50 flex items-center justify-center ${
