@@ -138,7 +138,7 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 											: 'text-blue-500'
 									)}
 								>
-									{`${strategyDetail.strategyProfit.allProfit}%`}
+									{`${strategyDetail.strategyProfit.allProfit.toFixed(2)}%`}
 								</div>
 							</div>
 							<div className="text-center">
@@ -153,7 +153,7 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 											: 'text-blue-500'
 									)}
 								>
-									{`${strategyDetail.strategyProfit.weekProfit}%`}
+									{`${strategyDetail.strategyProfit.weekProfit.toFixed(2)}%`}
 								</div>
 							</div>
 							<div className="text-center">
