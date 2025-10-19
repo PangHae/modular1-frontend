@@ -33,7 +33,7 @@ const registerSchema = z.object({
 	memberAppSecret: z.string().min(1, 'App Secret은 필수입니다.'),
 });
 
-type RegisterFormValues = z.infer<typeof registerSchema>;
+export type RegisterFormValues = z.infer<typeof registerSchema>;
 
 const RegisterStepForm = () => {
 	const router = useRouter();
