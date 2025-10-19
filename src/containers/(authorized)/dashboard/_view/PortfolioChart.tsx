@@ -11,11 +11,16 @@ import { ChartConfig, ChartContainer, ChartStyle } from '@/components/ui/chart';
 import { useHoldingStocks } from '@/hooks/api/accounts/useHoldingStocks';
 
 const CHART_COLORS = [
-	'var(--color-chart-1)',
-	'var(--color-chart-2)',
-	'var(--color-chart-3)',
-	'var(--color-chart-4)',
-	'var(--color-chart-5)',
+	'var(--color-custom-chart-1)',
+	'var(--color-custom-chart-2)',
+	'var(--color-custom-chart-3)',
+	'var(--color-custom-chart-4)',
+	'var(--color-custom-chart-5)',
+	'var(--color-custom-chart-6)',
+	'var(--color-custom-chart-7)',
+	'var(--color-custom-chart-8)',
+	'var(--color-custom-chart-9)',
+	'var(--color-custom-chart-10)',
 ];
 
 const PortfolioChart = () => {
@@ -35,15 +40,15 @@ const PortfolioChart = () => {
 		);
 
 		// 상위 10개와 나머지 분리
-		const topStocks = sortedStocks.slice(0, 10);
-		const otherStocks = sortedStocks.slice(10);
+		const topStocks = sortedStocks.slice(0, 9);
+		const otherStocks = sortedStocks.slice(9);
 
 		// chartConfig 생성
 		const config: ChartConfig = {};
 		topStocks.forEach((stock, index) => {
 			config[stock.stockCode] = {
 				label: stock.stockName,
-				color: CHART_COLORS[index % CHART_COLORS.length],
+				color: CHART_COLORS[index],
 			};
 		});
 
@@ -147,9 +152,9 @@ const PortfolioChart = () => {
 										</g>
 									)}
 								>
-									{chartData.map((entry, index) => (
+									{chartData.map((entry) => (
 										<Cell
-											key={`cell-${index}`}
+											key={`cell-${entry.stock}`}
 											fill={chartConfig[entry.stock]?.color || CHART_COLORS[0]}
 										/>
 									))}
