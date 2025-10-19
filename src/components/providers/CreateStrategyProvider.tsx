@@ -226,7 +226,7 @@ export const CreateStrategyProvider = ({
 			return;
 		}
 
-		if (!strategyNameRef.current) {
+		if (!strategyNameRef.current?.value) {
 			toast.error('전략 이름을 입력해주세요');
 			return;
 		}
