@@ -5,6 +5,7 @@ import UserChip from '@/components/common/UserChip';
 import { MENU } from '@/constants/menu';
 
 import MenuIcon from './MenuIcon';
+import modular1Icon from '../../../../public/images/modular1-icon.png';
 
 const SideNav = () => {
 	return (
@@ -16,8 +17,8 @@ const SideNav = () => {
 						className="flex items-center justify-center hover:bg-custom-gray-border/40 rounded-md p-2"
 					>
 						<Image
-							src="/icons/modular1-icon.png"
-							alt="menu"
+							src={modular1Icon}
+							alt="Modular1 Icon"
 							width={32}
 							height={32}
 						/>

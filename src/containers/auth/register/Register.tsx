@@ -24,6 +24,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { useSignUp } from '@/hooks/api/auth/useSignUp';
 
+import blockIcon from '../../../../public/images/block.png';
+import modular1LetterIcon from '../../../../public/images/letter-icon.png';
+import modular1Icon from '../../../../public/images/modular1-icon.png';
+import shinhanIcon from '../../../../public/images/shinhan.png';
+import smallBlock1Icon from '../../../../public/images/small-block-1.png';
+import smallBlock2Icon from '../../../../public/images/small-block-2.png';
+
 const registerSchema = z.object({
 	memberId: z.string().min(1, '아이디는 필수입니다.'),
 	memberPassword: z.string().min(1, '비밀번호는 필수입니다.'),
@@ -79,13 +86,13 @@ const RegisterStepForm = () => {
 						<div className="mb-10">
 							<div className="flex items-center gap-4 mb-6">
 								<Image
-									src="/icons/modular1-icon.png"
+									src={modular1Icon}
 									alt="Modular1 Icon"
 									width={50}
 									height={50}
 								/>
 								<Image
-									src="/icons/letter-icon.png"
+									src={modular1LetterIcon}
 									alt="Modular1 Letter Icon"
 									width={160}
 									height={40}
@@ -309,7 +316,7 @@ const RegisterStepForm = () => {
 								</div>
 								<div className="flex items-center space-x-2 mt-4">
 									<Image
-										src="/images/shinhan.png"
+										src={shinhanIcon}
 										alt="shinhan Icon"
 										width={20}
 										height={20}
@@ -320,21 +327,21 @@ const RegisterStepForm = () => {
 
 							<div className="flex items-center justify-center gap-6 my-8">
 								<Image
-									src="/images/block.png"
+									src={blockIcon}
 									alt="block"
 									width={110}
 									height={110}
 									className="floating"
 								/>
 								<Image
-									src="/images/small-block-1.png"
+									src={smallBlock1Icon}
 									alt="small block 1"
 									width={55}
 									height={55}
 									className="opacity-90 floating-x"
 								/>
 								<Image
-									src="/images/small-block-2.png"
+									src={smallBlock2Icon}
 									alt="small block 2"
 									width={55}
 									height={55}
