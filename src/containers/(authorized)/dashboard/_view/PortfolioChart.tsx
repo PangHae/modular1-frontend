@@ -118,7 +118,9 @@ const PortfolioChart = () => {
 				{isLoading && <CardLoading showBackground={false} />}
 				{!isLoading && !data && chartData.length === 0 && (
 					<div className="flex items-center justify-center h-64">
-						<div className="text-lg text-gray-500">No data</div>
+						<div className="text-lg text-gray-500">
+							보유 중인 종목이 없습니다.
+						</div>
 					</div>
 				)}
 				{/* 파이차트 */}

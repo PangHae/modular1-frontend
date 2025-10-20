@@ -85,7 +85,7 @@ const RecentExecution: FC<Props> = ({ executions }) => {
 										colSpan={4}
 										className="text-center text-gray-400 py-8"
 									>
-										No data
+										체결 내역이 없습니다.
 									</TableCell>
 								</TableRow>
 							)}

@@ -26,7 +26,9 @@ const RecentExecutions = () => {
 			<CardContent className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
 				{!data && (
 					<div className="flex items-center justify-center h-64">
-						<div className="text-lg text-gray-500">No data</div>
+						<div className="text-lg text-gray-500">
+							최근 체결 내역이 없습니다.
+						</div>
 					</div>
 				)}
 				{data?.pages.map((page) =>

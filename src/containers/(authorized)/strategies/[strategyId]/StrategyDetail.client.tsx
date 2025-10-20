@@ -88,7 +88,7 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 	if (!strategyDetail || !executions) {
 		return (
 			<div className="flex items-center justify-center h-64">
-				<div className="text-lg text-gray-500">No data</div>
+				<div className="text-lg text-gray-500">체결 내역이 없습니다.</div>
 			</div>
 		);
 	}

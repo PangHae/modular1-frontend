@@ -29,14 +29,6 @@ const StrategiesClient = () => {
 		setFilterStatus(status);
 	};
 
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
-
-	if (!data) {
-		return <div>No data</div>;
-	}
-
 	return (
 		<div className="flex flex-col gap-8 h-full overflow-y-auto relative px-10">
 			<div className="flex align-center justify-center flex-shrink-0 sticky top-0 bg-custom-gray-bg px-10 pt-14 pb-8 2xl:w-[1560px] w-[1280px]">
@@ -55,7 +47,12 @@ const StrategiesClient = () => {
 					</Link>
 				</div>
 				<CardGridLayout>
-					{data.data.items
+					{!isLoading && !data && (
+						<div className="flex items-center justify-center h-64">
+							<div className="text-lg text-gray-500">전략 목록이 없습니다.</div>
+						</div>
+					)}
+					{data?.data.items
 						.filter((strategy) => {
 							if (filterStatus === 'all') {
 								return true;

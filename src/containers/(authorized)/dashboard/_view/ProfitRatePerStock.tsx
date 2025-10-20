@@ -19,7 +19,9 @@ const ProfitRatePerStock = () => {
 			<CardContent className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
 				{!data && (
 					<div className="flex items-center justify-center h-64">
-						<div className="text-lg text-gray-500">No data</div>
+						<div className="text-lg text-gray-500">
+							종목 별 수익률 데이터가 없습니다.
+						</div>
 					</div>
 				)}
 				{data?.data.stockData.map((stock) => (

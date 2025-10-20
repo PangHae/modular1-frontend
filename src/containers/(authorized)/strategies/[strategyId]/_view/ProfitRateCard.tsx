@@ -99,7 +99,9 @@ const ProfitRateCard: FC<Props> = ({ profitRateSeries }) => {
 					/>
 				)}
 				{noProfitRateData && (
-					<div className="text-center text-gray-400 py-8">No data</div>
+					<div className="text-center text-gray-400 py-8">
+						수익률 데이터가 없습니다.
+					</div>
 				)}
 			</CardContent>
 		</Card>
