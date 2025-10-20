@@ -43,7 +43,7 @@ const StrategyCard: FC<Props> = ({
 			className="lg:w-[350px] lg:h-[210px] xl:w-[415px] xl:h-[250px] 2xl:w-[510px] 2xl:h-[315px] flex flex-col justify-between cursor-pointer"
 			onClick={() => router.push(`/strategies/${id}`)}
 		>
-			<CardHeader>
+			<CardHeader className="gap-3">
 				<CardDescription className="flex justify-between text-sub2 text-custom-sub-text">
 					<div className="flex items-center gap-1">
 						<Image
@@ -57,7 +57,7 @@ const StrategyCard: FC<Props> = ({
 					</div>
 					<StrategyStatusChip status={status} />
 				</CardDescription>
-				<CardTitle className="flex flex-col gap-1 text-heading3">
+				<CardTitle className="flex flex-col gap-1 text-[#333d4b] text-heading3!">
 					{title}
 				</CardTitle>
 			</CardHeader>
@@ -65,7 +65,7 @@ const StrategyCard: FC<Props> = ({
 				<p
 					className={cn(
 						'text-end text-heading3! font-semibold',
-						profitAmount > 0 ? 'text-red-500' : 'text-blue-500'
+						profitAmount > 0 ? 'text-[#F04452]' : 'text-[#3182F6]'
 					)}
 				>
 					{`${profitAmount.toLocaleString()}원(${profitRate.toLocaleString()}%)`}
