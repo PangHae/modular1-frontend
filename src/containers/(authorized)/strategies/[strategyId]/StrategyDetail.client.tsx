@@ -20,6 +20,8 @@ import {
 import { Tabs, TabsTrigger, TabsList, TabsContent } from '@/components/ui/tabs';
 import { useExecutionById } from '@/hooks/api/execution/useExecutionById';
 import { useDeleteStrategy } from '@/hooks/api/strategy/useDeleteStrategy';
+import { useRunStrategy } from '@/hooks/api/strategy/useRunStrategy';
+import { useStopStrategy } from '@/hooks/api/strategy/useStopStrategy';
 import { useStrategyDetail } from '@/hooks/api/strategy/useStrategyDetail';
 import { cn } from '@/lib/utils';
 
@@ -39,6 +41,24 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 		useStrategyDetail(strategyId);
 	const { data: executions, isLoading: isExecutionsLoading } =
 		useExecutionById(strategyId);
+	const { mutate: runStrategy } = useRunStrategy({
+		onSuccess: (
+			data: Response<{ strategyId: string; podName: string; status: string }>
+		) => {
+			toast.success(data.message);
+		},
+		onError: (error) => {
+			toast.error(error.message);
+		},
+	});
+	const { mutate: stopStrategy } = useStopStrategy({
+		onSuccess: (data: Response<{ strategyId: string; status: string }>) => {
+			toast.success(data.message);
+		},
+		onError: (error) => {
+			toast.error(error.message);
+		},
+	});
 
 	const { mutate: deleteStrategy } = useDeleteStrategy({
 		onSuccess: (data: Response<null>) => {
@@ -105,11 +125,17 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 							<MoreVertical className="w-4 h-4" />
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="start" id="strategy-actions-menu">
-							<DropdownMenuItem className="cursor-pointer">
+							<DropdownMenuItem
+								className="cursor-pointer"
+								onClick={() => runStrategy(strategyId)}
+							>
 								<Play className="w-[16px] h-[16px]" />
 								전략 실행
 							</DropdownMenuItem>
-							<DropdownMenuItem className="cursor-pointer">
+							<DropdownMenuItem
+								className="cursor-pointer"
+								onClick={() => stopStrategy(strategyId)}
+							>
 								<Square className="w-[16px] h-[16px]" />
 								전략 정지
 							</DropdownMenuItem>

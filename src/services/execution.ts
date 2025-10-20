@@ -10,6 +10,7 @@ export const getExecutionById = async (executionId: number) => {
 			{
 				headers: {
 					'Content-Type': 'application/json',
+					credentials: 'include',
 				},
 			}
 		);

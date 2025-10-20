@@ -123,3 +123,55 @@ export const getOneClickTemplates = async () => {
 		throw errorRes;
 	}
 };
+
+export const runStrategyPod = async (strategyId: number) => {
+	try {
+		const response = await fetch(`${STRATEGIES_API_URL}/${strategyId}/start`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (!response.ok) {
+			throw response;
+		}
+
+		const res: Response<{
+			strategyId: string;
+			podName: string;
+			status: string;
+		}> = await response.json();
+
+		return res;
+	} catch (error) {
+		const errorRes = await (error as globalThis.Response).json();
+		console.log(errorRes);
+		throw errorRes;
+	}
+};
+
+export const stopStrategyPod = async (strategyId: number) => {
+	try {
+		const response = await fetch(`${STRATEGIES_API_URL}/${strategyId}/stop`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				credentials: 'include',
+			},
+		});
+
+		if (!response.ok) {
+			throw response;
+		}
+
+		const res: Response<{ strategyId: string; status: string }> =
+			await response.json();
+
+		return res;
+	} catch (error) {
+		const errorRes = await (error as globalThis.Response).json();
+		console.log(errorRes);
+		throw errorRes;
+	}
+};

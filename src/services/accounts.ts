@@ -17,6 +17,7 @@ export const getAccountProfitRate = async () => {
 		const response = await fetch(`${ACCOUNTS_API_URL}/profit-rate`, {
 			headers: {
 				'Content-Type': 'application/json',
+				credentials: 'include',
 			},
 		});
 
@@ -40,6 +41,7 @@ export const getAccountProfitRateRanking = async () => {
 		const response = await fetch(`${ACCOUNTS_API_URL}/profit-rate/ranking`, {
 			headers: {
 				'Content-Type': 'application/json',
+				credentials: 'include',
 			},
 		});
 
@@ -64,6 +66,7 @@ export const getAccountTransactions = async (page: number, size: number) => {
 			{
 				headers: {
 					'Content-Type': 'application/json',
+					credentials: 'include',
 				},
 			}
 		);
@@ -87,6 +90,7 @@ export const getAccountHoldingStocks = async () => {
 		const response = await fetch(`${ACCOUNTS_API_URL}/stocks`, {
 			headers: {
 				'Content-Type': 'application/json',
+				credentials: 'include',
 			},
 		});
 
@@ -109,6 +113,7 @@ export const getAccountStockProfitRate = async () => {
 		const response = await fetch(`${ACCOUNTS_API_URL}/stocks/profit-rate`, {
 			headers: {
 				'Content-Type': 'application/json',
+				credentials: 'include',
 			},
 		});
 

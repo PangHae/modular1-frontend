@@ -8,6 +8,7 @@ export const getStocks = async () => {
 		const response = await fetch(`${STOCKS_API_URL}`, {
 			headers: {
 				'Content-Type': 'application/json',
+				credentials: 'include',
 			},
 		});
 
@@ -30,6 +31,7 @@ export const getMyStocks = async () => {
 		const response = await fetch(`${STOCKS_API_URL}/my-stocks`, {
 			headers: {
 				'Content-Type': 'application/json',
+				credentials: 'include',
 			},
 		});
 
