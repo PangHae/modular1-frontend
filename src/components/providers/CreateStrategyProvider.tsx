@@ -155,7 +155,9 @@ export const CreateStrategyProvider = ({
 	const buildNodeFromTree = (nodeIndex: number): Node | null => {
 		const node = treeState[nodeIndex];
 
-		if (!node) return null;
+		if (!node) {
+			return null;
+		}
 
 		// 루트 노드(buy/sell)는 제외하고 자식 노드들만 처리
 		if (nodeIndex === 0) {
@@ -205,7 +207,8 @@ export const CreateStrategyProvider = ({
 					: null;
 
 			// 자식이 모두 null이면 전체 결과도 null 반환
-			if (!leftChild || !rightChild) {
+			if (!leftChild && !rightChild) {
+				toast.error('노드 구성이 완료되지 않았습니다.');
 				return null;
 			}
 
