@@ -39,7 +39,7 @@ const StrategiesClient = () => {
 
 	return (
 		<div className="flex flex-col gap-8 h-full overflow-y-auto relative px-10">
-			<div className="flex align-center justify-center flex-shrink-0 sticky top-0 bg-custom-gray-bg px-10 pt-14 pb-8">
+			<div className="flex align-center justify-center flex-shrink-0 sticky top-0 bg-custom-gray-bg px-10 pt-14 pb-8 2xl:w-[1560px] w-[1280px]">
 				<SearchInput searchQuery={searchQuery} onSearch={handleSearch} />
 			</div>
 			<div className="flex flex-col flex-1 min-h-0 mx-auto gap-4 2xl:w-[1560px] w-[1280px]">
