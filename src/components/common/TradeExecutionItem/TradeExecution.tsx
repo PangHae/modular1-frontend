@@ -78,7 +78,12 @@ interface DateTimeProps {
 
 const DateTime = ({ children, className }: DateTimeProps) => {
 	return (
-		<span className={cn('text-overline! text-custom-sub-text', className)}>
+		<span
+			className={cn(
+				'text-overline! text-custom-sub-text text-right',
+				className
+			)}
+		>
 			{children}
 		</span>
 	);
