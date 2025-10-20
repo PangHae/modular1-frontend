@@ -16,8 +16,20 @@ export const FullScreenLoading: FC<FullScreenLoadingProps> = ({
 			className={`fixed inset-0 z-50 flex items-center justify-center ${
 				showBackground ? 'bg-white/60 backdrop-blur-sm' : 'bg-transparent'
 			}`}
+			role="status"
+			aria-live="polite"
+			aria-label="Loading"
+			style={{
+				pointerEvents: 'none',
+				willChange: 'opacity',
+			}}
 		>
-			<div className="flex flex-col items-center gap-4">
+			<div
+				className="flex flex-col items-center gap-4"
+				style={{
+					pointerEvents: 'auto',
+				}}
+			>
 				{/* Spinner */}
 				<Spinner className="w-8 h-8 text-blue-600" />
 
