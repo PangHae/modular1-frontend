@@ -63,6 +63,7 @@ const Sell: FC<PropsWithChildren<SellProps>> = ({
 				<Block.title className="text-shinhan-blue!">매도</Block.title>
 				<Block.input
 					ref={countRef}
+					type="number"
 					className="w-[200px] bg-white! focus-visible:border-shinhan-blue"
 					placeholder="몇 주를 매도할까요?"
 					defaultValue={initialValue}

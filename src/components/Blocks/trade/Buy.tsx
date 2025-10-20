@@ -61,6 +61,7 @@ const Buy: FC<PropsWithChildren<BuyProps>> = ({
 				<Block.title className="text-red-500!">매수</Block.title>
 				<Block.input
 					ref={countRef}
+					type="number"
 					className="w-[200px] bg-white! focus-visible:border-red-500"
 					placeholder="몇 주를 매수할까요?"
 					defaultValue={initialValue}
