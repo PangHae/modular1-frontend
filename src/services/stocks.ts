@@ -21,7 +21,7 @@ export const getStocks = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -44,7 +44,7 @@ export const getMyStocks = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };

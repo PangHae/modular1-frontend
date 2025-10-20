@@ -163,3 +163,36 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+/* 전역 스크롤바 스타일링 */
+/* Webkit 기반 브라우저 (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgba(156, 163, 175, 0.3);
+	border-radius: 3px;
+	transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(156, 163, 175, 0.5);
+}
+
+/* Firefox */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+}
+
+/* 스크롤바가 필요할 때만 표시 */
+.overflow-y-auto:hover::-webkit-scrollbar-thumb,
+.overflow-x-auto:hover::-webkit-scrollbar-thumb {
+	background: rgba(156, 163, 175, 0.4);
+}

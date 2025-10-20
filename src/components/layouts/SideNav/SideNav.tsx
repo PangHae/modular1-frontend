@@ -1,13 +1,27 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import UserChip from '@/components/common/UserChip';
+import {
+	dehydrate,
+	HydrationBoundary,
+	QueryClient,
+} from '@tanstack/react-query';
+
 import { MENU } from '@/constants/menu';
+import { getAccountInfo } from '@/services/accounts';
 
 import MenuIcon from './MenuIcon';
+import UserInformation from './UserInformation';
 import modular1Icon from '../../../../public/images/modular1-icon.png';
 
-const SideNav = () => {
+const SideNav = async () => {
+	const queryClient = new QueryClient();
+
+	await queryClient.prefetchQuery({
+		queryKey: ['account', 'info'],
+		queryFn: getAccountInfo,
+	});
+
 	return (
 		<nav className="fixed flex flex-col align-center justify-between w-[70px] h-full pt-6 pb-6 border-r-[0.2px] border-custom-gray-border/40 bg-transparent">
 			<menu className="flex flex-col items-center justify-center gap-3 w-full">
@@ -30,7 +44,9 @@ const SideNav = () => {
 					</li>
 				))}
 			</menu>
-			<UserChip />
+			<HydrationBoundary state={dehydrate(queryClient)}>
+				<UserInformation />
+			</HydrationBoundary>
 		</nav>
 	);
 };

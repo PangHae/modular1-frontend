@@ -102,7 +102,7 @@ const Login = () => {
 												<FormControl>
 													<Input
 														placeholder="아이디를 입력해주세요"
-														className="pl-5 h-12 rounded-lg bg-[#F9FAFB] border-gray-150 focus:border-blue-500"
+														className="pl-5 h-12 rounded-lg bg-[#F9FAFB] border-gray-200 focus:border-blue-500"
 														{...field}
 													/>
 												</FormControl>
@@ -120,7 +120,7 @@ const Login = () => {
 														<Input
 															type={showPassword ? 'text' : 'password'}
 															placeholder="비밀번호를 입력해주세요"
-															className="pl-5 pr-12 h-12 rounded-lg bg-[#F9FAFB] border-gray-0 focus:border-blue-500"
+															className="pl-5 pr-12 h-12 rounded-lg bg-[#F9FAFB] border-gray-200 focus:border-blue-500"
 															{...field}
 														/>
 														<button

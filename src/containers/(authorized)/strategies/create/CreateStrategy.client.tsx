@@ -24,7 +24,6 @@ const CreateStrategyClient = () => {
 			onNext={handleNext}
 			onPrev={handlePrev}
 			onCreateStrategy={handleCreateStrategy}
-			canProceed={currentStep === 1 ? !!selectedStock.trim() : true}
 		>
 			{currentStep === 1 && <StockSelectClient />}
 			{currentStep === 2 && <StrategyConfigurationClient />}

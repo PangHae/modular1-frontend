@@ -24,7 +24,7 @@ export const getExecutionById = async (executionId: number) => {
 		return res.data;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw error;
 	}
 };

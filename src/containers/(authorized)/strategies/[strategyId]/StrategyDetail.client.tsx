@@ -25,6 +25,7 @@ import { useStopStrategy } from '@/hooks/api/strategy/useStopStrategy';
 import { useStrategyDetail } from '@/hooks/api/strategy/useStrategyDetail';
 import { cn } from '@/lib/utils';
 
+import PreviewCode from './_view/PreviewCode';
 import PreviewStrategy from './_view/PreviewStrategy';
 import ProfitRateCard from './_view/ProfitRateCard';
 import RecentExecution from './_view/RecentExecution';
@@ -85,18 +86,18 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 		);
 	}
 
-	if (!strategyDetail || !executions) {
+	if (!strategyDetail) {
 		return (
 			<div className="flex items-center justify-center h-64">
-				<div className="text-lg text-gray-500">체결 내역이 없습니다.</div>
+				<div className="text-lg text-gray-500">전략이 존재하지 않습니다.</div>
 			</div>
 		);
 	}
 
 	return (
-		<div className="flex h-screen p-6 overflow-y-auto gap-4">
+		<div className="flex h-screen p-6 gap-4">
 			{/* 좌측 컬럼 */}
-			<div className="flex-1 space-y-4 h-full">
+			<div className="flex-1 space-y-4 h-full shrink-0 max-w-[calc(50%-20px)] overflow-y-auto relative">
 				{/* 전략 헤더 섹션 */}
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-4">
@@ -195,8 +196,8 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 						</div>
 					</CardContent>
 				</Card>
-				<Tabs defaultValue="preview">
-					<TabsList className="bg-transparent p-0 h-auto gap-2">
+				<Tabs defaultValue="preview" className="flex flex-col">
+					<TabsList className="bg-transparent p-0 h-auto gap-2 flex-shrink-0">
 						<TabsTrigger
 							className="cursor-pointer data-[state=active]:bg-shinhan-blue! data-[state=active]:text-white! data-[state=active]:border-shinhan-blue data-[state=inactive]:bg-shinhan-blue/8 data-[state=inactive]:text-black data-[state=inactive]:border-shinhan-blue/20 border rounded-full px-4 py-2 h-[36px] text-button transition-all duration-200"
 							value="preview"
@@ -208,6 +209,12 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 							value="summary"
 						>
 							전략 요약
+						</TabsTrigger>
+						<TabsTrigger
+							className="cursor-pointer data-[state=active]:bg-shinhan-blue! data-[state=active]:text-white! data-[state=active]:border-shinhan-blue data-[state=inactive]:bg-shinhan-blue/8 data-[state=inactive]:text-black data-[state=inactive]:border-shinhan-blue/20 border rounded-full px-4 py-2 h-[36px] text-button transition-all duration-200"
+							value="code"
+						>
+							코드 도우미
 						</TabsTrigger>
 					</TabsList>
 					<TabsContent value="preview">
@@ -223,11 +230,16 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 							summaryRisk={strategyDetail.strategySummary.summaryRisk}
 						/>
 					</TabsContent>
+					<TabsContent value="code">
+						<PreviewCode
+							code={strategyDetail.code || '코드가 생성되지 않았습니다.'}
+						/>
+					</TabsContent>
 				</Tabs>
 			</div>
 
 			{/* 우측 컬럼 */}
-			<div className="flex flex-col flex-1 gap-4">
+			<div className="flex flex-col flex-1 gap-4 shrink-0 overflow-y-auto">
 				{/* 수익률 그래프 */}
 				<ProfitRateCard profitRateSeries={strategyDetail.profitSeries} />
 				{/* 최근 체결 내역 */}

@@ -16,11 +16,10 @@ interface Props {
 	strategyNameRef: RefObject<HTMLInputElement | null>;
 	className?: string;
 	currentStep: Step;
-	selectedStock: string;
+	selectedStock: { name: string; code: string };
 	onNext: () => void;
 	onPrev: () => void;
 	onCreateStrategy: () => void;
-	canProceed: boolean;
 }
 
 const STEP_MAP = {
@@ -134,7 +133,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 						<Button
 							className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-8 cursor-pointer"
 							onClick={onNext}
-							disabled={!selectedStock.trim()}
+							disabled={!selectedStock.code}
 						>
 							다음
 							<ChevronRight className="w-4 h-4" />

@@ -25,6 +25,7 @@ export interface StrategyDetail {
 	strategyTemplate: StrategyTemplate;
 	strategySummary: StrategyAiSummary;
 	profitSeries: ProfitDataSeries;
+	code: string;
 }
 
 export interface StrategyMetaData {

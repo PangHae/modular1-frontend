@@ -29,9 +29,9 @@ export const Context = createContext<{
 	ref: React.RefObject<{ [key: string]: () => Node | null } | null>;
 	currentStep: Step;
 	strategyType: StrategyType;
-	selectedStock: string;
+	selectedStock: { name: string; code: string };
 	strategyNameRef: React.RefObject<HTMLInputElement | null>;
-	setSelectedStock: (stock: string) => void;
+	setSelectedStock: (stock: { name: string; code: string }) => void;
 	setStrategyType: (type: StrategyType) => void;
 	handleNext: () => void;
 	handlePrev: () => void;
@@ -64,7 +64,10 @@ export const CreateStrategyProvider = ({
 	const childRef = useRef<{ [key: string]: () => Node | null }>(null);
 	const [currentStep, setCurrentStep] = useState<Step>(1);
 	const [strategyType, setStrategyType] = useState<StrategyType>('BUY');
-	const [selectedStock, setSelectedStock] = useState('');
+	const [selectedStock, setSelectedStock] = useState<{
+		name: string;
+		code: string;
+	}>({ name: '', code: '' });
 	const [treeState, setTreeState] = useState<(ArrayTreeNode | null)[]>([
 		{ blockId: 'buy', index: 0 },
 		null,
@@ -258,7 +261,7 @@ export const CreateStrategyProvider = ({
 			strategy_name: strategyNameRef.current.value,
 			version: 1,
 			meta: {
-				universe: [selectedStock],
+				universe: [selectedStock.code],
 				enabled: true,
 			},
 		};

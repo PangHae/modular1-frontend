@@ -12,6 +12,33 @@ import { ProfitDataSeries } from '@/@types/strategy';
 
 const ACCOUNTS_API_URL = `${process.env.NEXT_PUBLIC_SERVICE_URL}/api/v1/accounts`;
 
+export const getAccountInfo = async () => {
+	try {
+		const response = await fetch(`${ACCOUNTS_API_URL}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				credentials: 'include',
+			},
+		});
+
+		if (!response.ok) {
+			throw response;
+		}
+
+		const res: Response<{
+			memberName: string;
+			accountNumber: string;
+			orderPossibleCash: string;
+		}> = await response.json();
+
+		return res.data;
+	} catch (error) {
+		const errorRes = await (error as globalThis.Response).json();
+		console.error(errorRes);
+		throw errorRes;
+	}
+};
+
 export const getAccountProfitRate = async () => {
 	try {
 		const response = await fetch(`${ACCOUNTS_API_URL}/profit-rate`, {
@@ -31,7 +58,7 @@ export const getAccountProfitRate = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -54,7 +81,7 @@ export const getAccountProfitRateRanking = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -80,7 +107,7 @@ export const getAccountTransactions = async (page: number, size: number) => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -103,7 +130,7 @@ export const getAccountHoldingStocks = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -126,7 +153,7 @@ export const getAccountStockProfitRate = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
