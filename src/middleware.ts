@@ -4,26 +4,13 @@ export function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 	const accessToken = request.cookies.get('access-token');
 
-	const protectedPaths = ['/dashboard', '/stocks', '/strategies'];
-	const publicPaths = ['/', '/auth/login', '/auth/register'];
-	const isProtectedPath = protectedPaths.some((path) =>
-		pathname.startsWith(path)
-	);
-	const isPublicPath = publicPaths.some((path) => pathname.startsWith(path));
-
-	if (pathname === '/') {
-		if (accessToken) {
-			return NextResponse.redirect(new URL('/dashboard', request.url));
-		} else {
-			return NextResponse.redirect(new URL('/auth/login', request.url));
-		}
-	}
-
-	if (isProtectedPath && !accessToken) {
+	if (!accessToken) {
 		return NextResponse.redirect(new URL('/auth/login', request.url));
 	}
 
-	if (isPublicPath && accessToken) {
+	if (pathname === '/') {
+		return NextResponse.redirect(new URL('/dashboard', request.url));
+	} else if (pathname === '/auth/login' || pathname === '/auth/register') {
 		return NextResponse.redirect(new URL('/dashboard', request.url));
 	}
 
