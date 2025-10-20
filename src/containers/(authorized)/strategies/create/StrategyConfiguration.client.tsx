@@ -3,7 +3,7 @@
 import React, { createElement, FC, ReactNode, useState } from 'react';
 
 import { DndContext, DragOverlay } from '@dnd-kit/core';
-import { Cuboid, FileText, Shapes } from 'lucide-react';
+import { Cuboid, FileText, Shapes, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { ArrayTreeNode } from '@/@types/strategy';
@@ -106,6 +106,40 @@ const StrategyConfigurationClient: FC = () => {
 		setActiveComponent(null);
 	};
 
+	// 노드 삭제 함수 (해당 노드와 모든 하위 노드들을 삭제)
+	const handleDeleteNode = (nodeIndex: number) => {
+		handleChangeTreeState((prev) => {
+			const newArray = [...prev];
+
+			// 재귀적으로 하위 노드들을 모두 삭제하는 함수
+			const deleteNodeAndChildren = (index: number) => {
+				if (index >= MAX_TREE_SIZE || !newArray[index]) {
+					return;
+				}
+
+				// 현재 노드 삭제
+				newArray[index] = null;
+
+				// 왼쪽 자식 삭제
+				const leftChildIndex = getLeftChildIndex(index);
+				if (leftChildIndex < MAX_TREE_SIZE) {
+					deleteNodeAndChildren(leftChildIndex);
+				}
+
+				// 오른쪽 자식 삭제
+				const rightChildIndex = getRightChildIndex(index);
+				if (rightChildIndex < MAX_TREE_SIZE) {
+					deleteNodeAndChildren(rightChildIndex);
+				}
+			};
+
+			deleteNodeAndChildren(nodeIndex);
+			return newArray;
+		});
+
+		toast.success('노드가 삭제되었습니다.');
+	};
+
 	// 배열 기반 트리 렌더링 함수 (중첩 구조)
 	const renderArrayTree = (array: (ArrayTreeNode | null)[]): ReactNode => {
 		// 루트 노드(0번 인덱스)가 없으면 빈 상태
@@ -147,7 +181,7 @@ const StrategyConfigurationClient: FC = () => {
 				children.push(renderNode(rightChild, rightChildIndex));
 			}
 
-			return createElement(
+			const blockElement = createElement(
 				BlockComponentToRender as any,
 				{
 					disabled: false,
@@ -156,6 +190,24 @@ const StrategyConfigurationClient: FC = () => {
 					nodeIndex: nodeIndex,
 				},
 				children.length > 0 ? children : undefined
+			);
+
+			return (
+				<div key={`${node.blockId}-${nodeIndex}`} className="relative">
+					{blockElement}
+					{nodeIndex !== 0 && (
+						<button
+							onClick={(e) => {
+								e.stopPropagation();
+								handleDeleteNode(nodeIndex);
+							}}
+							className="absolute top-2 right-2 z-10 text-black p-1 w-6 h-6 flex items-center justify-center transition-colors duration-200 cursor-pointer"
+							title="노드 삭제"
+						>
+							<X size={14} />
+						</button>
+					)}
+				</div>
 			);
 		};
 
