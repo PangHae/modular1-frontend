@@ -160,8 +160,10 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 									className={cn(
 										'text-2xl! font-bold',
 										strategyDetail.strategyProfit.allProfit > 0
-											? 'text-red-500'
-											: 'text-blue-500'
+											? 'text-[#F04452]'
+											: strategyDetail.strategyProfit.allProfit < 0
+												? 'text-[#3182F6]'
+												: 'text-gray-500'
 									)}
 								>
 									{`${strategyDetail.strategyProfit.allProfit.toFixed(2)}%`}
@@ -175,8 +177,10 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 									className={cn(
 										'text-2xl! font-bold',
 										strategyDetail.strategyProfit.weekProfit > 0
-											? 'text-red-500'
-											: 'text-blue-500'
+											? 'text-[#F04452]'
+											: strategyDetail.strategyProfit.weekProfit < 0
+												? 'text-[#3182F6]'
+												: 'text-gray-500'
 									)}
 								>
 									{`${strategyDetail.strategyProfit.weekProfit.toFixed(2)}%`}

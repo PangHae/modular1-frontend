@@ -100,7 +100,7 @@ const Amount = ({ children, className, type }: AmountProps) => {
 		<span
 			className={cn(
 				'text-caption! font-semibold',
-				type === 'BUY' ? 'text-red-500' : 'text-blue-500',
+				type === 'BUY' ? 'text-[#F04452]' : 'text-[#3182F6]',
 				className
 			)}
 		>
