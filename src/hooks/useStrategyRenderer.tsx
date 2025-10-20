@@ -59,8 +59,8 @@ export const useStrategyRenderer = ({
 							ref={ref}
 							childrenNodes={childrenJson}
 						>
-							{children.map((child) => (
-								<div key={`${child.type}-${child.label}`}>
+							{children.map((child, index) => (
+								<div key={`${child.type}-${child.label}-${index}`}>
 									{renderComponent(child)}
 								</div>
 							))}
