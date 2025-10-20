@@ -103,11 +103,6 @@ const PortfolioChart = () => {
 		}
 	};
 
-	// activeIndex가 유효하지 않으면 렌더링하지 않음
-	if (activeIndex === -1) {
-		return <div>Loading...</div>;
-	}
-
 	return (
 		<Card className="flex-1 min-w-0 min-h-0" data-chart={id}>
 			<ChartStyle id={id} config={chartConfig} />
@@ -115,10 +110,14 @@ const PortfolioChart = () => {
 				<CardTitle>보유 종목 비중</CardTitle>
 			</CardHeader>
 			<CardContent className="flex flex-1 items-center gap-8 pb-0">
-				{isLoading && <CardLoading showBackground={false} />}
+				{isLoading && (
+					<div className="flex items-center justify-center w-full h-full">
+						<CardLoading showBackground={false} />
+					</div>
+				)}
 				{!isLoading && !data && chartData.length === 0 && (
-					<div className="flex items-center justify-center h-64">
-						<div className="text-lg text-gray-500">
+					<div className="flex items-center justify-center w-full h-full">
+						<div className="text-sub2 text-gray-500">
 							보유 중인 종목이 없습니다.
 						</div>
 					</div>

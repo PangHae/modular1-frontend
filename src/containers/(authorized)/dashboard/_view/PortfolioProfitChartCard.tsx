@@ -91,10 +91,14 @@ const PortfolioProfitChartCard = () => {
 				</div>
 			</CardHeader>
 			<CardContent className="max-h-[calc(100%-72px)] pl-0">
-				{isLoading && <CardLoading showBackground={false} />}
+				{isLoading && (
+					<div className="flex items-center justify-center h-64">
+						<CardLoading showBackground={false} />
+					</div>
+				)}
 				{!isLoading && !data && (
 					<div className="flex items-center justify-center h-64">
-						<div className="text-lg text-gray-500">
+						<div className="text-sub2 text-gray-500">
 							포트폴리오 수익률 데이터가 없습니다.
 						</div>
 					</div>
