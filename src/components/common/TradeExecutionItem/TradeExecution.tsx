@@ -12,7 +12,7 @@ const TradeExecutionItemMain = ({
 	return (
 		<div
 			className={cn(
-				'flex justify-between items-center p-4 bg-white rounded-lg border border-custom-gray-border',
+				'flex justify-between items-center p-4 bg-white rounded-lg border border-custom-gray-border/40',
 				className
 			)}
 		>
