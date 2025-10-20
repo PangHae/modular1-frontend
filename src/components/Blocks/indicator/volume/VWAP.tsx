@@ -70,7 +70,7 @@ const VWAP: FC<VWAPProps> = ({
 			<Block.subtitle className="text-papaya-orange">
 				VWAP(거래량 가중치 평균가) 대비 종가 추세 감지
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="기준"
 					items={[

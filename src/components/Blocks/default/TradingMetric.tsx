@@ -131,7 +131,7 @@ const TradingMetric: FC<TradingMetricProps> = ({
 			<Block.subtitle className="text-yeondu">
 				누적 거래량/누적 거래 대금
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="거래 지표"
 					items={[

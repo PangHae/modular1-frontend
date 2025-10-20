@@ -95,7 +95,7 @@ const BandAbsoluteCompare: FC<BandAbsoluteCompareProps> = ({
 			<Block.subtitle className="text-papaya-orange">
 				볼린저밴드 폭 절대값 대비 변화 감지
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="기준"
 					items={[

@@ -78,7 +78,7 @@ const EMACompare: FC<EMACompareProps> = ({
 			<Block.subtitle className="text-papaya-orange">
 				지수이동평균선 종가 비교 감지
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="기준"
 					items={[

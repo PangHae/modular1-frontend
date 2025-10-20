@@ -65,7 +65,7 @@ const ExitWithLoss: FC<ExitWithLossProps> = ({
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-teal-600 rounded-lg bg-teal-50">
 			<Block.subtitle className="text-teal-600">손절 조건</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				수익률이
 				<Block.input
 					type="number"

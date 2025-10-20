@@ -114,7 +114,7 @@ const Price: FC<PriceProps> = ({
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-yeondu rounded-lg bg-yeondu-bg!">
 			<Block.subtitle className="text-yeondu">가격</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="기준"
 					items={[

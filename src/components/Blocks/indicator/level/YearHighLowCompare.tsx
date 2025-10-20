@@ -78,7 +78,7 @@ const YearHighLowCompare: FC<YearHighLowCompareProps> = ({
 			<Block.subtitle className="text-papaya-orange">
 				52주 고점/저점 대비 종가 비교 감지
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="지점"
 					items={[

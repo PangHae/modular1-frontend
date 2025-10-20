@@ -74,7 +74,7 @@ const MACDCompare: FC<MACDCompareProps> = ({
 			<Block.subtitle className="text-papaya-orange">
 				MACD 추세 강도 변화 감지
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="기준"
 					items={[

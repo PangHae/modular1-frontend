@@ -100,7 +100,7 @@ const RSICompare: FC<RSICompareProps> = ({
 			<Block.subtitle className="text-papaya-orange">
 				RSI 과매수/과매도 감지
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="기준"
 					items={[
