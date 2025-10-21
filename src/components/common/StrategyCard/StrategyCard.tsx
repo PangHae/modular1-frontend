@@ -65,7 +65,11 @@ const StrategyCard: FC<Props> = ({
 				<p
 					className={cn(
 						'text-end 2xl:text-heading3! xl:text-body1! lg:text-body2! font-semibold',
-						profitAmount > 0 ? 'text-[#F04452]' : 'text-[#3182F6]'
+						profitAmount > 0
+							? 'text-[#F04452]'
+							: profitAmount < 0
+								? 'text-[#3182F6]'
+								: 'text-gray-500'
 					)}
 				>
 					{`${profitAmount.toLocaleString()}원(${profitRate.toLocaleString()}%)`}
