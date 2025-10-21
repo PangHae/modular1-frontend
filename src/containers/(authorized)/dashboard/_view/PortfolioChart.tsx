@@ -103,6 +103,21 @@ const PortfolioChart = () => {
 		}
 	};
 
+	if (activeIndex === -1) {
+		return (
+			<Card className="flex-1 min-w-0 min-h-0">
+				<CardHeader className="flex space-y-0 pb-0 justify-between">
+					<CardTitle>보유 종목 비중</CardTitle>
+				</CardHeader>
+				<CardContent className="flex flex-1 items-center gap-8 pb-0">
+					<div className="flex items-center justify-center w-full h-full">
+						<CardLoading showBackground={false} />
+					</div>
+				</CardContent>
+			</Card>
+		);
+	}
+
 	return (
 		<Card className="flex-1 min-w-0 min-h-0" data-chart={id}>
 			<ChartStyle id={id} config={chartConfig} />

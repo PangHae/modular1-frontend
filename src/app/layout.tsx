@@ -40,7 +40,7 @@ export default function RootLayout({
 					className={`${pretendard.className} antialiased flex w-dvw h-dvh overflow-hidden bg-custom-gray-bg`}
 				>
 					{children}
-					<Toaster position="top-right" richColors />
+					<Toaster position="bottom-right" richColors />
 				</body>
 			</html>
 		</QueryClientProvider>

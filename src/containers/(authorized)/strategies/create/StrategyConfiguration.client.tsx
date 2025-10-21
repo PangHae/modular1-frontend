@@ -77,7 +77,7 @@ const StrategyConfigurationClient: FC = () => {
 			) {
 				// 논리 블록의 자식으로 추가
 				// 드롭 존 ID에서 해당 블록의 인덱스를 찾아서 자식으로 추가
-				const findTargetIndex = (dropZoneId: string): number | undefined => {
+				const findTargetIndex = (dropZoneId: string): number => {
 					if (dropZoneId.startsWith('all-drop-zone-')) {
 						// all-drop-zone-{nodeIndex} 형태에서 nodeIndex 추출
 						const nodeIndex = parseInt(
@@ -91,12 +91,20 @@ const StrategyConfigurationClient: FC = () => {
 						);
 						return nodeIndex;
 					}
-					return undefined;
+					return -1;
 				};
 
 				const targetIndex = findTargetIndex(String(over.id));
 
+				// 리프노드(인덱스 4,5,6,7)에는 논리 블록 추가 불가
 				if (targetIndex !== -1) {
+					if (
+						(targetIndex === 2 || targetIndex === 3) &&
+						(blockId === 'all' || blockId === 'any')
+					) {
+						toast.error('논리 블록은 한 번까지만 중첩할 수 있습니다.');
+						return;
+					}
 					handleChangeTreeState((prev) =>
 						addNodeToArray(prev, blockId, targetIndex)
 					);
@@ -137,7 +145,7 @@ const StrategyConfigurationClient: FC = () => {
 			return newArray;
 		});
 
-		toast.success('노드가 삭제되었습니다.');
+		toast.success('블록이 삭제되었습니다.');
 	};
 
 	// 배열 기반 트리 렌더링 함수 (중첩 구조)
