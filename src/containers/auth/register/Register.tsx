@@ -207,6 +207,7 @@ const RegisterStepForm = () => {
 										<div className="flex justify-between">
 											<Button
 												type="button"
+												className="cursor-pointer"
 												variant="outline"
 												onClick={prevStep}
 											>
@@ -214,7 +215,7 @@ const RegisterStepForm = () => {
 											</Button>
 											<Button
 												type="button"
-												className="bg-[#3182F6] hover:bg-blue-700 text-white font-semibold rounded-lg"
+												className="bg-[#3182F6] hover:bg-blue-700 text-white font-semibold rounded-lg cursor-pointer"
 												onClick={() =>
 													nextStep(['memberName', 'memberAccountNumber'])
 												}
@@ -277,6 +278,7 @@ const RegisterStepForm = () => {
 										<div className="flex justify-between">
 											<Button
 												type="button"
+												className="cursor-pointer"
 												variant="outline"
 												onClick={prevStep}
 											>
@@ -284,7 +286,7 @@ const RegisterStepForm = () => {
 											</Button>
 											<Button
 												type="submit"
-												className="h-12 bg-[#3182F6] hover:bg-blue-700 text-white font-semibold rounded-lg"
+												className="h-12 bg-[#3182F6] hover:bg-blue-700 text-white font-semibold rounded-lg cursor-pointer"
 											>
 												회원가입
 											</Button>

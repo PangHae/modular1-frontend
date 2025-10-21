@@ -102,7 +102,7 @@ const Login = () => {
 												<FormControl>
 													<Input
 														placeholder="아이디를 입력해주세요"
-														className="pl-5 h-12 rounded-lg bg-[#F9FAFB] border-gray-200 focus:border-blue-500"
+														className="pl-5 h-12 rounded-lg bg-[#F9FAFB] border-gray-200 focus:border-shinhan-blue"
 														{...field}
 													/>
 												</FormControl>
@@ -121,6 +121,11 @@ const Login = () => {
 															type={showPassword ? 'text' : 'password'}
 															placeholder="비밀번호를 입력해주세요"
 															className="pl-5 pr-12 h-12 rounded-lg bg-[#F9FAFB] border-gray-200 focus:border-blue-500"
+															onKeyDown={(e) => {
+																if (e.key === 'Enter') {
+																	form.handleSubmit(onSubmit)();
+																}
+															}}
 															{...field}
 														/>
 														<button
@@ -144,7 +149,7 @@ const Login = () => {
 
 								<Button
 									type="submit"
-									className="w-full h-12 bg-[#3182F6] hover:bg-blue-700 text-white font-semibold rounded-lg"
+									className="w-full h-12 bg-[#3182F6] hover:bg-blue-700 text-white font-semibold rounded-lg cursor-pointer"
 								>
 									{form.formState.isSubmitting ? '로그인 중...' : '로그인'}
 								</Button>
