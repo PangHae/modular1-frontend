@@ -25,7 +25,7 @@ const StrategyDropdownMenuClient: FC<Props> = ({ strategyId }) => {
 	const { mutate: stopStrategy, isPending: isStopStrategyPending } =
 		useStopStrategy({
 			onSuccess: (data: Response<{ strategyId: string; status: string }>) => {
-				queryClient.invalidateQueries({
+				queryClient.refetchQueries({
 					queryKey: ['strategyDetail', strategyId],
 				});
 				toast.success(data.message);
@@ -39,7 +39,7 @@ const StrategyDropdownMenuClient: FC<Props> = ({ strategyId }) => {
 			onSuccess: (
 				data: Response<{ strategyId: string; podName: string; status: string }>
 			) => {
-				queryClient.invalidateQueries({
+				queryClient.refetchQueries({
 					queryKey: ['strategyDetail', strategyId],
 				});
 				toast.success(data.message);
