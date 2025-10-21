@@ -102,7 +102,7 @@ const StrategyConfigurationClient: FC = () => {
 						(targetIndex === 2 || targetIndex === 3) &&
 						(blockId === 'all' || blockId === 'any')
 					) {
-						toast.error('논리 블록은 한 번까지만 중첩할 수 있습니다.');
+						toast.error('논리 블록은 한 번까지만 중첩 할 수 있습니다.');
 						return;
 					}
 					handleChangeTreeState((prev) =>
