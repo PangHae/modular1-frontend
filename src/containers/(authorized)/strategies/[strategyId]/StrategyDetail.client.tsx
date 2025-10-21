@@ -1,10 +1,13 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+import { useInView } from 'react-intersection-observer';
+
+import { FullScreenLoading } from '@/components/common/Loading';
 import StrategyStatusChip from '@/components/common/StrategyStatusChip';
 import { Card, CardContent } from '@/components/ui/card';
 import { useExecutionById } from '@/hooks/api/execution/useExecutionById';
@@ -27,16 +30,20 @@ interface Props {
 }
 
 const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
+	const { ref, inView } = useInView();
 	const { data: strategyDetail, isLoading: isStrategyDetailLoading } =
 		useStrategyDetail(strategyId);
-	const { data: executions, isLoading: isExecutionsLoading } =
-		useExecutionById(strategyId);
+	const { data, fetchNextPage, hasNextPage } = useExecutionById(strategyId, 20);
 
-	if (isStrategyDetailLoading || isExecutionsLoading) {
+	useEffect(() => {
+		if (inView && hasNextPage) {
+			fetchNextPage();
+		}
+	}, [inView, fetchNextPage, hasNextPage]);
+
+	if (isStrategyDetailLoading) {
 		return (
-			<div className="flex items-center justify-center h-64">
-				<div className="text-lg text-gray-500">Loading...</div>
-			</div>
+			<FullScreenLoading message="최근 체결 내역을 불러오고 있습니다..." />
 		);
 	}
 
@@ -124,7 +131,7 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 							<div className="text-center">
 								<div className="text-sm text-gray-600 mb-1">거래 체결 수</div>
 								<div className="text-2xl font-bold text-gray-900">
-									{executions?.tradeExecutionCount}
+									{data?.pages[0].data.tradeExecutionCount}
 								</div>
 							</div>
 						</div>
@@ -141,7 +148,13 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 				{/* 수익률 그래프 */}
 				<ProfitRateCard profitRateSeries={strategyDetail.profitSeries} />
 				{/* 최근 체결 내역 */}
-				<RecentExecution executions={executions?.tradeExecutions || []} />
+				<RecentExecution
+					ref={ref}
+					hasNextPage={hasNextPage}
+					executions={
+						data?.pages.flatMap((page) => page.data.tradeExecutions) || []
+					}
+				/>
 			</div>
 		</div>
 	);
