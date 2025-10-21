@@ -9,7 +9,6 @@ import {
 	getAccountProfitRate,
 	getAccountProfitRateRanking,
 	getAccountStockProfitRate,
-	getAccountTransactions,
 } from '@/services/accounts';
 
 import DashboardClient from './Dashboard.client';
@@ -33,13 +32,6 @@ const Dashboard = async () => {
 		queryClient.prefetchQuery({
 			queryKey: ['accounts', 'stocks', 'profit-rate'],
 			queryFn: getAccountStockProfitRate,
-		}),
-		queryClient.prefetchInfiniteQuery({
-			queryKey: ['accounts', 'transactions'],
-			queryFn: ({ pageParam }) => getAccountTransactions(pageParam, 10),
-			initialPageParam: 0,
-			getNextPageParam: (lastPage) => lastPage.data.pageInfo.currentPage + 1,
-			pages: 1,
 		}),
 	]);
 

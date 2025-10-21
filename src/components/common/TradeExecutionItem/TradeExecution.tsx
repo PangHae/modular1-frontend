@@ -51,7 +51,7 @@ interface StockNameProps {
 const StockName = ({ children, className }: StockNameProps) => {
 	return (
 		<span
-			className={cn('text-caption! font-semibold text-custom-main', className)}
+			className={cn('text-sub2! font-semibold text-custom-main', className)}
 		>
 			{children}
 		</span>
@@ -65,7 +65,7 @@ interface StrategyNameProps {
 
 const StrategyName = ({ children, className }: StrategyNameProps) => {
 	return (
-		<span className={cn('text-overline! text-custom-sub-text', className)}>
+		<span className={cn('text-caption! text-custom-sub-text', className)}>
 			{children}
 		</span>
 	);
