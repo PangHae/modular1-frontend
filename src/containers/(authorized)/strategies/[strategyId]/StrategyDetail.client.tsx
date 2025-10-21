@@ -78,7 +78,9 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 						</div>
 					</div>
 					<div className="flex flex-col items-end gap-2">
-						<StrategyStatusChip status={strategyDetail.activatedStatus} />
+						<StrategyStatusChip
+							status={strategyDetail.strategyInfo.strategyActivatedStatus}
+						/>
 						<StrategyDropdownMenuClient strategyId={strategyId} />
 					</div>
 				</div>
