@@ -40,11 +40,11 @@ const StrategyCard: FC<Props> = ({
 	const router = useRouter();
 	return (
 		<Card
-			className="lg:w-[309px] lg:h-[180px] xl:w-[330px] xl:h-[230px] 2xl:w-[415px] 2xl:h-[270px] flex flex-col justify-between cursor-pointer"
+			className="lg:w-[309px] lg:h-[180px] xl:w-[330px] xl:h-[210px] 2xl:w-[415px] 2xl:h-[270px] flex flex-col justify-between cursor-pointer"
 			onClick={() => router.push(`/strategies/${id}`)}
 		>
 			<CardHeader className="gap-3">
-				<CardDescription className="flex justify-between text-sub2 text-custom-sub-text">
+				<CardDescription className="flex justify-between 2xl:text-sub2 xl:text-caption lg:text-overline text-custom-sub-text">
 					<div className="flex items-center gap-1">
 						<Image
 							className="rounded-full"
@@ -57,24 +57,24 @@ const StrategyCard: FC<Props> = ({
 					</div>
 					<StrategyStatusChip status={status} />
 				</CardDescription>
-				<CardTitle className="flex flex-col gap-1 text-[#333d4b] text-heading3!">
+				<CardTitle className="flex flex-col gap-1 text-[#333d4b] 2xl:text-heading3! xl:text-body1! lg:text-body2!">
 					{title}
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<p
 					className={cn(
-						'text-end text-heading3! font-semibold',
+						'text-end 2xl:text-heading3! xl:text-body1! lg:text-body2! font-semibold',
 						profitAmount > 0 ? 'text-[#F04452]' : 'text-[#3182F6]'
 					)}
 				>
 					{`${profitAmount.toLocaleString()}원(${profitRate.toLocaleString()}%)`}
 				</p>
-				<div className="flex justify-between w-full text-button">
+				<div className="flex justify-between w-full 2xl:text-button! xl:text-caption! lg:text-overline!">
 					<p className="text-custom-sub-text">현재 가격</p>
 					<p>{`${currentPrice.toLocaleString()}원`}</p>
 				</div>
-				<div className="flex justify-between w-full text-button">
+				<div className="flex justify-between w-full 2xl:text-button! xl:text-caption! lg:text-overline!">
 					<p className="text-custom-sub-text">내 평균 매수 가격</p>
 					<p>{`${avgPrice.toLocaleString()}원`}</p>
 				</div>
