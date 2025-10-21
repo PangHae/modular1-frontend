@@ -5,6 +5,7 @@ import { FC } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+import StrategyStatusChip from '@/components/common/StrategyStatusChip';
 import { Card, CardContent } from '@/components/ui/card';
 import { useExecutionById } from '@/hooks/api/execution/useExecutionById';
 import { useStrategyDetail } from '@/hooks/api/strategy/useStrategyDetail';
@@ -41,8 +42,10 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 
 	if (!strategyDetail) {
 		return (
-			<div className="flex items-center justify-center h-64">
-				<div className="text-lg text-gray-500">전략이 존재하지 않습니다.</div>
+			<div className="flex items-center justify-center w-full h-full">
+				<div className="text-sub2! text-gray-500">
+					전략이 존재하지 않습니다.
+				</div>
 			</div>
 		);
 	}
@@ -74,7 +77,10 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 							</div>
 						</div>
 					</div>
-					<StrategyDropdownMenuClient strategyId={strategyId} />
+					<div className="flex flex-col items-end gap-2">
+						<StrategyStatusChip status={strategyDetail.activatedStatus} />
+						<StrategyDropdownMenuClient strategyId={strategyId} />
+					</div>
 				</div>
 
 				{/* 성과 지표 카드 */}

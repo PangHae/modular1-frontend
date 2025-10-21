@@ -13,6 +13,7 @@ export interface StrategySummary {
 }
 
 export interface StrategyDetail {
+	activatedStatus: 'ACTIVATED' | 'PENDING';
 	stockInfo: Stock;
 	strategyInfo: {
 		id: number;

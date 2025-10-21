@@ -5,16 +5,11 @@ import { FC } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { MoreVertical, Play, Square, Trash } from 'lucide-react';
+import { Play, Square, Trash } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { Response } from '@/@types/service';
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
 import { useDeleteStrategy } from '@/hooks/api/strategy/useDeleteStrategy';
 import { useRunStrategy } from '@/hooks/api/strategy/useRunStrategy';
 import { useStopStrategy } from '@/hooks/api/strategy/useStopStrategy';
@@ -28,6 +23,9 @@ const StrategyDropdownMenuClient: FC<Props> = ({ strategyId }) => {
 	const queryClient = useQueryClient();
 	const { mutate: stopStrategy } = useStopStrategy({
 		onSuccess: (data: Response<{ strategyId: string; status: string }>) => {
+			queryClient.invalidateQueries({
+				queryKey: ['strategyDetail', strategyId],
+			});
 			toast.success(data.message);
 		},
 		onError: (error) => {
@@ -38,6 +36,9 @@ const StrategyDropdownMenuClient: FC<Props> = ({ strategyId }) => {
 		onSuccess: (
 			data: Response<{ strategyId: string; podName: string; status: string }>
 		) => {
+			queryClient.invalidateQueries({
+				queryKey: ['strategyDetail', strategyId],
+			});
 			toast.success(data.message);
 		},
 		onError: (error) => {
@@ -60,34 +61,27 @@ const StrategyDropdownMenuClient: FC<Props> = ({ strategyId }) => {
 		deleteStrategy(strategyId);
 	};
 	return (
-		<DropdownMenu>
-			<DropdownMenuTrigger className="cursor-pointer">
-				<MoreVertical className="w-4 h-4" />
-			</DropdownMenuTrigger>
-			<DropdownMenuContent align="start" id="strategy-actions-menu">
-				<DropdownMenuItem
-					className="cursor-pointer"
+		<menu className="flex">
+			<li>
+				<Button
+					variant="ghost"
+					className="cursor-pointer p-0"
 					onClick={() => runStrategy(strategyId)}
 				>
-					<Play className="w-[16px] h-[16px]" />
-					전략 실행
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					className="cursor-pointer"
-					onClick={() => stopStrategy(strategyId)}
-				>
-					<Square className="w-[16px] h-[16px]" />
-					전략 정지
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					className="cursor-pointer"
-					onClick={handleDeleteStrategy}
-				>
-					<Trash className="w-[16px] h-[16px]" />
-					전략 삭제
-				</DropdownMenuItem>
-			</DropdownMenuContent>
-		</DropdownMenu>
+					<Play className="size-4" />
+				</Button>
+			</li>
+			<li className="cursor-pointer" onClick={() => stopStrategy(strategyId)}>
+				<Button variant="ghost" className="cursor-pointer p-0">
+					<Square className="size-4" />
+				</Button>
+			</li>
+			<li className="cursor-pointer" onClick={handleDeleteStrategy}>
+				<Button variant="ghost" className="cursor-pointer p-0">
+					<Trash className="size-4" />
+				</Button>
+			</li>
+		</menu>
 	);
 };
 

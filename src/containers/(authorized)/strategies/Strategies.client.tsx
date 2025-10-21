@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import Link from 'next/link';
 
+import { CardLoading } from '@/components/common/Loading';
 import SearchInput from '@/components/common/SearchInput';
 import StrategyCard from '@/components/common/StrategyCard';
 import StrategyStatusFilterMenu from '@/components/common/StrategyStatusFilterMenu';
@@ -46,12 +47,19 @@ const StrategiesClient = () => {
 						</Button>
 					</Link>
 				</div>
-				<CardGridLayout>
-					{!isLoading && !data && (
-						<div className="flex items-center justify-center h-64">
-							<div className="text-lg text-gray-500">전략 목록이 없습니다.</div>
+				{isLoading && (
+					<div className="flex items-center justify-center w-full h-full">
+						<CardLoading message="전략 불러오는 중..." showBackground={false} />
+					</div>
+				)}
+				{!isLoading && !data && (
+					<div className="flex items-center justify-center w-full h-full">
+						<div className="text-sub2 text-gray-500">
+							전략이 존재하지 않습니다.
 						</div>
-					)}
+					</div>
+				)}
+				<CardGridLayout>
 					{data?.data.items
 						.filter((strategy) => {
 							if (filterStatus === 'all') {

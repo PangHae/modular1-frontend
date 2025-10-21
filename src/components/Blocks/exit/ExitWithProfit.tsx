@@ -68,6 +68,7 @@ const ExitWithProfit: FC<ExitWithProfitProps> = ({
 			<div className="flex items-center gap-1 flex-wrap">
 				수익률이
 				<Block.input
+					ref={rightProfitRef}
 					type="number"
 					className="w-[100px]"
 					placeholder="값 입력"
@@ -76,7 +77,7 @@ const ExitWithProfit: FC<ExitWithProfitProps> = ({
 				>
 					양수를 입력해주세요.
 				</Block.input>
-				% 이상일 때 전략 종료
+				% 이상일 때 익절
 			</div>
 		</Block>
 	);

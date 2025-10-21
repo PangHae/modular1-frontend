@@ -68,6 +68,7 @@ const ExitWithLoss: FC<ExitWithLossProps> = ({
 			<div className="flex items-center gap-1 flex-wrap">
 				수익률이
 				<Block.input
+					ref={rightLossRef}
 					type="number"
 					className="w-[100px]"
 					placeholder="값 입력"
@@ -76,7 +77,7 @@ const ExitWithLoss: FC<ExitWithLossProps> = ({
 				>
 					음수를 입력해주세요.
 				</Block.input>
-				% 이하일 때 전략 종료
+				% 이하일 때 손절
 			</div>
 		</Block>
 	);
