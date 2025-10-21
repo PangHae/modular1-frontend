@@ -111,7 +111,9 @@ const PortfolioChart = () => {
 				</CardHeader>
 				<CardContent className="flex flex-1 items-center gap-8 pb-0">
 					<div className="flex items-center justify-center w-full h-full">
-						<CardLoading showBackground={false} />
+						<div className="text-sub2 text-gray-500">
+							보유 중인 종목이 없습니다.
+						</div>
 					</div>
 				</CardContent>
 			</Card>
