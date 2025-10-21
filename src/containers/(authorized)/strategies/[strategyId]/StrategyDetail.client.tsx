@@ -2,81 +2,34 @@
 
 import { FC } from 'react';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
-import { useQueryClient } from '@tanstack/react-query';
-import { MoreVertical, Play, Trash, Square } from 'lucide-react';
-import { toast } from 'sonner';
-
-import { Response } from '@/@types/service';
 import { Card, CardContent } from '@/components/ui/card';
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Tabs, TabsTrigger, TabsList, TabsContent } from '@/components/ui/tabs';
 import { useExecutionById } from '@/hooks/api/execution/useExecutionById';
-import { useDeleteStrategy } from '@/hooks/api/strategy/useDeleteStrategy';
-import { useRunStrategy } from '@/hooks/api/strategy/useRunStrategy';
-import { useStopStrategy } from '@/hooks/api/strategy/useStopStrategy';
 import { useStrategyDetail } from '@/hooks/api/strategy/useStrategyDetail';
 import { cn } from '@/lib/utils';
 
-import PreviewCode from './_view/PreviewCode';
-import PreviewStrategy from './_view/PreviewStrategy';
 import ProfitRateCard from './_view/ProfitRateCard';
 import RecentExecution from './_view/RecentExecution';
-import StrategyAIDetail from './_view/StrategyAIDetail';
+import StrategyDetailTab from './_view/StrategyDetailTab';
+
+const StrategyDropdownMenuClient = dynamic(
+	() => import('./_view/StrategyDropdownMenu.client'),
+	{
+		ssr: true,
+	}
+);
 
 interface Props {
 	strategyId: number;
 }
 
 const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
-	const router = useRouter();
-	const queryClient = useQueryClient();
 	const { data: strategyDetail, isLoading: isStrategyDetailLoading } =
 		useStrategyDetail(strategyId);
 	const { data: executions, isLoading: isExecutionsLoading } =
 		useExecutionById(strategyId);
-	const { mutate: runStrategy } = useRunStrategy({
-		onSuccess: (
-			data: Response<{ strategyId: string; podName: string; status: string }>
-		) => {
-			toast.success(data.message);
-		},
-		onError: (error) => {
-			toast.error(error.message);
-		},
-	});
-	const { mutate: stopStrategy } = useStopStrategy({
-		onSuccess: (data: Response<{ strategyId: string; status: string }>) => {
-			toast.success(data.message);
-		},
-		onError: (error) => {
-			toast.error(error.message);
-		},
-	});
-
-	const { mutate: deleteStrategy } = useDeleteStrategy({
-		onSuccess: (data: Response<null>) => {
-			toast.success(data.message);
-			queryClient.invalidateQueries({
-				queryKey: ['strategies'],
-			});
-			router.push('/strategies');
-		},
-		onError: (error) => {
-			toast.error(error.message);
-		},
-	});
-
-	const handleDeleteStrategy = () => {
-		deleteStrategy(strategyId);
-	};
 
 	if (isStrategyDetailLoading || isExecutionsLoading) {
 		return (
@@ -121,34 +74,7 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 							</div>
 						</div>
 					</div>
-					<DropdownMenu>
-						<DropdownMenuTrigger className="cursor-pointer">
-							<MoreVertical className="w-4 h-4" />
-						</DropdownMenuTrigger>
-						<DropdownMenuContent align="start" id="strategy-actions-menu">
-							<DropdownMenuItem
-								className="cursor-pointer"
-								onClick={() => runStrategy(strategyId)}
-							>
-								<Play className="w-[16px] h-[16px]" />
-								전략 실행
-							</DropdownMenuItem>
-							<DropdownMenuItem
-								className="cursor-pointer"
-								onClick={() => stopStrategy(strategyId)}
-							>
-								<Square className="w-[16px] h-[16px]" />
-								전략 정지
-							</DropdownMenuItem>
-							<DropdownMenuItem
-								className="cursor-pointer"
-								onClick={handleDeleteStrategy}
-							>
-								<Trash className="w-[16px] h-[16px]" />
-								전략 삭제
-							</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
+					<StrategyDropdownMenuClient strategyId={strategyId} />
 				</div>
 
 				{/* 성과 지표 카드 */}
@@ -196,48 +122,12 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 						</div>
 					</CardContent>
 				</Card>
-				<Tabs defaultValue="preview" className="flex flex-col">
-					<TabsList className="bg-transparent p-0 h-auto gap-2 flex-shrink-0">
-						<TabsTrigger
-							className="cursor-pointer data-[state=active]:bg-shinhan-blue! data-[state=active]:text-white! data-[state=active]:border-shinhan-blue data-[state=inactive]:bg-shinhan-blue/8 data-[state=inactive]:text-black data-[state=inactive]:border-shinhan-blue/20 border rounded-full px-4 py-2 h-[36px] text-button transition-all duration-200"
-							value="preview"
-						>
-							미리보기
-						</TabsTrigger>
-						<TabsTrigger
-							className="cursor-pointer data-[state=active]:bg-shinhan-blue! data-[state=active]:text-white! data-[state=active]:border-shinhan-blue data-[state=inactive]:bg-shinhan-blue/8 data-[state=inactive]:text-black data-[state=inactive]:border-shinhan-blue/20 border rounded-full px-4 py-2 h-[36px] text-button transition-all duration-200"
-							value="summary"
-						>
-							전략 요약
-						</TabsTrigger>
-						<TabsTrigger
-							className="cursor-pointer data-[state=active]:bg-shinhan-blue! data-[state=active]:text-white! data-[state=active]:border-shinhan-blue data-[state=inactive]:bg-shinhan-blue/8 data-[state=inactive]:text-black data-[state=inactive]:border-shinhan-blue/20 border rounded-full px-4 py-2 h-[36px] text-button transition-all duration-200"
-							value="code"
-						>
-							코드 도우미
-						</TabsTrigger>
-					</TabsList>
-					<TabsContent value="preview">
-						<PreviewStrategy
-							sell={strategyDetail.strategyTemplate?.sell || null}
-							buy={strategyDetail.strategyTemplate?.buy || null}
-						/>
-					</TabsContent>
-					<TabsContent value="summary">
-						<StrategyAIDetail
-							summaryOverview={strategyDetail.strategySummary.summaryOverview}
-							summaryCondition={strategyDetail.strategySummary.summaryCondition}
-							summaryRisk={strategyDetail.strategySummary.summaryRisk}
-						/>
-					</TabsContent>
-					<TabsContent value="code">
-						<PreviewCode
-							code={strategyDetail.code || '코드가 생성되지 않았습니다.'}
-						/>
-					</TabsContent>
-				</Tabs>
+				<StrategyDetailTab
+					strategyTemplate={strategyDetail.strategyTemplate}
+					strategySummary={strategyDetail.strategySummary}
+					code={strategyDetail.code}
+				/>
 			</div>
-
 			{/* 우측 컬럼 */}
 			<div className="flex flex-col flex-1 gap-4 shrink-0 overflow-y-auto">
 				{/* 수익률 그래프 */}
