@@ -93,8 +93,10 @@ export const CreateStrategyProvider = ({
 			// 루트 노드 설정 (인덱스 0)
 			if (template.buy) {
 				treeState[0] = { blockId: 'buy', index: 0 };
+				setStrategyType('BUY');
 			} else if (template.sell) {
 				treeState[0] = { blockId: 'sell', index: 0 };
+				setStrategyType('SELL');
 			}
 
 			// 노드를 재귀적으로 treeState에 추가

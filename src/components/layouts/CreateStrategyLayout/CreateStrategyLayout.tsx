@@ -55,7 +55,10 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 				<div className="flex gap-4 items-center">
 					{currentStep === 1 && (
 						<Link href="/strategies">
-							<Button variant="outline" className="flex items-center gap-2">
+							<Button
+								variant="outline"
+								className="flex items-center gap-2 cursor-pointer"
+							>
 								<ChevronLeft className="w-4 h-4" />
 								이전
 							</Button>
@@ -65,7 +68,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 						<Button
 							variant="outline"
 							onClick={onPrev}
-							className="flex items-center gap-2"
+							className="flex items-center gap-2 cursor-pointer"
 						>
 							<ChevronLeft className="w-4 h-4" />
 							이전
@@ -148,7 +151,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 							className="w-64"
 						/>
 						<Button
-							className="bg-shinhan-blue hover:bg-shinhan-blue/80"
+							className="bg-shinhan-blue hover:bg-shinhan-blue/80 cursor-pointer"
 							onClick={onCreateStrategy}
 						>
 							전략 생성하기
