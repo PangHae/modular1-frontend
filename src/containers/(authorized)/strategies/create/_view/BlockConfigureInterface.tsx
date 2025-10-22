@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react';
 
 import { BanknoteArrowDown, BanknoteArrowUp } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { ArrayTreeNode } from '@/@types/strategy';
 import { useCreateStrategyContext } from '@/hooks/contexts/useCreateStrategyContext';
@@ -16,27 +17,28 @@ const BlockConfigureInterface: FC<Props> = ({ renderArrayTree }) => {
 
 	const handleChangeStrategyType = (type: 'BUY' | 'SELL') => {
 		if (type === 'SELL') {
-			handleChangeTreeState([
+			handleChangeTreeState((prev) => [
 				{ blockId: 'sell', index: 0 },
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
+				...prev.slice(1),
 			]);
 		} else {
-			handleChangeTreeState([
-				{ blockId: 'buy', index: 0 },
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-			]);
+			handleChangeTreeState((prev) =>
+				prev.map((item, index) => {
+					if (index === 0) {
+						return { blockId: 'buy', index: 0 };
+					}
+					if (
+						item?.blockId === 'exitWithProfit' ||
+						item?.blockId === 'exitWithLoss'
+					) {
+						toast.info(
+							'익절/손절 조건은 매도에만 추가할 수 있어 제거 되었습니다.'
+						);
+						return null;
+					}
+					return item;
+				})
+			);
 		}
 		setStrategyType(type);
 	};
