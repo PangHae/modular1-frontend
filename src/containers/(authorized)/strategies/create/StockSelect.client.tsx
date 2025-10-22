@@ -38,8 +38,9 @@ const StockSelectClient: FC = () => {
 								<h3 className="text-2xl font-semibold text-gray-900">
 									투자 전략을 시작하세요
 								</h3>
-								<p className="text-gray-600 max-w-md">
-									왼쪽 패널에서 종목을 선택하면 전략 구성을 시작할 수 있습니다.
+								<p className="text-gray-600 text-button">
+									왼쪽 패널에서 종목을 선택한 후 우측 상단에 다음 버튼을 클릭해
+									전략을 구성할 수 있습니다.
 								</p>
 							</div>
 							{selectedStock && (
