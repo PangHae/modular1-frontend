@@ -183,17 +183,17 @@ const PortfolioChart = () => {
 						{/* 선택된 종목 정보 */}
 						<div className="flex-1 flex flex-col items-center justify-center gap-4">
 							<div className="text-center">
-								<div className="text-3xl font-bold text-foreground mb-2">
+								<div className="text-2xl font-bold text-foreground mb-2">
 									{chartData[activeIndex].amount.toLocaleString()}원
 								</div>
-								<div className="text-lg text-muted-foreground">
+								<div className="text-lg">
 									{chartConfig[activeStock as keyof typeof chartConfig]?.label}
 								</div>
 							</div>
 
 							{/* 비율 표시 */}
 							<div className="text-center">
-								<div className="text-2xl font-semibold text-foreground">
+								<div className="text-xl font-semibold text-foreground">
 									{(
 										(chartData[activeIndex].amount /
 											chartData.reduce((sum, item) => sum + item.amount, 0)) *
