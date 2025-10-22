@@ -76,7 +76,7 @@ const RVOL: FC<RVOLProps> = ({
 			<Block.subtitle className="text-papaya-orange">
 				RVOL(상대 거래량) 대비 상대 거래량 비교 감지
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="기준"
 					items={[

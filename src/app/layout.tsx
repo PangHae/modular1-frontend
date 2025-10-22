@@ -15,7 +15,7 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-	title: '블록 기반 노코드 자동 감시 주문 플랫폼',
+	title: 'Modular1',
 	description:
 		'코딩 없이 드래그 앤 드롭으로 매매 전략을 만들고, 실시간으로 자동 실행하는 노코드 플랫폼',
 	keywords: [
@@ -40,7 +40,7 @@ export default function RootLayout({
 					className={`${pretendard.className} antialiased flex w-dvw h-dvh overflow-hidden bg-custom-gray-bg`}
 				>
 					{children}
-					<Toaster />
+					<Toaster position="bottom-right" richColors />
 				</body>
 			</html>
 		</QueryClientProvider>

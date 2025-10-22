@@ -10,9 +10,15 @@ interface Props {
 	searchQuery: string;
 	onSearch: (keyword: string) => void;
 	className?: string;
+	placeholder?: string;
 }
 
-const SearchInput: FC<Props> = ({ searchQuery, onSearch, className }) => {
+const SearchInput: FC<Props> = ({
+	searchQuery,
+	onSearch,
+	className,
+	placeholder = '검색어를 입력해주세요.',
+}) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	return (
@@ -25,7 +31,7 @@ const SearchInput: FC<Props> = ({ searchQuery, onSearch, className }) => {
 			<input
 				ref={inputRef}
 				className="w-full h-full focus:outline-none pl-5"
-				placeholder="검색어를 입력해주세요."
+				placeholder={placeholder}
 				value={searchQuery}
 				onChange={(e) => onSearch(e.target.value)}
 			/>

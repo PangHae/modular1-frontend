@@ -2,6 +2,8 @@
 
 import { FC, useEffect, useRef, useState } from 'react';
 
+import { toast } from 'sonner';
+
 import {
 	BlockProps,
 	ComparisonType,
@@ -63,9 +65,16 @@ const Price: FC<PriceProps> = ({
 	const createJson = () => {
 		let right = {};
 		if (rightValueType === 'constant') {
-			if (!rightPriceRef.current) {
-				return {} as Node;
+			if (!rightPriceRef.current?.value) {
+				toast.error('가격을 입력해주세요.');
+				return null;
 			}
+
+			if (Number(rightPriceRef.current.value) < 0) {
+				toast.error('가격은 0 이상의 값을 입력해주세요.');
+				return null;
+			}
+
 			right = {
 				kind: 'CONSTANT',
 				constant: { value: rightPriceRef.current?.value },
@@ -105,7 +114,7 @@ const Price: FC<PriceProps> = ({
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-yeondu rounded-lg bg-yeondu-bg!">
 			<Block.subtitle className="text-yeondu">가격</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="기준"
 					items={[

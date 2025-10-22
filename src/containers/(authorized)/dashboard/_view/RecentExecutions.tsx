@@ -1,16 +1,18 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import { useInView } from 'react-intersection-observer';
 
+import { CardLoading } from '@/components/common/Loading';
 import TradeExecutionItem from '@/components/common/TradeExecutionItem';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { useAccountTransactions } from '@/hooks/api/accounts/useAccountTransactions';
 
 const RecentExecutions = () => {
 	const { ref, inView } = useInView();
-	const { data, fetchNextPage, hasNextPage } = useAccountTransactions(10);
+	const { data, fetchNextPage, hasNextPage, isLoading } =
+		useAccountTransactions(10);
 
 	useEffect(() => {
 		if (inView && hasNextPage) {
@@ -23,25 +25,40 @@ const RecentExecutions = () => {
 			<CardHeader>
 				<CardTitle>최근 체결 내역</CardTitle>
 			</CardHeader>
-			<CardContent className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
-				{!data && (
+			<CardContent className="overflow-y-auto flex-1 min-h-0">
+				{isLoading && (
 					<div className="flex items-center justify-center h-64">
-						<div className="text-lg text-gray-500">No data</div>
+						<CardLoading showBackground={false} />
 					</div>
 				)}
-				{data?.pages.map((page) =>
-					page.data.items.map((item) => (
-						<TradeExecutionItem
-							key={item.transactionId}
-							type={item.side}
-							stockName={item.stockName}
-							strategyName={item.strategyInfo.strategyName}
-							dateTime={item.executionTime}
-							amount={item.price * item.qty}
-						/>
-					))
+				{!isLoading && !data && (
+					<div className="flex items-center justify-center h-64">
+						<div className="text-sub2 text-gray-500">
+							최근 체결 내역이 없습니다.
+						</div>
+					</div>
 				)}
-				<div ref={ref} />
+				{data?.pages.map((page) => {
+					return (
+						<Fragment key={page.data.items[0].transactionId}>
+							<div className="flex flex-col gap-2">
+								{page.data.items.map((item) => {
+									return (
+										<TradeExecutionItem
+											key={item.transactionId}
+											type={item.side}
+											stockName={item.stockName}
+											strategyName={item.strategyInfo.strategyName}
+											dateTime={item.executionTime}
+											amount={item.price * item.qty}
+										/>
+									);
+								})}
+							</div>
+							{hasNextPage && <div ref={ref} className="h-[0.5px]" />}
+						</Fragment>
+					);
+				})}
 			</CardContent>
 		</Card>
 	);

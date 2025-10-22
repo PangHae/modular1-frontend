@@ -78,7 +78,7 @@ const MACDCross: FC<MACDCrossProps> = ({
 			<Block.subtitle className="text-papaya-orange">
 				MACD 매수, 매도 신호 감지
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="기준"
 					items={[

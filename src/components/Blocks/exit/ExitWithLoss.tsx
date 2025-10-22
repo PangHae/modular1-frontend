@@ -1,5 +1,7 @@
 import { FC, useEffect, useRef } from 'react';
 
+import { toast } from 'sonner';
+
 import {
 	BlockProps,
 	ConstantOperand,
@@ -20,8 +22,14 @@ const ExitWithLoss: FC<ExitWithLossProps> = ({
 	const rightLossRef = useRef<HTMLInputElement>(null);
 
 	const createJson = () => {
-		if (!rightLossRef.current) {
-			return {} as Node;
+		if (!rightLossRef.current?.value) {
+			toast.error('손절 비율을 입력해주세요.');
+			return null;
+		}
+
+		if (Number(rightLossRef.current.value) >= 0) {
+			toast.error('손절 비율은 음수를 입력해주세요.');
+			return null;
 		}
 
 		return {
@@ -57,9 +65,10 @@ const ExitWithLoss: FC<ExitWithLossProps> = ({
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-teal-600 rounded-lg bg-teal-50">
 			<Block.subtitle className="text-teal-600">손절 조건</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				수익률이
 				<Block.input
+					ref={rightLossRef}
 					type="number"
 					className="w-[100px]"
 					placeholder="값 입력"
@@ -68,7 +77,7 @@ const ExitWithLoss: FC<ExitWithLossProps> = ({
 				>
 					음수를 입력해주세요.
 				</Block.input>
-				% 이하일 때 전략 종료
+				% 이하일 때 손절
 			</div>
 		</Block>
 	);

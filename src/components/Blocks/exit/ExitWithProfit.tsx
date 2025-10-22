@@ -1,5 +1,7 @@
 import { FC, useEffect, useRef } from 'react';
 
+import { toast } from 'sonner';
+
 import {
 	BlockProps,
 	ConstantOperand,
@@ -20,8 +22,14 @@ const ExitWithProfit: FC<ExitWithProfitProps> = ({
 	const rightProfitRef = useRef<HTMLInputElement>(null);
 
 	const createJson = () => {
-		if (!rightProfitRef.current) {
-			return {} as Node;
+		if (!rightProfitRef.current?.value) {
+			toast.error('익절 비율을 입력해주세요.');
+			return null;
+		}
+
+		if (Number(rightProfitRef.current.value) <= 0) {
+			toast.error('익절 비율은 양수를 입력해주세요.');
+			return null;
 		}
 
 		return {
@@ -57,9 +65,10 @@ const ExitWithProfit: FC<ExitWithProfitProps> = ({
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-teal-600 rounded-lg bg-teal-50">
 			<Block.subtitle className="text-teal-600">익절 조건</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				수익률이
 				<Block.input
+					ref={rightProfitRef}
 					type="number"
 					className="w-[100px]"
 					placeholder="값 입력"
@@ -68,7 +77,7 @@ const ExitWithProfit: FC<ExitWithProfitProps> = ({
 				>
 					양수를 입력해주세요.
 				</Block.input>
-				% 이상일 때 전략 종료
+				% 이상일 때 익절
 			</div>
 		</Block>
 	);

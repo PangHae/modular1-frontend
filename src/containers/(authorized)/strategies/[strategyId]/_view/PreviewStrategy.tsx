@@ -38,8 +38,8 @@ const PreviewStrategy: FC<Props> = ({ sell, buy }) => {
 	}
 
 	return (
-		<Card>
-			<CardContent className="p-6">{renderStrategy}</CardContent>
+		<Card className="h-fit">
+			<CardContent className="overflow-hidden">{renderStrategy}</CardContent>
 		</Card>
 	);
 };

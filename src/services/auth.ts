@@ -23,7 +23,7 @@ export const login = async (memberData: LoginFormValues) => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -47,7 +47,31 @@ export const signUp = async (memberData: RegisterFormValues) => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
-		throw error;
+		console.error(errorRes);
+		throw errorRes;
+	}
+};
+
+export const logout = async () => {
+	try {
+		const response = await fetch(`${AUTH_API_URL}/logout`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				credentials: 'include',
+			},
+		});
+
+		if (!response.ok) {
+			throw response;
+		}
+
+		const res: Response<null> = await response.json();
+
+		return res;
+	} catch (error) {
+		const errorRes = await (error as globalThis.Response).json();
+		console.error(errorRes);
+		throw errorRes;
 	}
 };

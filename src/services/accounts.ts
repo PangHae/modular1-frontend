@@ -12,11 +12,45 @@ import { ProfitDataSeries } from '@/@types/strategy';
 
 const ACCOUNTS_API_URL = `${process.env.NEXT_PUBLIC_SERVICE_URL}/api/v1/accounts`;
 
+export const getAccountInfo = async () => {
+	try {
+		const response = await fetch(`${ACCOUNTS_API_URL}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				credentials: 'include',
+			},
+			next: {
+				revalidate: 60,
+			},
+		});
+
+		if (!response.ok) {
+			throw response;
+		}
+
+		const res: Response<{
+			memberName: string;
+			accountNumber: string;
+			orderPossibleCash: string;
+		}> = await response.json();
+
+		return res.data;
+	} catch (error) {
+		const errorRes = await (error as globalThis.Response).json();
+		console.error(errorRes);
+		throw errorRes;
+	}
+};
+
 export const getAccountProfitRate = async () => {
 	try {
 		const response = await fetch(`${ACCOUNTS_API_URL}/profit-rate`, {
 			headers: {
 				'Content-Type': 'application/json',
+				credentials: 'include',
+			},
+			next: {
+				revalidate: 60,
 			},
 		});
 
@@ -30,7 +64,7 @@ export const getAccountProfitRate = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -40,6 +74,10 @@ export const getAccountProfitRateRanking = async () => {
 		const response = await fetch(`${ACCOUNTS_API_URL}/profit-rate/ranking`, {
 			headers: {
 				'Content-Type': 'application/json',
+				credentials: 'include',
+			},
+			next: {
+				revalidate: 60,
 			},
 		});
 
@@ -52,7 +90,7 @@ export const getAccountProfitRateRanking = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -64,6 +102,7 @@ export const getAccountTransactions = async (page: number, size: number) => {
 			{
 				headers: {
 					'Content-Type': 'application/json',
+					credentials: 'include',
 				},
 			}
 		);
@@ -77,7 +116,7 @@ export const getAccountTransactions = async (page: number, size: number) => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -87,6 +126,10 @@ export const getAccountHoldingStocks = async () => {
 		const response = await fetch(`${ACCOUNTS_API_URL}/stocks`, {
 			headers: {
 				'Content-Type': 'application/json',
+				credentials: 'include',
+			},
+			next: {
+				revalidate: 60,
 			},
 		});
 
@@ -99,7 +142,7 @@ export const getAccountHoldingStocks = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -109,6 +152,10 @@ export const getAccountStockProfitRate = async () => {
 		const response = await fetch(`${ACCOUNTS_API_URL}/stocks/profit-rate`, {
 			headers: {
 				'Content-Type': 'application/json',
+				credentials: 'include',
+			},
+			next: {
+				revalidate: 60,
 			},
 		});
 
@@ -121,7 +168,7 @@ export const getAccountStockProfitRate = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };

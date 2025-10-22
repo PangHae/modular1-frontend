@@ -40,9 +40,9 @@ const InvestmentRankingItem = ({
 					className={cn(
 						'text-caption! text-end',
 						profit > 0
-							? 'text-red-500'
+							? 'text-[#F04452]'
 							: profit < 0
-								? 'text-blue-500'
+								? 'text-[#3182F6]'
 								: 'text-gray-500'
 					)}
 				>{`${profit.toLocaleString('ko-KR')}원(${profitRate}%)`}</span>

@@ -2,6 +2,8 @@
 
 import { FC, useEffect, useRef, useState } from 'react';
 
+import { toast } from 'sonner';
+
 import {
 	BlockProps,
 	ComparisonType,
@@ -49,6 +51,19 @@ const RSICompare: FC<RSICompareProps> = ({
 	};
 
 	const createJson = () => {
+		if (!rsiCompareValueRef.current?.value) {
+			toast.error('RSI 값을 입력해주세요.');
+			return null;
+		}
+
+		if (
+			Number(rsiCompareValueRef.current.value) < 0 ||
+			Number(rsiCompareValueRef.current.value) > 100
+		) {
+			toast.error('RSI 값은 0부터 100 사이의 값을 입력해주세요.');
+			return null;
+		}
+
 		return {
 			type: 'COMPARE',
 			label: 'rsiCompare',
@@ -85,7 +100,7 @@ const RSICompare: FC<RSICompareProps> = ({
 			<Block.subtitle className="text-papaya-orange">
 				RSI 과매수/과매도 감지
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="기준"
 					items={[

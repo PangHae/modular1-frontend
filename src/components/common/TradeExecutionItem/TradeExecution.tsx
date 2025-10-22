@@ -12,7 +12,7 @@ const TradeExecutionItemMain = ({
 	return (
 		<div
 			className={cn(
-				'flex justify-between items-center p-4 bg-white rounded-lg border border-custom-gray-border',
+				'flex justify-between items-center p-4 bg-white rounded-lg border border-custom-gray-border/40',
 				className
 			)}
 		>
@@ -51,7 +51,7 @@ interface StockNameProps {
 const StockName = ({ children, className }: StockNameProps) => {
 	return (
 		<span
-			className={cn('text-caption! font-semibold text-custom-main', className)}
+			className={cn('text-sub2! font-semibold text-custom-main', className)}
 		>
 			{children}
 		</span>
@@ -65,7 +65,7 @@ interface StrategyNameProps {
 
 const StrategyName = ({ children, className }: StrategyNameProps) => {
 	return (
-		<span className={cn('text-overline! text-custom-sub-text', className)}>
+		<span className={cn('text-caption! text-custom-sub-text', className)}>
 			{children}
 		</span>
 	);
@@ -78,7 +78,12 @@ interface DateTimeProps {
 
 const DateTime = ({ children, className }: DateTimeProps) => {
 	return (
-		<span className={cn('text-overline! text-custom-sub-text', className)}>
+		<span
+			className={cn(
+				'text-overline! text-custom-sub-text text-right',
+				className
+			)}
+		>
 			{children}
 		</span>
 	);
@@ -95,7 +100,7 @@ const Amount = ({ children, className, type }: AmountProps) => {
 		<span
 			className={cn(
 				'text-caption! font-semibold',
-				type === 'BUY' ? 'text-red-500' : 'text-blue-500',
+				type === 'BUY' ? 'text-[#F04452]' : 'text-[#3182F6]',
 				className
 			)}
 		>

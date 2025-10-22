@@ -1,25 +1,29 @@
 'use client';
 
 import InvestmentRankingItem from '@/components/common/InvestmentRankingItem';
+import { CardLoading } from '@/components/common/Loading';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAccountProfitRateRanking } from '@/hooks/api/accounts/useAccountProfitRateRanking';
 
 const TopProfitRate = () => {
 	const { data, isLoading } = useAccountProfitRateRanking();
 
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
-
 	return (
 		<Card className="flex-1 flex flex-col overflow-hidden">
 			<CardHeader>
-				<CardTitle>수익률 Top 10</CardTitle>
+				<CardTitle>금주 수익률 Top 10</CardTitle>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-2 overflow-y-auto flex-1 min-h-0">
-				{!data && (
+				{isLoading && (
 					<div className="flex items-center justify-center h-64">
-						<div className="text-lg text-gray-500">No data</div>
+						<CardLoading showBackground={false} />
+					</div>
+				)}
+				{!isLoading && !data && (
+					<div className="flex items-center justify-center h-64">
+						<div className="text-sub2 text-gray-500">
+							금주 수익률 데이터가 없습니다.
+						</div>
 					</div>
 				)}
 				{data?.data.items.map((item) => (

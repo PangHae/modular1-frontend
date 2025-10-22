@@ -51,8 +51,10 @@ const MyStrategyItems = () => {
 							className="p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
 							onClick={() => handleSelectStrategy(strategy.id)}
 						>
-							<div className="font-medium">{strategy.strategyName}</div>
-							<div className="text-sm text-gray-600 mt-1">
+							<div className="text-button font-semibold">
+								{strategy.strategyName}
+							</div>
+							<div className="text-caption! text-gray-600 mt-1">
 								{strategy.stockInfo.stockName}
 							</div>
 						</div>

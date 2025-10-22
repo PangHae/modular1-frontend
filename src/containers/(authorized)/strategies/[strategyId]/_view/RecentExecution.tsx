@@ -15,10 +15,12 @@ import {
 import { cn } from '@/lib/utils';
 
 interface Props {
+	ref: (node: Element | null) => void;
+	hasNextPage: boolean;
 	executions: Execution[];
 }
 
-const RecentExecution: FC<Props> = ({ executions }) => {
+const RecentExecution: FC<Props> = ({ ref, executions, hasNextPage }) => {
 	const noExecutionData = executions.length === 0;
 	return (
 		<Card className="flex-1 max-h-[50%] flex flex-col">
@@ -79,13 +81,18 @@ const RecentExecution: FC<Props> = ({ executions }) => {
 										</TableCell>
 									</TableRow>
 								))}
+							{hasNextPage && (
+								<TableRow>
+									<TableCell colSpan={4} ref={ref} className="h-[0.5px] p-0" />
+								</TableRow>
+							)}
 							{noExecutionData && (
 								<TableRow>
 									<TableCell
 										colSpan={4}
 										className="text-center text-gray-400 py-8"
 									>
-										No data
+										체결 내역이 없습니다.
 									</TableCell>
 								</TableRow>
 							)}

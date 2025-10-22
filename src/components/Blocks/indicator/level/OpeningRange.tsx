@@ -73,7 +73,7 @@ const OpeningRange: FC<OpeningRangeProps> = ({
 			<Block.subtitle className="text-papaya-orange">
 				장시작 15분 동안의 고점 또는 저점 감지
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				장 시작 15분 동안의
 				<Block.dropdown
 					placeholder="지점"

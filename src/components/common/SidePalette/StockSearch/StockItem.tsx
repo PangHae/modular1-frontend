@@ -12,7 +12,7 @@ const StockItem = ({ stockCode, stockName, onClick }: Props) => {
 			className="flex items-center p-2 hover:bg-gray-50 cursor-pointer transition-colors gap-2"
 			onClick={() => onClick({ name: stockName, code: stockCode })}
 		>
-			<div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-lg">
+			<div className="w-10 h-10 rounded-full flex items-center justify-center text-lg">
 				<Image
 					className="object-cover rounded-full"
 					src={`https://images.tossinvest.com/https%3A%2F%2Fstatic.toss.im%2Fpng-icons%2Fsecurities%2Ficn-sec-fill-${stockCode}.png?width=64&height=64`}

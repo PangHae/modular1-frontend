@@ -8,6 +8,10 @@ export const getStocks = async () => {
 		const response = await fetch(`${STOCKS_API_URL}`, {
 			headers: {
 				'Content-Type': 'application/json',
+				credentials: 'include',
+			},
+			next: {
+				revalidate: 3600,
 			},
 		});
 
@@ -20,7 +24,7 @@ export const getStocks = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -30,6 +34,10 @@ export const getMyStocks = async () => {
 		const response = await fetch(`${STOCKS_API_URL}/my-stocks`, {
 			headers: {
 				'Content-Type': 'application/json',
+				credentials: 'include',
+			},
+			next: {
+				revalidate: 600,
 			},
 		});
 
@@ -42,7 +50,7 @@ export const getMyStocks = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };

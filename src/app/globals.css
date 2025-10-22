@@ -67,6 +67,17 @@
 	--text-button: var(--font-size-button); /* 14px*/
 	--text-caption: var(--font-size-caption); /* 12px*/
 	--text-overline: var(--font-size-overline); /* 10px*/
+
+	--color-custom-chart-1: var(--color-custom-chart-1);
+	--color-custom-chart-2: var(--color-custom-chart-2);
+	--color-custom-chart-3: var(--color-custom-chart-3);
+	--color-custom-chart-4: var(--color-custom-chart-4);
+	--color-custom-chart-5: var(--color-custom-chart-5);
+	--color-custom-chart-6: var(--color-custom-chart-6);
+	--color-custom-chart-7: var(--color-custom-chart-7);
+	--color-custom-chart-8: var(--color-custom-chart-8);
+	--color-custom-chart-9: var(--color-custom-chart-9);
+	--color-custom-chart-10: var(--color-custom-chart-10);
 }
 
 :root {
@@ -113,7 +124,7 @@
 	--color-status-running-text: #50ac75;
 	--color-status-pending-bg: rgba(132, 132, 132, 0.2);
 	--color-status-pending-text: #848484;
-	--color-shinhan-blue: #0046ff;
+	--color-shinhan-blue: #477aff;
 	--color-papaya-orange: #f98e1d;
 	--color-papaya-orange-bg: #fff5ed;
 	--color-yeondu: #5e9b25;
@@ -130,6 +141,18 @@
 	--font-size-button: 14px;
 	--font-size-caption: 12px;
 	--font-size-overline: 10px;
+
+	/* custom chart colors */
+	--color-custom-chart-1: #477aff;
+	--color-custom-chart-2: #638eff;
+	--color-custom-chart-3: #759bff;
+	--color-custom-chart-4: #a3bcff;
+	--color-custom-chart-5: #ccdaff;
+	--color-custom-chart-6: #9d72f8;
+	--color-custom-chart-7: #ac87f9;
+	--color-custom-chart-8: #ad94f9;
+	--color-custom-chart-9: #c9b7fb;
+	--color-custom-chart-10: #e1d7fd;
 }
 
 @layer base {
@@ -139,4 +162,37 @@
 	body {
 		@apply bg-background text-foreground;
 	}
+}
+
+/* 전역 스크롤바 스타일링 */
+/* Webkit 기반 브라우저 (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgba(156, 163, 175, 0.3);
+	border-radius: 3px;
+	transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(156, 163, 175, 0.5);
+}
+
+/* Firefox */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+}
+
+/* 스크롤바가 필요할 때만 표시 */
+.overflow-y-auto:hover::-webkit-scrollbar-thumb,
+.overflow-x-auto:hover::-webkit-scrollbar-thumb {
+	background: rgba(156, 163, 175, 0.4);
 }

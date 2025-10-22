@@ -1,82 +1,66 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
-import { useQueryClient } from '@tanstack/react-query';
-import { MoreVertical, Play, Trash, Square } from 'lucide-react';
-import { toast } from 'sonner';
+import { useInView } from 'react-intersection-observer';
 
-import { Response } from '@/@types/service';
+import { FullScreenLoading } from '@/components/common/Loading';
+import StrategyStatusChip from '@/components/common/StrategyStatusChip';
 import { Card, CardContent } from '@/components/ui/card';
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Tabs, TabsTrigger, TabsList, TabsContent } from '@/components/ui/tabs';
 import { useExecutionById } from '@/hooks/api/execution/useExecutionById';
-import { useDeleteStrategy } from '@/hooks/api/strategy/useDeleteStrategy';
 import { useStrategyDetail } from '@/hooks/api/strategy/useStrategyDetail';
 import { cn } from '@/lib/utils';
 
-import PreviewStrategy from './_view/PreviewStrategy';
 import ProfitRateCard from './_view/ProfitRateCard';
 import RecentExecution from './_view/RecentExecution';
-import StrategyAIDetail from './_view/StrategyAIDetail';
+import StrategyDetailTab from './_view/StrategyDetailTab';
+
+const StrategyDropdownMenuClient = dynamic(
+	() => import('./_view/StrategyMenu.client'),
+	{
+		ssr: true,
+	}
+);
 
 interface Props {
 	strategyId: number;
 }
 
 const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
-	const router = useRouter();
-	const queryClient = useQueryClient();
+	const { ref, inView } = useInView();
 	const { data: strategyDetail, isLoading: isStrategyDetailLoading } =
 		useStrategyDetail(strategyId);
-	const { data: executions, isLoading: isExecutionsLoading } =
-		useExecutionById(strategyId);
+	const { data, fetchNextPage, hasNextPage } = useExecutionById(strategyId, 20);
 
-	const { mutate: deleteStrategy } = useDeleteStrategy({
-		onSuccess: (data: Response<null>) => {
-			toast.success(data.message);
-			queryClient.invalidateQueries({
-				queryKey: ['strategies'],
-			});
-			router.push('/strategies');
-		},
-		onError: (error) => {
-			toast.error(error.message);
-		},
-	});
+	useEffect(() => {
+		if (inView && hasNextPage) {
+			fetchNextPage();
+		}
+	}, [inView, fetchNextPage, hasNextPage]);
 
-	const handleDeleteStrategy = () => {
-		deleteStrategy(strategyId);
-	};
-
-	if (isStrategyDetailLoading || isExecutionsLoading) {
+	if (isStrategyDetailLoading) {
 		return (
-			<div className="flex items-center justify-center h-64">
-				<div className="text-lg text-gray-500">Loading...</div>
-			</div>
+			<FullScreenLoading message="최근 체결 내역을 불러오고 있습니다..." />
 		);
 	}
 
-	if (!strategyDetail || !executions) {
+	if (!strategyDetail) {
 		return (
-			<div className="flex items-center justify-center h-64">
-				<div className="text-lg text-gray-500">No data</div>
+			<div className="flex items-center justify-center w-full h-full">
+				<div className="text-sub2! text-gray-500">
+					전략이 존재하지 않습니다.
+				</div>
 			</div>
 		);
 	}
 
 	return (
-		<div className="flex h-screen p-6 overflow-y-auto gap-4">
+		<div className="flex h-screen p-6 gap-4">
 			{/* 좌측 컬럼 */}
-			<div className="flex-1 space-y-4 h-full">
+			<div className="flex-1 space-y-4 h-full shrink-0 max-w-[calc(50%-20px)] overflow-y-auto relative">
 				{/* 전략 헤더 섹션 */}
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-4">
@@ -85,7 +69,7 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 								{strategyDetail.strategyInfo.strategyName}
 							</h1>
 							<div className="flex items-center gap-2 mt-1">
-								<div className="w-6 h-6 bg-gray-200 rounded flex items-center justify-center">
+								<div className="w-6 h-6 rounded flex items-center justify-center">
 									<Image
 										className="rounded-full"
 										src={`https://images.tossinvest.com/https%3A%2F%2Fstatic.toss.im%2Fpng-icons%2Fsecurities%2Ficn-sec-fill-${strategyDetail.stockInfo.stockCode}.png?width=64&height=64`}
@@ -100,28 +84,18 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 							</div>
 						</div>
 					</div>
-					<DropdownMenu>
-						<DropdownMenuTrigger className="cursor-pointer">
-							<MoreVertical className="w-4 h-4" />
-						</DropdownMenuTrigger>
-						<DropdownMenuContent align="start" id="strategy-actions-menu">
-							<DropdownMenuItem className="cursor-pointer">
-								<Play className="w-[16px] h-[16px]" />
-								전략 실행
-							</DropdownMenuItem>
-							<DropdownMenuItem className="cursor-pointer">
-								<Square className="w-[16px] h-[16px]" />
-								전략 정지
-							</DropdownMenuItem>
-							<DropdownMenuItem
-								className="cursor-pointer"
-								onClick={handleDeleteStrategy}
-							>
-								<Trash className="w-[16px] h-[16px]" />
-								전략 삭제
-							</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
+					<div className="flex flex-col items-end gap-2">
+						<StrategyStatusChip
+							status={strategyDetail.strategyInfo.strategyActivatedStatus}
+						/>
+						<StrategyDropdownMenuClient
+							strategyId={strategyId}
+							isActivated={
+								strategyDetail.strategyInfo.strategyActivatedStatus ===
+								'ACTIVATED'
+							}
+						/>
+					</div>
 				</div>
 
 				{/* 성과 지표 카드 */}
@@ -134,11 +108,13 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 									className={cn(
 										'text-2xl! font-bold',
 										strategyDetail.strategyProfit.allProfit > 0
-											? 'text-red-500'
-											: 'text-blue-500'
+											? 'text-[#F04452]'
+											: strategyDetail.strategyProfit.allProfit < 0
+												? 'text-[#3182F6]'
+												: 'text-gray-500'
 									)}
 								>
-									{`${strategyDetail.strategyProfit.allProfit}%`}
+									{`${strategyDetail.strategyProfit.allProfit.toFixed(2)}%`}
 								</div>
 							</div>
 							<div className="text-center">
@@ -149,59 +125,42 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 									className={cn(
 										'text-2xl! font-bold',
 										strategyDetail.strategyProfit.weekProfit > 0
-											? 'text-red-500'
-											: 'text-blue-500'
+											? 'text-[#F04452]'
+											: strategyDetail.strategyProfit.weekProfit < 0
+												? 'text-[#3182F6]'
+												: 'text-gray-500'
 									)}
 								>
-									{`${strategyDetail.strategyProfit.weekProfit}%`}
+									{`${strategyDetail.strategyProfit.weekProfit.toFixed(2)}%`}
 								</div>
 							</div>
 							<div className="text-center">
 								<div className="text-sm text-gray-600 mb-1">거래 체결 수</div>
 								<div className="text-2xl font-bold text-gray-900">
-									{executions?.tradeExecutionCount}
+									{data?.pages[0].data.tradeExecutionCount}
 								</div>
 							</div>
 						</div>
 					</CardContent>
 				</Card>
-				<Tabs defaultValue="preview">
-					<TabsList className="bg-transparent p-0 h-auto gap-2">
-						<TabsTrigger
-							className="cursor-pointer data-[state=active]:bg-shinhan-blue! data-[state=active]:text-white! data-[state=active]:border-shinhan-blue data-[state=inactive]:bg-shinhan-blue/8 data-[state=inactive]:text-black data-[state=inactive]:border-shinhan-blue/20 border rounded-full px-4 py-2 h-[36px] text-button transition-all duration-200"
-							value="preview"
-						>
-							미리보기
-						</TabsTrigger>
-						<TabsTrigger
-							className="cursor-pointer data-[state=active]:bg-shinhan-blue! data-[state=active]:text-white! data-[state=active]:border-shinhan-blue data-[state=inactive]:bg-shinhan-blue/8 data-[state=inactive]:text-black data-[state=inactive]:border-shinhan-blue/20 border rounded-full px-4 py-2 h-[36px] text-button transition-all duration-200"
-							value="summary"
-						>
-							전략 요약
-						</TabsTrigger>
-					</TabsList>
-					<TabsContent value="preview">
-						<PreviewStrategy
-							sell={strategyDetail.strategyTemplate?.sell || null}
-							buy={strategyDetail.strategyTemplate?.buy || null}
-						/>
-					</TabsContent>
-					<TabsContent value="summary">
-						<StrategyAIDetail
-							summaryOverview={strategyDetail.strategySummary.summaryOverview}
-							summaryCondition={strategyDetail.strategySummary.summaryCondition}
-							summaryRisk={strategyDetail.strategySummary.summaryRisk}
-						/>
-					</TabsContent>
-				</Tabs>
+				<StrategyDetailTab
+					strategyTemplate={strategyDetail.strategyTemplate}
+					strategySummary={strategyDetail.strategySummary}
+					code={strategyDetail.code}
+				/>
 			</div>
-
 			{/* 우측 컬럼 */}
-			<div className="flex flex-col flex-1 gap-4">
+			<div className="flex flex-col flex-1 gap-4 shrink-0 overflow-y-auto">
 				{/* 수익률 그래프 */}
 				<ProfitRateCard profitRateSeries={strategyDetail.profitSeries} />
 				{/* 최근 체결 내역 */}
-				<RecentExecution executions={executions?.tradeExecutions || []} />
+				<RecentExecution
+					ref={ref}
+					hasNextPage={hasNextPage}
+					executions={
+						data?.pages.flatMap((page) => page.data.tradeExecutions) || []
+					}
+				/>
 			</div>
 		</div>
 	);

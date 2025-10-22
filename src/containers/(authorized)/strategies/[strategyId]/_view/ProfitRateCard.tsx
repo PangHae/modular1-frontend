@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, useState } from 'react';
 
 import { ProfitDataKey, ProfitDataSeries } from '@/@types/strategy';
@@ -21,7 +23,7 @@ const ProfitRateCard: FC<Props> = ({ profitRateSeries }) => {
 		useState<ProfitDataKey>('oneMonth');
 	const noProfitRateData = profitRateSeries[selectedPeriod].length === 0;
 	return (
-		<Card className="flex-1 min-h-0">
+		<Card className="flex-1 min-h-0 max-h-[50%]">
 			<CardHeader>
 				<div className="flex items-start justify-between">
 					<CardTitle>수익률 그래프</CardTitle>
@@ -99,7 +101,9 @@ const ProfitRateCard: FC<Props> = ({ profitRateSeries }) => {
 					/>
 				)}
 				{noProfitRateData && (
-					<div className="text-center text-gray-400 py-8">No data</div>
+					<div className="text-center text-gray-400 py-8">
+						수익률 데이터가 없습니다.
+					</div>
 				)}
 			</CardContent>
 		</Card>

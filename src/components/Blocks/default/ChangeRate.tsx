@@ -1,5 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
 
+import { toast } from 'sonner';
+
 import {
 	BlockProps,
 	ComparisonType,
@@ -30,8 +32,17 @@ const ChangeRate: FC<ChangeRateProps> = ({
 	};
 
 	const createJson = () => {
-		if (!rightChangeRateRef.current) {
-			return {} as Node;
+		if (!rightChangeRateRef.current?.value) {
+			toast.error('변화율을 입력해주세요.');
+			return null;
+		}
+
+		if (
+			Number(rightChangeRateRef.current.value) > 100 ||
+			Number(rightChangeRateRef.current.value) < -100
+		) {
+			toast.error('변화율은 -100부터 100 사이의 값을 입력해주세요.');
+			return null;
 		}
 
 		return {
@@ -65,7 +76,7 @@ const ChangeRate: FC<ChangeRateProps> = ({
 	return (
 		<Block className="flex gap-2 p-4 border-2 border-yeondu rounded-lg bg-yeondu-bg!">
 			<Block.subtitle className="text-yeondu!">변화율</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				현재가가 전일 대비
 				<Block.input
 					ref={rightChangeRateRef}
@@ -77,7 +88,7 @@ const ChangeRate: FC<ChangeRateProps> = ({
 				>
 					-100부터 100 사이의 값을 입력해주세요.
 				</Block.input>
-				%{' '}
+				%
 				<Block.dropdown
 					placeholder="비교"
 					items={[

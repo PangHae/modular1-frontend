@@ -19,18 +19,19 @@ import {
 	StrategyTemplate,
 } from '@/@types/strategy';
 import { GroupNode, Node } from '@/@types/StrategyTemplateNode';
+import { FullScreenLoading } from '@/components/common/Loading';
 import { useCreateStrategy } from '@/hooks/api/strategy/useCreateStrategy';
 
 type Step = 1 | 2;
 type StrategyType = 'BUY' | 'SELL';
 
 export const Context = createContext<{
-	ref: React.RefObject<{ [key: string]: () => Node } | null>;
+	ref: React.RefObject<{ [key: string]: () => Node | null } | null>;
 	currentStep: Step;
 	strategyType: StrategyType;
-	selectedStock: string;
+	selectedStock: { name: string; code: string };
 	strategyNameRef: React.RefObject<HTMLInputElement | null>;
-	setSelectedStock: (stock: string) => void;
+	setSelectedStock: (stock: { name: string; code: string }) => void;
 	setStrategyType: (type: StrategyType) => void;
 	handleNext: () => void;
 	handlePrev: () => void;
@@ -49,7 +50,7 @@ export const CreateStrategyProvider = ({
 	const strategyNameRef = useRef<HTMLInputElement>(null);
 	const router = useRouter();
 	const queryClient = useQueryClient();
-	const { mutate: createStrategy } = useCreateStrategy({
+	const { mutate: createStrategy, isPending } = useCreateStrategy({
 		onSuccess: (data) => {
 			toast.success(data.message);
 			queryClient.invalidateQueries({ queryKey: ['strategies'] });
@@ -60,10 +61,13 @@ export const CreateStrategyProvider = ({
 			toast.error(error.message);
 		},
 	});
-	const childRef = useRef<{ [key: string]: () => Node }>(null);
+	const childRef = useRef<{ [key: string]: () => Node | null }>(null);
 	const [currentStep, setCurrentStep] = useState<Step>(1);
 	const [strategyType, setStrategyType] = useState<StrategyType>('BUY');
-	const [selectedStock, setSelectedStock] = useState('');
+	const [selectedStock, setSelectedStock] = useState<{
+		name: string;
+		code: string;
+	}>({ name: '', code: '' });
 	const [treeState, setTreeState] = useState<(ArrayTreeNode | null)[]>([
 		{ blockId: 'buy', index: 0 },
 		null,
@@ -89,8 +93,10 @@ export const CreateStrategyProvider = ({
 			// 루트 노드 설정 (인덱스 0)
 			if (template.buy) {
 				treeState[0] = { blockId: 'buy', index: 0 };
+				setStrategyType('BUY');
 			} else if (template.sell) {
 				treeState[0] = { blockId: 'sell', index: 0 };
+				setStrategyType('SELL');
 			}
 
 			// 노드를 재귀적으로 treeState에 추가
@@ -154,7 +160,9 @@ export const CreateStrategyProvider = ({
 	const buildNodeFromTree = (nodeIndex: number): Node | null => {
 		const node = treeState[nodeIndex];
 
-		if (!node) return null;
+		if (!node) {
+			return null;
+		}
 
 		// 루트 노드(buy/sell)는 제외하고 자식 노드들만 처리
 		if (nodeIndex === 0) {
@@ -165,6 +173,11 @@ export const CreateStrategyProvider = ({
 				childIndex < treeState.length && treeState[childIndex]
 					? buildNodeFromTree(childIndex)
 					: null;
+
+			// 자식이 null이면 전체 결과도 null 반환
+			if (!child) {
+				return null;
+			}
 
 			// 자식이 있으면 그대로 반환 (추가 GROUP으로 감싸지 않음)
 			return child;
@@ -198,6 +211,12 @@ export const CreateStrategyProvider = ({
 					? buildNodeFromTree(rightChildIndex)
 					: null;
 
+			// 자식이 모두 null이면 전체 결과도 null 반환
+			if (!leftChild && !rightChild) {
+				toast.error('노드 구성이 완료되지 않았습니다.');
+				return null;
+			}
+
 			const children = [];
 			if (leftChild) children.push(leftChild);
 			if (rightChild) children.push(rightChild);
@@ -213,6 +232,9 @@ export const CreateStrategyProvider = ({
 
 		// ref에서 해당 블록의 createJson 함수 호출 (일반 블록만)
 		if (childRef.current && childRef.current[node.blockId]) {
+			if (childRef.current[node.blockId] === null) {
+				return null;
+			}
 			const refResult = childRef.current[node.blockId]();
 			return refResult;
 		}
@@ -225,7 +247,7 @@ export const CreateStrategyProvider = ({
 			return;
 		}
 
-		if (!strategyNameRef.current) {
+		if (!strategyNameRef.current?.value) {
 			toast.error('전략 이름을 입력해주세요');
 			return;
 		}
@@ -233,11 +255,15 @@ export const CreateStrategyProvider = ({
 		// 루트 노드(인덱스 0)의 자식들을 처리해서 트리 구조 생성
 		const rootNode = buildNodeFromTree(0);
 
+		if (!rootNode) {
+			return;
+		}
+
 		const data: StrategyTemplate = {
 			strategy_name: strategyNameRef.current.value,
 			version: 1,
 			meta: {
-				universe: [selectedStock],
+				universe: [selectedStock.code],
 				enabled: true,
 			},
 		};
@@ -273,7 +299,6 @@ export const CreateStrategyProvider = ({
 		}
 		createStrategy(data);
 	};
-
 	return (
 		<Context.Provider
 			value={{
@@ -294,6 +319,7 @@ export const CreateStrategyProvider = ({
 			}}
 		>
 			{children}
+			{isPending && <FullScreenLoading message="전략을 생성하고 있습니다..." />}
 		</Context.Provider>
 	);
 };

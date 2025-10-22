@@ -14,6 +14,9 @@ export const getStrategies = async () => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			next: {
+				revalidate: 60,
+			},
 		});
 
 		if (!response.ok) {
@@ -25,7 +28,7 @@ export const getStrategies = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -47,7 +50,7 @@ export const getStrategyDetailById = async (strategyId: number) => {
 		return res.data;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw error;
 	}
 };
@@ -70,7 +73,7 @@ export const deleteStrategyById = async (strategyId: number) => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -94,7 +97,7 @@ export const createStrategy = async (strategy: StrategyTemplate) => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw errorRes;
 	}
 };
@@ -106,6 +109,9 @@ export const getOneClickTemplates = async () => {
 			{
 				headers: {
 					'Content-Type': 'application/json',
+				},
+				next: {
+					revalidate: 3600,
 				},
 			}
 		);
@@ -119,7 +125,59 @@ export const getOneClickTemplates = async () => {
 		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
+		throw errorRes;
+	}
+};
+
+export const runStrategyPod = async (strategyId: number) => {
+	try {
+		const response = await fetch(`${STRATEGIES_API_URL}/${strategyId}/start`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (!response.ok) {
+			throw response;
+		}
+
+		const res: Response<{
+			strategyId: string;
+			podName: string;
+			status: string;
+		}> = await response.json();
+
+		return res;
+	} catch (error) {
+		const errorRes = await (error as globalThis.Response).json();
+		console.error(errorRes);
+		throw errorRes;
+	}
+};
+
+export const stopStrategyPod = async (strategyId: number) => {
+	try {
+		const response = await fetch(`${STRATEGIES_API_URL}/${strategyId}/stop`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				credentials: 'include',
+			},
+		});
+
+		if (!response.ok) {
+			throw response;
+		}
+
+		const res: Response<{ strategyId: string; status: string }> =
+			await response.json();
+
+		return res;
+	} catch (error) {
+		const errorRes = await (error as globalThis.Response).json();
+		console.error(errorRes);
 		throw errorRes;
 	}
 };

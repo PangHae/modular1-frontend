@@ -16,11 +16,10 @@ interface Props {
 	strategyNameRef: RefObject<HTMLInputElement | null>;
 	className?: string;
 	currentStep: Step;
-	selectedStock: string;
+	selectedStock: { name: string; code: string };
 	onNext: () => void;
 	onPrev: () => void;
 	onCreateStrategy: () => void;
-	canProceed: boolean;
 }
 
 const STEP_MAP = {
@@ -56,7 +55,10 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 				<div className="flex gap-4 items-center">
 					{currentStep === 1 && (
 						<Link href="/strategies">
-							<Button variant="outline" className="flex items-center gap-2">
+							<Button
+								variant="outline"
+								className="flex items-center gap-2 cursor-pointer"
+							>
 								<ChevronLeft className="w-4 h-4" />
 								이전
 							</Button>
@@ -66,7 +68,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 						<Button
 							variant="outline"
 							onClick={onPrev}
-							className="flex items-center gap-2"
+							className="flex items-center gap-2 cursor-pointer"
 						>
 							<ChevronLeft className="w-4 h-4" />
 							이전
@@ -89,7 +91,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 								className={cn(
 									'flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium',
 									currentStep >= 1
-										? 'bg-blue-100 text-blue-700'
+										? 'bg-shinhan-blue/10 text-shinhan-blue'
 										: 'bg-gray-100 text-gray-500'
 								)}
 							>
@@ -97,7 +99,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 									className={cn(
 										'w-6 h-6 rounded-full flex items-center justify-center text-xs',
 										currentStep >= 1
-											? 'bg-blue-600 text-white'
+											? 'bg-shinhan-blue text-white'
 											: 'bg-gray-300 text-gray-600'
 									)}
 								>
@@ -110,7 +112,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 								className={cn(
 									'flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium',
 									currentStep >= 2
-										? 'bg-blue-100 text-blue-700'
+										? 'bg-shinhan-blue/10 text-shinhan-blue'
 										: 'bg-gray-100 text-gray-500'
 								)}
 							>
@@ -118,7 +120,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 									className={cn(
 										'w-6 h-6 rounded-full flex items-center justify-center text-xs',
 										currentStep >= 2
-											? 'bg-blue-600 text-white'
+											? 'bg-shinhan-blue text-white'
 											: 'bg-gray-300 text-gray-600'
 									)}
 								>
@@ -132,9 +134,9 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 				{currentStep === 1 && (
 					<div className="flex items-center gap-4">
 						<Button
-							className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-8 cursor-pointer"
+							className="flex items-center gap-2 bg-shinhan-blue hover:bg-shinhan-blue/80 px-8 cursor-pointer"
 							onClick={onNext}
-							disabled={!selectedStock.trim()}
+							disabled={!selectedStock.code}
 						>
 							다음
 							<ChevronRight className="w-4 h-4" />
@@ -149,7 +151,7 @@ const CreateStrategyLayout: FC<PropsWithChildren<Props>> = ({
 							className="w-64"
 						/>
 						<Button
-							className="bg-blue-600 hover:bg-blue-700"
+							className="bg-shinhan-blue hover:bg-shinhan-blue/80 cursor-pointer"
 							onClick={onCreateStrategy}
 						>
 							전략 생성하기

@@ -2,9 +2,11 @@
 
 import { FC } from 'react';
 
+import Image from 'next/image';
+
 import SidePalette from '@/components/common/SidePalette';
 import StockSearch from '@/components/common/SidePalette/StockSearch';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { useMyStocks } from '@/hooks/api/stocks/useMyStocks';
 import { useStocks } from '@/hooks/api/stocks/useStocks';
 import { useCreateStrategyContext } from '@/hooks/contexts/useCreateStrategyContext';
@@ -15,7 +17,7 @@ const StockSelectClient: FC = () => {
 	const { selectedStock, setSelectedStock } = useCreateStrategyContext();
 
 	const handleSelectStock = (stock: { name: string; code: string }) => {
-		setSelectedStock(stock.code);
+		setSelectedStock(stock);
 	};
 
 	return (
@@ -30,11 +32,41 @@ const StockSelectClient: FC = () => {
 					/>
 				</SidePalette>
 				<Card className="w-full">
-					<CardHeader>
-						<CardTitle>선택된 종목</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<p>{selectedStock}</p>
+					<CardContent className="flex  items-center justify-center p-8 h-full">
+						<div className="flex flex-col items-center justify-center space-y-6">
+							<div className="text-center space-y-2">
+								<h3 className="text-2xl font-semibold text-gray-900">
+									투자 전략을 시작하세요
+								</h3>
+								<p className="text-gray-600 text-button">
+									왼쪽 패널에서 종목을 선택한 후 우측 상단에 다음 버튼을 클릭해
+									전략을 구성할 수 있습니다.
+								</p>
+							</div>
+							{selectedStock && (
+								<div className="flex items-center pl-4 w-[300px] h-[60px] bg-white rounded-lg border border-blue-200 shadow-lg">
+									<div className="flex items-center space-x-3">
+										{selectedStock.code && (
+											<Image
+												className="rounded-full"
+												src={`https://images.tossinvest.com/https%3A%2F%2Fstatic.toss.im%2Fpng-icons%2Fsecurities%2Ficn-sec-fill-${selectedStock.code}.png?width=64&height=64`}
+												alt={selectedStock.name}
+												width={40}
+												height={40}
+											/>
+										)}
+										<div>
+											<h4 className="font-semibold text-gray-900">
+												{selectedStock.name}
+											</h4>
+											<p className="text-sm text-gray-500">
+												{selectedStock.code}
+											</p>
+										</div>
+									</div>
+								</div>
+							)}
+						</div>
 					</CardContent>
 				</Card>
 			</div>

@@ -79,9 +79,9 @@ const StockProfitRate = ({
 			className={cn(
 				'text-caption! font-semibold',
 				profitRate > 0
-					? 'text-red-500'
+					? 'text-[#F04452]'
 					: profitRate < 0
-						? 'text-blue-500'
+						? 'text-[#3182F6]'
 						: 'text-gray-500',
 				className
 			)}

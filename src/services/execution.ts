@@ -3,13 +3,18 @@ import { Response } from '@/@types/service';
 
 const EXECUTION_API_URL = `${process.env.NEXT_PUBLIC_SERVICE_URL}/api/v1/trade`;
 
-export const getExecutionById = async (executionId: number) => {
+export const getExecutionById = async (
+	executionId: number,
+	page: number,
+	size: number
+) => {
 	try {
 		const response = await fetch(
-			`${EXECUTION_API_URL}/execution/${executionId}`,
+			`${EXECUTION_API_URL}/execution/${executionId}?page=${page}&size=${size}`,
 			{
 				headers: {
 					'Content-Type': 'application/json',
+					credentials: 'include',
 				},
 			}
 		);
@@ -20,10 +25,10 @@ export const getExecutionById = async (executionId: number) => {
 
 		const res: Response<ExecutionList> = await response.json();
 
-		return res.data;
+		return res;
 	} catch (error) {
 		const errorRes = await (error as globalThis.Response).json();
-		console.log(errorRes);
+		console.error(errorRes);
 		throw error;
 	}
 };

@@ -26,7 +26,7 @@ const OneClickTemplateItems = () => {
 								className="p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
 								onClick={() => handleSelectTemplate(template)}
 							>
-								<div className="font-medium">
+								<div className="text-button font-semibold">
 									{TEMPLATE_CONDITION_MAP[templateName].name}
 								</div>
 								<div className="text-caption! text-gray-600 mt-1">

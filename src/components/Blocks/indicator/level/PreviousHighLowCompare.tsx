@@ -77,7 +77,7 @@ const PreviousHighLowCompare: FC<PreviousHighLowCompareProps> = ({
 			<Block.subtitle className="text-papaya-orange">
 				전일 가격 대비 현재 시가 비교 감지
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="비교"
 					items={[

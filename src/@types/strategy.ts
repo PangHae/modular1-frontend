@@ -17,6 +17,7 @@ export interface StrategyDetail {
 	strategyInfo: {
 		id: number;
 		strategyName: string;
+		strategyActivatedStatus: 'ACTIVATED' | 'PENDING';
 	};
 	strategyProfit: {
 		allProfit: number;
@@ -25,6 +26,7 @@ export interface StrategyDetail {
 	strategyTemplate: StrategyTemplate;
 	strategySummary: StrategyAiSummary;
 	profitSeries: ProfitDataSeries;
+	code: string;
 }
 
 export interface StrategyMetaData {

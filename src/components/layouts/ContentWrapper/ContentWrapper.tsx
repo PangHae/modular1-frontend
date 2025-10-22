@@ -11,7 +11,7 @@ const ContentWrapper: FC<PropsWithChildren<Props>> = ({
 	className,
 }) => {
 	return (
-		<main className={cn('w-full h-full p-10 bg-transparent', className)}>
+		<main className={cn('w-full h-full p-8 bg-transparent', className)}>
 			{children}
 		</main>
 	);

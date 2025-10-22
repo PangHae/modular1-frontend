@@ -67,9 +67,9 @@ const ProfitRateLineChart: FC<Props> = ({
 									<span
 										className={
 											Number(value) > 0
-												? 'text-red-500'
+												? 'text-[#F04452]'
 												: Number(value) < 0
-													? 'text-blue-500'
+													? 'text-[#3182F6]'
 													: 'text-gray-500'
 										}
 									>{`${value.toLocaleString('ko-KR')}%`}</span>

@@ -80,7 +80,7 @@ const BandCross: FC<BandCrossProps> = ({
 			<Block.subtitle className="text-papaya-orange">
 				볼린저밴드 교차 감지
 			</Block.subtitle>
-			<div className="flex items-center gap-1">
+			<div className="flex items-center gap-1 flex-wrap">
 				<Block.dropdown
 					placeholder="기준"
 					items={[

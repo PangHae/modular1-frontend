@@ -6,7 +6,6 @@ import {
 	QueryClient,
 } from '@tanstack/react-query';
 
-import { getExecutionById } from '@/services/execution';
 import { getStrategyDetailById } from '@/services/strategies';
 
 import StrategyDetailClient from './StrategyDetail.client';
@@ -22,11 +21,6 @@ const StrategyDetail: FC<Props> = async ({ params }) => {
 	await queryClient.prefetchQuery({
 		queryKey: ['strategyDetail', strategyId],
 		queryFn: () => getStrategyDetailById(strategyId),
-	});
-
-	await queryClient.prefetchQuery({
-		queryKey: ['execution', strategyId],
-		queryFn: () => getExecutionById(strategyId),
 	});
 
 	return (

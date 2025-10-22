@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren, useEffect, useRef } from 'react';
 
 import { useDroppable } from '@dnd-kit/core';
+import { toast } from 'sonner';
 
 import { BlockProps, TradeNode } from '@/@types/StrategyTemplateNode';
 
@@ -24,6 +25,15 @@ const Buy: FC<PropsWithChildren<BuyProps>> = ({
 	const countRef = useRef<HTMLInputElement>(null);
 
 	const createJson = () => {
+		if (!countRef.current?.value) {
+			toast.error('매수 수량을 입력해주세요.');
+			return null;
+		}
+
+		if (Number(countRef.current.value) <= 0) {
+			toast.error('매수 수량은 1 이상의 값을 입력해주세요.');
+			return null;
+		}
 		return {
 			orderQuantity: Number(countRef.current?.value),
 			node: childNode || {
@@ -46,12 +56,13 @@ const Buy: FC<PropsWithChildren<BuyProps>> = ({
 	}, [childNode]);
 
 	return (
-		<Block className="flex-1 gap-2 p-4 border-2 border-red-500 rounded-lg bg-red-500/10">
+		<Block className="flex-1 gap-2 p-4 border-2 border-[#F04452] rounded-lg bg-[#F04452]/10">
 			<div className="flex items-center gap-2">
-				<Block.title className="text-red-500!">매수</Block.title>
+				<Block.title className="text-[#F04452]!">매수</Block.title>
 				<Block.input
 					ref={countRef}
-					className="w-[200px] bg-white! focus-visible:border-red-500"
+					type="number"
+					className="w-[200px] bg-white! focus-visible:border-[#F04452]"
 					placeholder="몇 주를 매수할까요?"
 					defaultValue={initialValue}
 					disabled={disabled}
