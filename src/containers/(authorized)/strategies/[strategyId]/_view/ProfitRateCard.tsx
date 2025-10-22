@@ -23,7 +23,7 @@ const ProfitRateCard: FC<Props> = ({ profitRateSeries }) => {
 		useState<ProfitDataKey>('oneMonth');
 	const noProfitRateData = profitRateSeries[selectedPeriod].length === 0;
 	return (
-		<Card className="flex-1 min-h-0">
+		<Card className="flex-1 min-h-0 max-h-[50%]">
 			<CardHeader>
 				<div className="flex items-start justify-between">
 					<CardTitle>수익률 그래프</CardTitle>
