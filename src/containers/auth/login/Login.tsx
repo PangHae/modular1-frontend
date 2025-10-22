@@ -123,6 +123,7 @@ const Login = () => {
 															className="pl-5 pr-12 h-12 rounded-lg bg-[#F9FAFB] border-gray-200 focus:border-blue-500"
 															onKeyDown={(e) => {
 																if (e.key === 'Enter') {
+																	e.preventDefault();
 																	form.handleSubmit(onSubmit)();
 																}
 															}}

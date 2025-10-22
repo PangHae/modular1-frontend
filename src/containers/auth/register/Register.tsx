@@ -161,7 +161,7 @@ const RegisterStepForm = () => {
 										/>
 										<Button
 											type="button"
-											className="w-full h-12 bg-[#3182F6] hover:bg-blue-700 text-white font-semibold rounded-lg"
+											className="w-full h-12 bg-[#3182F6] hover:bg-blue-700 text-white font-semibold rounded-lg mt-2"
 											onClick={() => nextStep(['memberId', 'memberPassword'])}
 										>
 											다음
