@@ -14,6 +14,9 @@ export const getStrategies = async () => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			next: {
+				revalidate: 60,
+			},
 		});
 
 		if (!response.ok) {
@@ -106,6 +109,9 @@ export const getOneClickTemplates = async () => {
 			{
 				headers: {
 					'Content-Type': 'application/json',
+				},
+				next: {
+					revalidate: 3600,
 				},
 			}
 		);

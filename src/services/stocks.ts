@@ -10,6 +10,9 @@ export const getStocks = async () => {
 				'Content-Type': 'application/json',
 				credentials: 'include',
 			},
+			next: {
+				revalidate: 3600,
+			},
 		});
 
 		if (!response.ok) {
@@ -32,6 +35,9 @@ export const getMyStocks = async () => {
 			headers: {
 				'Content-Type': 'application/json',
 				credentials: 'include',
+			},
+			next: {
+				revalidate: 600,
 			},
 		});
 

@@ -19,6 +19,9 @@ export const getAccountInfo = async () => {
 				'Content-Type': 'application/json',
 				credentials: 'include',
 			},
+			next: {
+				revalidate: 60,
+			},
 		});
 
 		if (!response.ok) {
@@ -46,6 +49,9 @@ export const getAccountProfitRate = async () => {
 				'Content-Type': 'application/json',
 				credentials: 'include',
 			},
+			next: {
+				revalidate: 60,
+			},
 		});
 
 		if (!response.ok) {
@@ -69,6 +75,9 @@ export const getAccountProfitRateRanking = async () => {
 			headers: {
 				'Content-Type': 'application/json',
 				credentials: 'include',
+			},
+			next: {
+				revalidate: 60,
 			},
 		});
 
@@ -119,6 +128,9 @@ export const getAccountHoldingStocks = async () => {
 				'Content-Type': 'application/json',
 				credentials: 'include',
 			},
+			next: {
+				revalidate: 60,
+			},
 		});
 
 		if (!response.ok) {
@@ -141,6 +153,9 @@ export const getAccountStockProfitRate = async () => {
 			headers: {
 				'Content-Type': 'application/json',
 				credentials: 'include',
+			},
+			next: {
+				revalidate: 60,
 			},
 		});
 
