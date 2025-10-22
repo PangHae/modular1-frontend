@@ -24,8 +24,8 @@ const SideNav = async () => {
 
 	return (
 		<nav className="fixed flex flex-col align-center justify-between w-[70px] h-full pt-6 pb-6 border-r-[0.2px] border-custom-gray-border/40 bg-transparent">
-			<menu className="flex flex-col items-center justify-center gap-3 w-full">
-				<li className="mb-6">
+			<menu className="flex flex-col items-center justify-center gap-4 w-full">
+				<li className="mb-2">
 					<Link
 						href="/dashboard"
 						className="flex items-center justify-center hover:bg-custom-gray-border/40 rounded-md p-2"
