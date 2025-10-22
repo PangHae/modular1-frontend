@@ -267,7 +267,7 @@ const StrategyConfigurationClient: FC = () => {
 									>
 										<SidePalette.menuItem
 											icon={<Cuboid strokeWidth={1} />}
-											title="전략"
+											title="내 전략"
 											isActive={activeTab === 'strategy'}
 										/>
 									</button>
