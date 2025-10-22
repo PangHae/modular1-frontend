@@ -34,6 +34,7 @@ const StockSearch: FC<Props> = ({ onClick, stocks, myStocks }) => {
 					className="w-full h-[40px] py-1 px-3"
 					searchQuery={searchQuery}
 					onSearch={handleSearch}
+					placeholder="종목을 검색해주세요."
 				/>
 			</div>
 			<div className="flex gap-2">
@@ -51,16 +52,20 @@ const StockSearch: FC<Props> = ({ onClick, stocks, myStocks }) => {
 			{filterType === 'all' && (
 				<StockList
 					onClick={onClick}
-					stocks={stocks.filter((stock) =>
-						stock.stockName.includes(searchQuery)
+					stocks={stocks.filter(
+						(stock) =>
+							stock.stockName.includes(searchQuery) ||
+							stock.stockCode.includes(searchQuery)
 					)}
 				/>
 			)}
 			{filterType === 'my' && (
 				<StockList
 					onClick={onClick}
-					stocks={myStocks.filter((stock) =>
-						stock.stockName.includes(searchQuery)
+					stocks={myStocks.filter(
+						(stock) =>
+							stock.stockName.includes(searchQuery) ||
+							stock.stockCode.includes(searchQuery)
 					)}
 				/>
 			)}
