@@ -17,9 +17,10 @@ import { useStopStrategy } from '@/hooks/api/strategy/useStopStrategy';
 
 interface Props {
 	strategyId: number;
+	isActivated: boolean;
 }
 
-const StrategyDropdownMenuClient: FC<Props> = ({ strategyId }) => {
+const StrategyMenuClient: FC<Props> = ({ strategyId, isActivated }) => {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const { mutate: stopStrategy, isPending: isStopStrategyPending } =
@@ -81,24 +82,29 @@ const StrategyDropdownMenuClient: FC<Props> = ({ strategyId }) => {
 			<li>
 				<Button
 					variant="ghost"
-					className="cursor-pointer p-0 hover:text-green-600 transition-colors duration-200"
+					className="not-disabled:cursor-pointer p-0 hover:text-green-600 transition-colors duration-200"
 					onClick={() => runStrategy(strategyId)}
+					disabled={isActivated}
 				>
 					<Play className="size-4" strokeWidth={2.5} />
 				</Button>
 			</li>
-			<li className="cursor-pointer" onClick={() => stopStrategy(strategyId)}>
+			<li>
 				<Button
 					variant="ghost"
-					className="cursor-pointer p-0 hover:text-[#F04452] transition-colors duration-200"
+					className="not-disabled:cursor-pointer p-0 hover:text-[#F04452] transition-colors duration-200"
+					disabled={!isActivated}
+					onClick={() => stopStrategy(strategyId)}
 				>
 					<Square className="size-4" strokeWidth={2.5} />
 				</Button>
 			</li>
-			<li className="cursor-pointer" onClick={handleDeleteStrategy}>
+			<li>
 				<Button
 					variant="ghost"
-					className="cursor-pointer p-0 hover:text-gray-400 transition-colors duration-200"
+					className="not-disabled:cursor-pointer p-0 hover:text-gray-400 transition-colors duration-200"
+					disabled={isActivated}
+					onClick={handleDeleteStrategy}
 				>
 					<Trash className="size-4" strokeWidth={2.5} />
 				</Button>
@@ -107,4 +113,4 @@ const StrategyDropdownMenuClient: FC<Props> = ({ strategyId }) => {
 	);
 };
 
-export default StrategyDropdownMenuClient;
+export default StrategyMenuClient;

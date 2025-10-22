@@ -19,7 +19,7 @@ import RecentExecution from './_view/RecentExecution';
 import StrategyDetailTab from './_view/StrategyDetailTab';
 
 const StrategyDropdownMenuClient = dynamic(
-	() => import('./_view/StrategyDropdownMenu.client'),
+	() => import('./_view/StrategyMenu.client'),
 	{
 		ssr: true,
 	}
@@ -88,7 +88,13 @@ const StrategyDetailClient: FC<Props> = ({ strategyId }) => {
 						<StrategyStatusChip
 							status={strategyDetail.strategyInfo.strategyActivatedStatus}
 						/>
-						<StrategyDropdownMenuClient strategyId={strategyId} />
+						<StrategyDropdownMenuClient
+							strategyId={strategyId}
+							isActivated={
+								strategyDetail.strategyInfo.strategyActivatedStatus ===
+								'ACTIVATED'
+							}
+						/>
 					</div>
 				</div>
 
