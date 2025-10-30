@@ -55,11 +55,9 @@ Modular1은 블록 기반의 노코드 알고리즘 트레이딩 플랫폼입니
 
 - **Framework**: Next.js 15.5.3 (App Router)
 - **Language**: TypeScript 5
-- **UI Library**: Radix UI + Tailwind CSS 4
+- **UI Library**: shadcn
 - **State Management**: TanStack Query (React Query)
-- **Form Handling**: React Hook Form + Zod
 - **Drag & Drop**: @dnd-kit
-- **Charts**: Recharts
 - **Package Manager**: pnpm
 
 ### Development Tools
@@ -206,19 +204,3 @@ chore: 빌드 설정 변경
 - 훅은 camelCase (use 접두사)
 - 타입 정의는 @types 폴더에 분리
 - API 관련 로직은 services 폴더에 분리
-
-## 📝 라이선스
-
-이 프로젝트는 MIT 라이선스 하에 있습니다.
-
-## 🤝 기여하기
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-**Modular1** - 알고리즘 트레이딩의 새로운 패러다임을 제시합니다.
